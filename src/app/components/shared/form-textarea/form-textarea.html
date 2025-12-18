@@ -1,0 +1,23 @@
+<fieldset class="form-input">
+  <label class="form-input__label" [attr.for]="id">
+    {{ label }}
+    <span *ngIf="required" class="form-input__required" aria-hidden="true">*</span>
+  </label>
+
+  <textarea
+    class="form-input__field form-input__field--textarea"
+    [id]="id"
+    [attr.name]="id"
+    [required]="required || null"
+    [attr.aria-required]="required ? 'true' : null"
+    [attr.placeholder]="placeholder || null"
+  ></textarea>
+
+  <p *ngIf="helpText" class="form-input__help">
+    {{ helpText }}
+  </p>
+
+  <p *ngIf="errorText" class="form-input__error" role="alert">
+    {{ errorText }}
+  </p>
+</fieldset>

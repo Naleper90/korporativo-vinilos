@@ -1,0 +1,7 @@
+<nav class="toast-overlay" *ngIf="isModalOpen" role="alert">
+  <section #modal class="toast">
+    <h3>Mensaje enviado correctamente</h3>
+    <p>Te contactaremos pronto.</p>
+    <button type="button" class="toast__close" (click)="closeModal()">Cerrar</button>
+  </section>
+</nav>

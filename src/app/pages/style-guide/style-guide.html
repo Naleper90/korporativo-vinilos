@@ -1,0 +1,113 @@
+<main class="layout__main">
+  <section class="layout__container style-guide">
+    <header class="style-guide__header">
+      <h1 class="style-guide__title">Style Guide · Korporativo</h1>
+      <p class="style-guide__subtitle">
+        Componentes UI básicos utilizados en la aplicación.
+      </p>
+    </header>
+
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Botones</h2>
+      <article class="style-guide__row">
+        <app-button variant="primary">Primary</app-button>
+        <app-button variant="secondary">Secondary</app-button>
+        <app-button variant="ghost">Ghost</app-button>
+        <app-button variant="danger">Danger</app-button>
+      </article>
+    </section>
+
+    <section class="style-guide__section style-guide__section--form-fields">
+      <h2 class="style-guide__section-title">Campos de formulario</h2>
+      <article class="style-guide__row">
+        <app-form-input
+          id="sg-email"
+          label="Correo electrónico"
+          type="email"
+          [required]="true"
+          helpText="Campo de ejemplo para login o contacto."
+        ></app-form-input>
+
+        <app-form-input
+          id="sg-password"
+          label="Contraseña"
+          type="password"
+          [required]="true"
+        ></app-form-input>
+      </article>
+    </section>
+
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Formulario de contacto</h2>
+      <article class="style-guide__row">
+        <app-contact-form></app-contact-form>
+      </article>
+    </section>
+
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Alertas</h2>
+      <article class="style-guide__column">
+        <app-alert variant="success">
+          Operación realizada correctamente.
+        </app-alert>
+        <app-alert variant="error">
+          Ha ocurrido un error al calcular el presupuesto.
+        </app-alert>
+        <app-alert variant="warning">
+          Revisa los datos antes de enviar el presupuesto.
+        </app-alert>
+        <app-alert variant="info">
+          Los precios son orientativos y pueden variar.
+        </app-alert>
+      </article>
+    </section>
+
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Cards</h2>
+      <article class="style-guide__row">
+        <app-card
+          eyebrow="01"
+          title="Presupuestos instantáneos"
+          description="Calcula precios en segundos según las especificaciones del vinilo."
+        ></app-card>
+
+        <app-card
+          eyebrow="02"
+          title="Personalización sencilla"
+          description="Elige entre múltiples tipos de vinilo, cortes y acabados."
+        ></app-card>
+
+        <app-card
+          eyebrow="03"
+          title="Sin sorpresas"
+          description="Precios transparentes con todos los costes incluidos."
+        ></app-card>
+      </article>
+    </section>
+
+    <section class="style-guide__section style-guide__section--textarea-select">
+      <h2 class="style-guide__section-title">Textarea y Select</h2>
+
+      <article class="style-guide__row">
+        <app-form-textarea
+          id="sg-message"
+          label="Mensaje"
+          placeholder="Escribe tu consulta aquí..."
+          [required]="true"
+          helpText="Máximo 500 caracteres"
+          errorText="Este campo no puede estar vacío">
+        </app-form-textarea>
+      </article>
+
+      <article class="style-guide__row">
+        <app-form-select
+          id="sg-country"
+          label="País"
+          [required]="true"
+          helpText="Selecciona país"
+          [options]="countryOptions">
+        </app-form-select>
+      </article>
+    </section>
+  </section>
+</main>

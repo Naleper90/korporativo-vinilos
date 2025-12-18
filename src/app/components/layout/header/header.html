@@ -1,0 +1,36 @@
+<header class="layout-header">
+  <nav class="layout-header__nav layout__container" aria-label="Navegación principal">
+    <a routerLink="/" class="layout-header__logo">Korporativo</a>
+
+    <button
+      type="button"
+      class="layout-header__hamburger"
+      aria-label="Abrir menú"
+      (click)="onToggleMobileMenu($event)"
+    >
+      ☰
+    </button>
+
+    <ul class="layout-header__nav-list" role="list">
+      <li><a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a></li>
+      <li><a routerLink="/calculadora" routerLinkActive="is-active">Calculadora</a></li>
+      <li><a routerLink="/contacto" routerLinkActive="is-active">Contacto</a></li>
+      <li>
+        <button type="button" class="btn btn--secondary layout-header__theme-toggle" (click)="onToggleTheme()">
+          {{ isDark ? 'Tema claro' : 'Tema oscuro' }}
+        </button>
+      </li>
+    </ul>
+
+    <ul #mobileMenu class="layout-header__nav-mobile" role="list">
+      <li><a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a></li>
+      <li><a routerLink="/calculadora" routerLinkActive="is-active">Calculadora</a></li>
+      <li><a routerLink="/contacto" routerLinkActive="is-active">Contacto</a></li>
+      <li>
+        <button type="button" class="btn btn--secondary layout-header__theme-toggle" (click)="onToggleTheme()">
+          {{ isDark ? 'Tema claro' : 'Tema oscuro' }}
+        </button>
+      </li>
+    </ul>
+  </nav>
+</header>

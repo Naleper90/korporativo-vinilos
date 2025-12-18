@@ -1,0 +1,65 @@
+<app-main>
+  <section class="landing">
+    <article class="hero__content">
+      <h1 class="hero__title">
+        CALCULA TUS VINILOS DE MANERA FÁCIL Y RÁPIDA
+      </h1>
+
+      <app-button variant="primary">
+        Calcular ahora
+      </app-button>
+    </article>
+
+    <figure class="hero__preview" aria-label="Previsualización del vinilo">
+    </figure>
+
+    <section class="hero-benefits">
+      <article class="hero-benefits__item">
+        <h3 class="hero-benefits__title">01 Presupuestos instantáneos</h3>
+        <p class="hero-benefits__text">
+          Calcula precios en segundos según las especificaciones del vinilo.
+        </p>
+      </article>
+
+      <article class="hero-benefits__item">
+        <h3 class="hero-benefits__title">02 Personalización sencilla</h3>
+        <p class="hero-benefits__text">
+          Ajusta medidas, materiales y acabados sin salir de la página.
+        </p>
+      </article>
+
+      <article class="hero-benefits__item">
+        <h3 class="hero-benefits__title">03 Sin sorpresas</h3>
+        <p class="hero-benefits__text">
+          Visualiza el coste desglosado antes de enviar el presupuesto.
+        </p>
+      </article>
+    </section>
+
+    <section class="why-us">
+      <h2 class="why-us__title">¿Por qué elegirnos?</h2>
+
+      <ul class="why-us__list">
+        <li class="why-us__item">
+          Materiales de vinilo de calidad profesional para resultados duraderos.
+        </li>
+        <li class="why-us__item">
+          Servicios de instalación expertos disponibles para todo tipo de proyectos.
+        </li>
+        <li class="why-us__item">
+          Diseños a medida sin sacrificar la calidad.
+        </li>
+      </ul>
+    </section>
+  </section>
+
+  <section class="home-extra">
+    <h2 class="home-extra__title">Más sobre Korporativo</h2>
+
+    <app-tabs [tabs]="demoTabs"></app-tabs>
+  </section>
+  <section class="home-register">
+    <h2 class="home-register__title">Crea tu cuenta</h2>
+    <app-register-form></app-register-form>
+  </section>
+</app-main>

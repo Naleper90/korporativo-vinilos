@@ -1,0 +1,51 @@
+.btn {
+  border-radius: 0;
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color var(--transition-fast) var(--transition-easing),
+              color var(--transition-fast) var(--transition-easing),
+              border-color var(--transition-fast) var(--transition-easing);
+}
+
+/* tamaños */
+.btn--sm { padding: 0.4rem 1rem; font-size: var(--font-size-xs); }
+.btn--md { padding: 0.6rem 1.4rem; font-size: var(--font-size-sm); }
+.btn--lg { padding: 0.8rem 1.8rem; font-size: var(--font-size-md); }
+
+/* variantes usando tus tokens */
+.btn--primary {
+  background: var(--color-accent-important);
+  color: var(--color-neutral-900);
+}
+
+.btn--secondary {
+  background: var(--color-primary-900);      /* negro */
+  color: var(--color-white);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-primary-900);
+  border-color: var(--color-primary-900);    /* borde visible */
+}
+
+.btn--danger {
+  background: var(--color-error-500);        /* rojo error */
+  color: var(--color-white);
+}
+
+/* estados */
+.btn:hover:not(:disabled) {
+  filter: brightness(0.95);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-accent-important);
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

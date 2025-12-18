@@ -1,0 +1,16 @@
+<article class="card">
+  <header *ngIf="title || eyebrow" class="card__header">
+    <p *ngIf="eyebrow" class="card__eyebrow">{{ eyebrow }}</p>
+    <h3 *ngIf="title" class="card__title">{{ title }}</h3>
+  </header>
+
+  <p *ngIf="description" class="card__description">
+    {{ description }}
+  </p>
+
+  <footer *ngIf="showAction" class="card__footer">
+    <app-button variant="ghost" size="sm">
+      {{ actionLabel }}
+    </app-button>
+  </footer>
+</article>

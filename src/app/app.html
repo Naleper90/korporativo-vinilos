@@ -1,0 +1,16 @@
+<app-header></app-header>
+
+<main class="layout-main">
+  <router-outlet></router-outlet>
+</main>
+
+<app-footer></app-footer>
+
+<app-spinner></app-spinner>
+
+<section class="toasts-container">
+  <app-toast
+    *ngFor="let notif of notifications"
+    [notification]="notif">
+  </app-toast>
+</section>

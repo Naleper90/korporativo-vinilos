@@ -1,0 +1,17 @@
+.tabs__tab {
+  flex: 1;
+  padding: var(--spacing-3) var(--spacing-4);
+  background: none;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tabs__tab:hover {
+  background: var(--color-surface-hover);
+}
+
+.tabs__tab--active {
+  background: var(--color-accent-important);
+  color: var(--color-on-accent);
+}

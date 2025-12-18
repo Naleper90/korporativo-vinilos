@@ -1,0 +1,28 @@
+/* 1. Media queries breakpoints */
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: var(--breakpoint-sm)) { @content; }
+  } @else if $breakpoint == md {
+    @media (min-width: var(--breakpoint-md)) { @content; }
+  } @else if $breakpoint == lg {
+    @media (min-width: var(--breakpoint-lg)) { @content; }
+  } @else if $breakpoint == xl {
+    @media (min-width: var(--breakpoint-xl)) { @content; }
+  }
+}
+
+@mixin flex-center($direction: row, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: center;
+  justify-content: center;
+  gap: $gap;
+}
+
+@mixin card($padding: var(--spacing-4)) {
+  padding: $padding;
+  background-color: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: var(--border-width-thin) solid var(--color-neutral-100);
+}

@@ -1,0 +1,61 @@
+<form [formGroup]="form" class="contact-form">
+  <fieldset class="contact-form__fieldset">
+    <legend class="contact-form__legend">Envíanos tu mensaje</legend>
+
+    <fieldset class="form-input">
+      <label class="form-input__label" for="contact-name">
+        Nombre <span class="form-input__required">*</span>
+      </label>
+      <input id="contact-name" class="form-input__field" formControlName="name">
+
+      <p *ngIf="form.get('name')?.touched && form.get('name')?.hasError('required')"
+         class="form-input__error">
+        El nombre es obligatorio.
+      </p>
+    </fieldset>
+
+    <fieldset class="form-input">
+      <label class="form-input__label" for="contact-email">
+        Email <span class="form-input__required">*</span>
+      </label>
+      <input id="contact-email" type="email" class="form-input__field" formControlName="email">
+
+      <p *ngIf="form.get('email')?.touched && form.get('email')?.hasError('required')"
+         class="form-input__error">
+        El email es obligatorio.
+      </p>
+      <p *ngIf="form.get('email')?.touched && form.get('email')?.hasError('email')"
+         class="form-input__error">
+        El formato del email no es válido.
+      </p>
+    </fieldset>
+
+    <fieldset class="form-input">
+      <label class="form-input__label" for="contact-message">
+        Mensaje <span class="form-input__required">*</span>
+      </label>
+      <textarea
+        id="contact-message"
+        class="form-input__field form-input__field--textarea"
+        formControlName="message">
+      </textarea>
+
+      <p *ngIf="form.get('message')?.touched && form.get('message')?.hasError('required')"
+         class="form-input__error">
+        El mensaje es obligatorio.
+      </p>
+      <p *ngIf="form.get('message')?.touched && form.get('message')?.hasError('minlength')"
+         class="form-input__error">
+        El mensaje debe tener al menos 10 caracteres.
+      </p>
+    </fieldset>
+
+    <button
+      type="button"
+      class="btn btn--primary"
+      [disabled]="form.invalid"
+      (click)="onSubmit()">
+      Enviar
+    </button>
+  </fieldset>
+</form>
