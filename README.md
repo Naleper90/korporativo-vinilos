@@ -1,59 +1,63 @@
-# KorporativoVinilos
+# Korporativo Vinilos
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.1.
+Aplicación web para calcular precios y gestionar presupuestos/facturas de vinilos para la empresa ficticia **Korporativo Studio**.  
+Este repositorio corresponde a la **primera versión del proyecto** desarrollada para las asignaturas **DIW** y **DWEC** del ciclo **2º DAW**.  
+**Autora:** Natalia Alejo Pérez (2º DAW).
 
-## Development server
+## Tecnologías
 
-To start a local development server, run:
+- Framework **Angular**.  
+- TypeScript, HTML5 y CSS (con variables y estilos modulares).  
+- Maquetación semántica y diseño responsive básico.
 
-```bash
+## Puesta en marcha (desarrollo)
+
+1. Instalar dependencias:
+
+```
+npm install
+```
+
+2. Arrancar el servidor de desarrollo:
+
+```
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+3. Abrir el navegador en:
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```
+http://localhost:4200/
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+La aplicación se recarga automáticamente al guardar cambios en el código fuente.
 
-```bash
-ng generate --help
+## Scripts habituales
+
+- **Construir el proyecto** (genera la carpeta `dist/`):
+
 ```
-
-## Building
-
-To build the project run:
-
-```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Estructura general
 
-## Running unit tests
+- `src/app`  
+- `components/` – Componentes reutilizables (botones, cards, formularios, alerts, etc.).  
+- `pages/` – Páginas principales (inicio, calculadora, contacto, style guide).  
+- `services/` – Servicios de tema (modo claro/oscuro), notificaciones y carga.  
+- `src/styles/` – Variables, reset y estilos globales.
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Páginas principales
 
-```bash
-ng test
-```
+- **Inicio:** Presentación de Korporativo Studio y acceso a las secciones clave.  
+- **Calculadora:** Pantalla para simular precios de vinilos según diferentes parámetros.  
+- **Contacto:** Información de la empresa y formulario de contacto accesible.  
+- **Style Guide:** Guía de estilos con botones, formularios, alerts y otros componentes UI.
 
-## Running end-to-end tests
+## Objetivo de esta versión
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Implementar la maquetación principal, navegación y componentes básicos de interfaz.  
+- Unificar estilos mediante una guía de estilos y un sistema de variables CSS.  
+- Dejar preparada la base para futuras versiones con más lógica de negocio
+(cálculo completo de presupuestos y gestión avanzada de facturas).
