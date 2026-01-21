@@ -2,7 +2,10 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+
+// Servicios
 import { CalculatorService } from '../../services/calculator.service';
+import { BudgetService } from '../../services/budgets.service';
 
 @Component({
   selector: 'app-calculator',
@@ -12,9 +15,12 @@ import { CalculatorService } from '../../services/calculator.service';
   styleUrls: ['./calculator.scss']
 })
 export class CalculatorComponent {
+  // Inyecciones
   private router = inject(Router);
+  private budgetService = inject(BudgetService);
   public calc = inject(CalculatorService);
 
+  // Estado visual
   mostrarErrores = signal(false);
 
   // --- NAVEGACIÓN ---
@@ -24,7 +30,7 @@ export class CalculatorComponent {
 
   // --- ACCIÓN PRINCIPAL: GUARDAR PRESUPUESTO ---
   onSaveBudget() {
-    // 1. Validar: Si alto o ancho son 0, error y paramos
+    // 1. Validar: Si alto o ancho son 0, mostramos error visual y paramos
     if (this.calc.alto() === 0 || this.calc.ancho() === 0) {
       this.mostrarErrores.set(true);
       return;
@@ -33,7 +39,8 @@ export class CalculatorComponent {
     // 2. Si todo OK, limpiamos errores
     this.mostrarErrores.set(false);
 
-    // 3. Preparar datos para Backend (Futuro)
+    // 3. Preparar datos para el Backend
+    // Creamos el objeto que enviaremos a la base de datos
     const presupuestoFinal = {
       dimensiones: `${this.calc.ancho()}x${this.calc.alto()} ${this.calc.unidad()}`,
       material: this.calc.material(),
@@ -43,15 +50,23 @@ export class CalculatorComponent {
       precioTotal: this.calc.precioTotal()
     };
 
-    // 4. Feedback temporal
-    console.log('Guardando presupuesto:', presupuestoFinal);
-    alert(`¡Presupuesto de ${this.calc.precioTotal().toFixed(2)}€ guardado correctamente!`);
+    console.log('Enviando al backend...', presupuestoFinal);
 
-    // Aquí redirigiremos al dashboard o limpiaremos el formulario
-    // this.router.navigate(['/dashboard']);
+    // 4. LLAMADA AL SERVIDOR
+    this.budgetService.createBudget(presupuestoFinal).subscribe({
+      next: (response) => {
+        console.log('✅ Respuesta servidor:', response);
+        alert(`¡Presupuesto guardado con éxito!`);
+        this.router.navigate(['/']);
+      },
+      error: (error) => {
+        console.error('Error al guardar:', error);
+        alert('Hubo un error al conectar con el servidor. Revisa si el Backend está encendido.');
+      }
+    });
   }
 
-  // --- HELPERS PARA INPUTS Y LOGICA ---
+  // --- HELPERS PARA INPUTS Y LÓGICA ---
 
   updateAlto(valor: string) {
     const v = Number(valor);
