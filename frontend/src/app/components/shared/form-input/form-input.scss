@@ -1,0 +1,39 @@
+.form-input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  margin-bottom: var(--spacing-3);
+}
+
+.form-input__label {
+  font-weight: var(--font-weight-medium);
+}
+
+.form-input__required {
+  color: var(--color-error-500);
+  margin-left: var(--spacing-1);
+}
+
+.form-input__field {
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-3);
+  border-radius: 0;
+  border: 1px solid var(--color-primary-300);
+  outline: none;
+  font: inherit;
+}
+
+.form-input__help {
+  font-size: var(--font-size-body);
+  color: var(--color-primary-500);
+}
+
+.form-input__error {
+  font-size: var(--font-size-body);
+  color: var(--color-error-500);
+}
+
+.form-input__field--textarea {
+  min-height: 8rem;
+  resize: vertical;
+}

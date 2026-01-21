@@ -1,0 +1,5 @@
+<section class="toast" [class.success]="notification.type === 'success'"
+                      [class.error]="notification.type === 'error'">
+  {{ notification.message }}
+  <button (click)="close()">×</button>
+</section>

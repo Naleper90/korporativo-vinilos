@@ -1,0 +1,15 @@
+.layout-footer {
+  background-color: var(--color-header-bg);
+  color: var(--color-header-text);
+  padding: var(--spacing-4) 0;
+}
+
+.layout-footer__inner {
+  display: flex;
+  justify-content: center;
+}
+
+.layout-footer__text {
+  font-size: var(--font-size-sm);
+  color: var(--color-header-text);
+}

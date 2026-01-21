@@ -1,0 +1,119 @@
+<app-main>
+  <main class="calculator-page">
+    <button class="back-button" type="button" (click)="onBack()">
+      ← Volver
+    </button>
+
+    <section class="calculator-page__container">
+      <header class="calculator-page__header">
+        <h1>Calculadora de vinilos</h1>
+      </header>
+
+      <!-- Dimensiones -->
+      <section class="calculator-section">
+        <h2 class="calculator-section__title">Dimensiones</h2>
+        <section
+          class="calculator-section__row calculator-section__row--inline"
+          aria-label="Dimensiones del vinilo"
+        >
+          <app-form-input
+            id="width"
+            label="Width"
+            type="number"
+            [required]="true">
+          </app-form-input>
+
+          <app-form-input
+            id="height"
+            label="Height"
+            type="number"
+            [required]="true">
+          </app-form-input>
+
+          <button class="calculator-chip calculator-chip--select" type="button">
+            cm ▾
+          </button>
+        </section>
+      </section>
+
+      <!-- Tipo de vinilo -->
+      <section class="calculator-section">
+        <h2 class="calculator-section__title">Tipo de vinilo</h2>
+        <section
+          class="calculator-section__row"
+          aria-label="Tipo de vinilo"
+        >
+          <button class="calculator-chip" type="button">Monomérico</button>
+          <button class="calculator-chip" type="button">Polimérico</button>
+          <button class="calculator-chip" type="button">Transparente</button>
+          <button class="calculator-chip" type="button">Microperforado</button>
+        </section>
+      </section>
+
+      <!-- Personalización -->
+      <section class="calculator-section">
+        <h2 class="calculator-section__title">Personalización</h2>
+
+        <section aria-label="Tipo de corte">
+          <h3 class="calculator-subtitle">Tipo de corte</h3>
+          <section class="calculator-section__row">
+            <button class="calculator-chip" type="button">Recto</button>
+            <button class="calculator-chip" type="button">Contorno</button>
+          </section>
+        </section>
+
+        <section aria-label="Adhesivo">
+          <h3 class="calculator-subtitle">Adhesivo</h3>
+          <section class="calculator-section__row">
+            <button class="calculator-chip" type="button">Normal</button>
+            <button class="calculator-chip" type="button">Extra</button>
+          </section>
+        </section>
+      </section>
+
+      <!-- Extras -->
+      <section class="calculator-section">
+        <h2 class="calculator-section__title">Extras</h2>
+
+        <section
+          class="calculator-section__row calculator-section__row--inline"
+          aria-label="Extras"
+        >
+          <label class="calculator-checkbox">
+            <input type="checkbox" />
+            <span>Incluir IVA</span>
+          </label>
+
+          <label class="calculator-checkbox">
+            <input type="checkbox" />
+            <span>Incluir instalación</span>
+          </label>
+        </section>
+
+        <section
+          class="calculator-section__row calculator-section__row--inline"
+          aria-label="País"
+        >
+          <span class="calculator-subtitle">País</span>
+          <button class="calculator-chip calculator-chip--select" type="button">
+            España ▾
+          </button>
+        </section>
+      </section>
+
+      <!-- Botón final + resumen presupuesto -->
+      <section class="calculator-section calculator-section--submit">
+        <button
+          class="btn btn--primary calculator-submit"
+          type="button"
+          (click)="onCalculate()">
+          Calcular Precio
+        </button>
+
+        <section class="calculator-section">
+          Presupuesto actual: {{ (budget$ | async) || 0 }} €
+        </section>
+      </section>
+    </section>
+  </main>
+</app-main>

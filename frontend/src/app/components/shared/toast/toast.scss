@@ -1,0 +1,15 @@
+.toast {
+  padding: 16px 20px;
+  margin: 10px 0;
+  border-radius: 8px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.toast.success {
+  background: #4caf50;
+}
+
+.toast.error {
+  background: #f44336;
+}

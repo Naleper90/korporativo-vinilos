@@ -1,0 +1,30 @@
+.form-select {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  font-size: var(--font-size-sm);
+}
+
+.form-select__label {
+  font-weight: 600;
+}
+
+.form-select__required {
+  color: var(--color-semantic-error);
+  margin-left: var(--spacing-1);
+}
+
+.form-select__field {
+  padding: var(--spacing-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font: inherit;
+}
+
+.form-select__help {
+  color: var(--color-text-secondary);
+}
+
+.form-select__error {
+  color: var(--color-semantic-error);
+}

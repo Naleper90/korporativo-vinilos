@@ -1,0 +1,21 @@
+<section class="tabs">
+  <nav class="tabs__nav" role="tablist">
+    <button
+      *ngFor="let tab of tabs"
+      class="tabs__tab"
+      [class.tabs__tab--active]="activeTab === tab.id"
+      type="button"
+      (click)="activeTab = tab.id">
+      {{ tab.label }}
+    </button>
+  </nav>
+
+  <section class="tabs__content">
+    <article
+      *ngFor="let tab of tabs"
+      class="tabs__panel"
+      [class.tabs__panel--active]="activeTab === tab.id">
+      <p *ngIf="activeTab === tab.id">{{ tab.content }}</p>
+    </article>
+  </section>
+</section>

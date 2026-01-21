@@ -1,0 +1,31 @@
+<fieldset class="form-input">
+  <label class="form-input__label" [attr.for]="id">
+    {{ label }}
+    <span *ngIf="required" class="form-input__required" aria-hidden="true">*</span>
+  </label>
+
+  <ng-container *ngIf="type !== 'textarea'; else textareaField">
+    <input
+      class="form-input__field"
+      [id]="id"
+      [type]="type"
+      [attr.name]="id"
+      [attr.aria-required]="required ? 'true' : null"
+      [attr.placeholder]="placeholder || null"
+    />
+  </ng-container>
+
+  <ng-template #textareaField>
+    <textarea
+      class="form-input__field form-input__field--textarea"
+      [id]="id"
+      [attr.name]="id"
+      [attr.aria-required]="required ? 'true' : null"
+      [attr.placeholder]="placeholder || null"
+    ></textarea>
+  </ng-template>
+
+  <p *ngIf="helpText" class="form-input__help">
+    {{ helpText }}
+  </p>
+</fieldset>
