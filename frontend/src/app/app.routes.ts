@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
 import { StyleGuide } from './pages/style-guide/style-guide';
 import { Contact } from './pages/contact/contact';
-import { Calculator } from './pages/calculator/calculator';
+import { CalculatorComponent } from './pages/calculator/calculator';
 import { NotFound } from './pages/not-found/not-found';
 
 import { BudgetsList } from './pages/budgets/budgets-list';
@@ -19,7 +19,7 @@ export const routes: Routes = [
 
   { path: 'style-guide', component: StyleGuide, data: { breadcrumb: 'Style guide' } },
   { path: 'contacto', component: Contact, data: { breadcrumb: 'Contacto' } },
-  { path: 'calculadora', component: Calculator, data: { breadcrumb: 'Calculadora' } },
+  { path: 'calculadora', component: CalculatorComponent, data: { breadcrumb: 'Calculadora' } },
 
   { path: 'presupuestos', component: BudgetsList, data: { breadcrumb: 'Presupuestos' } },
 
