@@ -40,7 +40,7 @@ public class SecurityConfig {
                                 "/h2-console/**"
                         ).permitAll()
                         // Login endpoint público (sin autenticación)
-                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
                         // Toda la API requiere estar autenticado
                         .requestMatchers("/api/**").authenticated()
                         // Lo demás se permite

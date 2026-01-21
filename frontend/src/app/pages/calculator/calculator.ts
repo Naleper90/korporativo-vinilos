@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 // Servicios
 import { CalculatorService } from '../../services/calculator.service';
 import { BudgetService } from '../../services/budgets.service';
+import { LoadingService } from '../../services/loading'; // <--- RUTA CORRECTA
 
 @Component({
   selector: 'app-calculator',
@@ -18,6 +19,7 @@ export class CalculatorComponent {
   // Inyecciones
   private router = inject(Router);
   private budgetService = inject(BudgetService);
+  private loadingService = inject(LoadingService); // <--- INYECCIÓN NUEVA
   public calc = inject(CalculatorService);
 
   // Estado visual
@@ -30,17 +32,14 @@ export class CalculatorComponent {
 
   // --- ACCIÓN PRINCIPAL: GUARDAR PRESUPUESTO ---
   onSaveBudget() {
-    // 1. Validar: Si alto o ancho son 0, mostramos error visual y paramos
+    // 1. Validar
     if (this.calc.alto() === 0 || this.calc.ancho() === 0) {
       this.mostrarErrores.set(true);
       return;
     }
-
-    // 2. Si todo OK, limpiamos errores
     this.mostrarErrores.set(false);
 
-    // 3. Preparar datos para el Backend
-    // Creamos el objeto que enviaremos a la base de datos
+    // 2. Preparar datos
     const presupuestoFinal = {
       dimensiones: `${this.calc.ancho()}x${this.calc.alto()} ${this.calc.unidad()}`,
       material: this.calc.material(),
@@ -50,29 +49,32 @@ export class CalculatorComponent {
       precioTotal: this.calc.precioTotal()
     };
 
-    console.log('Enviando al backend...', presupuestoFinal);
+    console.log('📡 Enviando al backend...', presupuestoFinal);
+
+    // 3. ACTIVAR SPINNER GLOBAL
+    this.loadingService.show(); // <--- START LOADING
 
     // 4. LLAMADA AL SERVIDOR
     this.budgetService.createBudget(presupuestoFinal).subscribe({
       next: (response) => {
-        console.log('✅ Respuesta servidor:', response);
+        this.loadingService.hide(); // <--- STOP LOADING
+        console.log('✅ Respuesta:', response);
         alert(`¡Presupuesto guardado con éxito!`);
         this.router.navigate(['/']);
       },
       error: (error) => {
-        console.error('Error al guardar:', error);
-        alert('Hubo un error al conectar con el servidor. Revisa si el Backend está encendido.');
+        this.loadingService.hide(); // <--- STOP LOADING (SIEMPRE)
+        console.error('❌ Error:', error);
+        alert('Hubo un error al conectar con el servidor.');
       }
     });
   }
 
   // --- HELPERS PARA INPUTS Y LÓGICA ---
-
   updateAlto(valor: string) {
     const v = Number(valor);
     if (v >= 0) {
       this.calc.alto.set(v);
-      // Si el usuario corrige el 0, quitamos el error visual
       if (v > 0) this.mostrarErrores.set(false);
     }
   }

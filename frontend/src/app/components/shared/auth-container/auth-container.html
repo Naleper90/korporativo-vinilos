@@ -1,0 +1,49 @@
+<section class="auth-container" aria-label="Acceso y registro de usuarios">
+
+  <!-- PESTAÑAS (Tabs) -->
+  <nav class="auth-tabs" aria-label="Selección de modo de acceso">
+    <button
+      type="button"
+      class="auth-tab"
+      [class.active]="isLoginView"
+      (click)="toggleView(true)"
+      [attr.aria-selected]="isLoginView">
+      Iniciar Sesión
+    </button>
+
+    <button
+      type="button"
+      class="auth-tab"
+      [class.active]="!isLoginView"
+      (click)="toggleView(false)"
+      [attr.aria-selected]="!isLoginView">
+      Crear Cuenta
+    </button>
+  </nav>
+
+  <!-- CONTENIDO -->
+  <article class="auth-content">
+
+    <!-- MODO LOGIN -->
+    <section *ngIf="isLoginView" class="fade-in" aria-label="Formulario de inicio de sesión">
+      <app-login-form></app-login-form>
+
+      <p class="auth-switch-text">
+        ¿No tienes cuenta?
+        <button type="button" class="btn-link" (click)="toggleView(false)">Regístrate aquí</button>
+      </p>
+    </section>
+
+    <!-- MODO REGISTRO -->
+    <section *ngIf="!isLoginView" class="fade-in" aria-label="Formulario de registro">
+      <!-- Conectamos el evento del hijo con el método del padre -->
+      <app-register-form (registerSuccess)="onRegisterSuccess()"></app-register-form>
+
+      <p class="auth-switch-text">
+        ¿Ya tienes cuenta?
+        <button type="button" class="btn-link" (click)="toggleView(true)">Entra aquí</button>
+      </p>
+    </section>
+
+  </article>
+</section>

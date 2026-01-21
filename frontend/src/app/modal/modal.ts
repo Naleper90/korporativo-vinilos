@@ -1,26 +1,60 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewEncapsulation, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-modal',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './modal.html',
-  styleUrls: ['./modal.scss']
+  styleUrls: ['./modal.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class ModalComponent {
-  @ViewChild('modal') modal?: ElementRef;
-  isModalOpen = false;
+export class ModalComponent implements OnInit, OnDestroy {
+  @Input() id?: string;
+  isOpen = false;
 
-  openModal() { this.isModalOpen = true; }
-  closeModal() { this.isModalOpen = false; }
+  constructor(
+    private modalService: ModalService,
+    private el: ElementRef,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
-@HostListener('document:keydown.escape') onEsc() { this.closeModal(); }
+  ngOnInit(): void {
+    if (!this.id) {
+      console.error('El modal debe tener un id');
+      return;
+    }
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    if (this.isModalOpen && !this.modal?.nativeElement.contains(event.target as Node)) {
-      this.closeModal();
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.appendChild(this.el.nativeElement);
+    }
+
+    this.modalService.add(this);
+  }
+
+  ngOnDestroy(): void {
+    if (this.id) {
+      this.modalService.remove(this.id);
+    }
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.el.nativeElement.remove();
+    }
+  }
+
+  open(): void {
+    this.isOpen = true;
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.classList.add('modal-open');
+    }
+  }
+
+  close(): void {
+    this.isOpen = false;
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.classList.remove('modal-open');
     }
   }
 }

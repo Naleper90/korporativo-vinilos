@@ -1,0 +1,54 @@
+<section class="login-container" aria-labelledby="login-title">
+  <header class="login-header">
+    <h2 id="login-title" class="login-title">Bienvenido de nuevo</h2>
+    <p class="login-subtitle">Introduce tus credenciales para acceder</p>
+  </header>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+
+    <!-- Email Field -->
+    <fieldset class="form-group">
+      <label for="email" class="form-label">Email</label>
+      <input
+        id="email"
+        type="email"
+        class="form-input"
+        formControlName="email"
+        placeholder="ejemplo@correo.com"
+        [class.has-error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+        autocomplete="email"
+      >
+      <!-- Feedback de error (opcional pero recomendado) -->
+      <span *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="form-error-text">
+        Email inválido
+      </span>
+    </fieldset>
+
+    <!-- Password Field -->
+    <fieldset class="form-group">
+      <label for="password" class="form-label">Contraseña</label>
+      <input
+        id="password"
+        type="password"
+        class="form-input"
+        formControlName="password"
+        placeholder="******"
+        [class.has-error]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+        autocomplete="current-password"
+      >
+    </fieldset>
+
+    <!-- Mensaje de Error Global -->
+    <p *ngIf="errorMessage" class="error-banner" role="alert">
+      {{ errorMessage }}
+    </p>
+
+    <!-- Actions -->
+    <footer class="login-actions">
+      <button type="submit" class="btn btn--primary btn--full" [disabled]="loginForm.invalid || isLoading">
+        {{ isLoading ? 'Entrando...' : 'Iniciar Sesión' }}
+      </button>
+    </footer>
+
+  </form>
+</section>

@@ -2,6 +2,8 @@ package com.korporativo.korporativo_backend.controller;
 
 import com.korporativo.korporativo_backend.dto.LoginRequestDTO;
 import com.korporativo.korporativo_backend.dto.LoginResponseDTO;
+import com.korporativo.korporativo_backend.dto.RegisterRequestDTO; // <--- NUEVO DTO
+import com.korporativo.korporativo_backend.model.Role;
 import com.korporativo.korporativo_backend.model.User;
 import com.korporativo.korporativo_backend.repository.UserRepository;
 import com.korporativo.korporativo_backend.security.JwtTokenProvider;
@@ -10,12 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Controlador de autenticación JWT
- * Endpoints: POST /auth/login
- */
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"})
 public class AuthController {
 
@@ -24,62 +25,72 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
 
     public AuthController(UserRepository userRepository,
-                        JwtTokenProvider jwtTokenProvider,
-                        PasswordEncoder passwordEncoder) {
+                          JwtTokenProvider jwtTokenProvider,
+                          PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.jwtTokenProvider = jwtTokenProvider;
         this.passwordEncoder = passwordEncoder;
     }
 
-    /**
-     * Login endpoint que valida credenciales y devuelve JWT token
-     * POST /auth/login
-     *
-     * Request:
-     * {
-     *   "username": "admin",
-     *   "password": "admin123"
-     * }
-     *
-     * Response:
-     * {
-     *   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-     *   "type": "Bearer",
-     *   "username": "admin",
-     *   "role": "ADMIN"
-     * }
-     */
+    // --- LOGIN (Igual que antes) ---
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDTO loginRequest) {
-        // Buscar usuario por username
-        User user = userRepository.findByUsername(loginRequest.getUsername())
+        
+        User user = userRepository.findByEmail(loginRequest.getEmail())
             .orElse(null);
 
         if (user == null) {
-            return ResponseEntity.status(401)
-                .body("Usuario o contraseña incorrectos");
+            return ResponseEntity.status(401).body("Usuario o contraseña incorrectos");
         }
 
-        // Validar contraseña
-        // En desarrollo usamos NoOp, en producción será BCrypt
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            return ResponseEntity.status(401)
-                .body("Usuario o contraseña incorrectos");
+            return ResponseEntity.status(401).body("Usuario o contraseña incorrectos");
         }
 
-        // Generar JWT token
         String token = jwtTokenProvider.generateToken(
             user.getUsername(),
             user.getRole().name().replace("ROLE_", "")
         );
 
-        // Devolver response con token
         LoginResponseDTO response = new LoginResponseDTO(
             token,
             user.getUsername(),
             user.getRole().name().replace("ROLE_", "")
         );
 
+        return ResponseEntity.ok(response);
+    }
+
+    // --- NUEVO: REGISTRO ---
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequestDTO registerRequest) {
+        
+        // 1. Validar si el email ya existe
+        if (userRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest().body("El email ya está en uso.");
+        }
+
+        // 2. Validar si el username ya existe
+        if (userRepository.findByUsername(registerRequest.getUsername()).isPresent()) {
+            return ResponseEntity.badRequest().body("El nombre de usuario ya está en uso.");
+        }
+
+        // 3. Crear nuevo usuario
+        User newUser = new User();
+        newUser.setUsername(registerRequest.getUsername());
+        newUser.setEmail(registerRequest.getEmail());
+        newUser.setPassword(registerRequest.getPassword()); // Guardamos tal cual (NoOp) o encriptada según tu config
+        newUser.setRole(Role.ROLE_USER); // Rol por defecto
+
+        // Opcional: Si añades campo 'phone' en User, guárdalo aquí también
+        // newUser.setPhone(registerRequest.getPhone());
+
+        userRepository.save(newUser);
+
+        // 4. Devolver respuesta de éxito (puedes devolver token directamente si quieres auto-login)
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Usuario registrado con éxito");
+        
         return ResponseEntity.ok(response);
     }
 }

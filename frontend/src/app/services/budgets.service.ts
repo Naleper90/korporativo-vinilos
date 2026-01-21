@@ -6,6 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BudgetService {
+  getBudgetById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
+
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:8080/api/presupuestos';
 

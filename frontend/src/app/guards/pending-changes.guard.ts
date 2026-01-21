@@ -1,7 +1,7 @@
 import { CanDeactivateFn } from '@angular/router';
-import { RegisterForm } from '../components/shared/register-form/register-form';
+import { RegisterFormComponent } from '../components/shared/register-form/register-form';
 
-export const pendingChangesGuard: CanDeactivateFn<RegisterForm> = (component) => {
+export const pendingChangesGuard: CanDeactivateFn<RegisterFormComponent> = (component) => {
   if (!component.hasUnsavedChanges()) {
     return true;
   }

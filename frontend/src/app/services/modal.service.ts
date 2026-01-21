@@ -1,16 +1,35 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ModalService {
-  private openSubject = new BehaviorSubject<boolean>(false);
-  open$ = this.openSubject.asObservable();
+  // Array para guardar las referencias de todos los modales de la app
+  private modals: any[] = [];
 
-  open(): void {
-    this.openSubject.next(true);
+  // Método para registrar un modal (lo llama el componente al iniciarse)
+  add(modal: any) {
+    this.modals.push(modal);
   }
 
-  close(): void {
-    this.openSubject.next(false);
+  // Método para eliminar un modal (lo llama el componente al destruirse)
+  remove(id: string) {
+    this.modals = this.modals.filter(x => x.id !== id);
+  }
+
+  // Abre un modal específico por su ID
+  open(id: string) {
+    const modal = this.modals.find(x => x.id === id);
+    if (modal) {
+      modal.open();
+    } else {
+      console.warn(`Modal '${id}' no encontrado.`);
+    }
+  }
+
+  // Cierra un modal específico por su ID
+  close(id: string) {
+    const modal = this.modals.find(x => x.id === id);
+    if (modal) {
+      modal.close();
+    }
   }
 }

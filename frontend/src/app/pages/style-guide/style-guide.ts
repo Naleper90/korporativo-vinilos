@@ -39,7 +39,10 @@ export class StyleGuide {
   }
 
   loginDemo() {
-    this.auth.login();
+    this.auth.login('usuario@demo.com', '123456').subscribe({
+      next: () => console.log('Login test OK'),
+      error: (err) => console.log('Login test failed (esperado si no hay backend)', err)
+    });
   }
 
   logoutDemo() {

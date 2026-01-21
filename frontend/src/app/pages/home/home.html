@@ -1,5 +1,8 @@
 <app-main>
-  <section class="landing">
+  <!-- HERO PRINCIPAL -->
+  <section class="landing" aria-label="Sección principal de bienvenida">
+
+    <!-- CONTENIDO HERO -->
     <article class="hero__content">
       <h1 class="hero__title">
         CALCULA TUS VINILOS DE MANERA FÁCIL Y RÁPIDA
@@ -8,6 +11,7 @@
       <app-button
         variant="primary"
         (click)="goToCalculator()"
+        aria-label="Ir a la calculadora de presupuestos"
       >
         Calcular ahora
       </app-button>
@@ -15,15 +19,35 @@
       <app-button
         variant="secondary"
         (click)="goToContactForm()"
+        aria-label="Ir al formulario de contacto"
       >
         Hablar con el estudio
       </app-button>
     </article>
 
-    <figure class="hero__preview" aria-label="Previsualización del vinilo">
+        <!-- PREVIEW VISUAL -->
+    <figure class="hero__preview" aria-label="Previsualización del vinilo decorativo">
+      <!-- IMAGEN RESPONSIVE Y OPTIMIZADA (WebP + JPG fallback) -->
+      <picture>
+        <!-- Formato moderno (WebP) -->
+        <source srcset="assets/images/hero-home.webp" type="image/webp">
+        <!-- Formato estándar (JPG) -->
+        <source srcset="assets/images/hero-home.jpg" type="image/jpeg">
+        <!-- Imagen final -->
+        <img
+          src="assets/images/hero-home.jpg"
+          alt="Vinilo decorativo de alta calidad Korporativo"
+          class="hero__img"
+          loading="eager"
+          width="800"
+          height="600"
+        >
+      </picture>
     </figure>
 
-    <section class="hero-benefits">
+
+    <!-- BENEFICIOS (Grid de 3 columnas) -->
+    <section class="hero-benefits" aria-label="Beneficios principales">
       <article class="hero-benefits__item">
         <h3 class="hero-benefits__title">01 Presupuestos instantáneos</h3>
         <p class="hero-benefits__text">
@@ -46,8 +70,9 @@
       </article>
     </section>
 
-    <section class="why-us">
-      <h2 class="why-us__title">¿Por qué elegirnos?</h2>
+    <!-- POR QUÉ ELEGIRNOS -->
+    <section class="why-us" aria-labelledby="why-us-title">
+      <h2 id="why-us-title" class="why-us__title">¿Por qué elegirnos?</h2>
 
       <ul class="why-us__list">
         <li class="why-us__item">
@@ -63,13 +88,13 @@
     </section>
   </section>
 
-  <section class="home-extra">
-    <h2 class="home-extra__title">Más sobre Korporativo</h2>
+  <!-- SECCIÓN EXTRA (TABS) -->
+  <section class="home-extra" aria-labelledby="extra-title">
+    <h2 id="extra-title" class="home-extra__title">Más sobre Korporativo</h2>
     <app-tabs [tabs]="demoTabs"></app-tabs>
   </section>
 
-  <section class="home-register">
-    <h2 class="home-register__title">Crea tu cuenta</h2>
-    <app-register-form></app-register-form>
-  </section>
+  <!-- SECCIÓN REGISTRO ELIMINADA -->
+  <!-- Se ha movido al Modal de Autenticación global -->
+
 </app-main>

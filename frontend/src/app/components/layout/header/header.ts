@@ -1,11 +1,14 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { CommonModule } from '@angular/common'; // <--- IMPORTANTE AÑADIRLO
+import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { ThemeService } from '../../../services/theme.service';
+import { ModalService } from '../../../services/modal.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive], // <--- AÑADIDO AQUÍ
   templateUrl: './header.html',
   styleUrls: ['./header.scss'],
 })
@@ -15,7 +18,12 @@ export class Header {
 
   @ViewChild('mobileMenu') mobileMenu?: ElementRef<HTMLElement>;
 
-  constructor(private themeService: ThemeService) {
+  constructor(
+    private themeService: ThemeService,
+    private router: Router,
+    public modalService: ModalService, // He puesto public por si acaso lo usas en HTML
+    public authService: AuthService    // <--- PUBLIC E INYECTADO
+  ) {
     this.themeService.theme$.subscribe((theme: 'light' | 'dark' | 'system') => {
       this.isDark = theme === 'dark';
     });
@@ -29,6 +37,25 @@ export class Header {
     event.stopPropagation();
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
     this.updateMobileMenuDOM();
+  }
+
+  /**
+   * Maneja el click en "Entrar"
+   */
+  onLogin() {
+    this.isMobileMenuOpen = false;
+    this.updateMobileMenuDOM();
+    console.log('Abriendo modal login-modal...');
+    this.modalService.open('login-modal');
+  }
+
+  /**
+   * 👇 NUEVO: Maneja el Logout
+   */
+  onLogout() {
+    this.isMobileMenuOpen = false;
+    this.updateMobileMenuDOM();
+    this.authService.logout();
   }
 
   private updateMobileMenuDOM() {

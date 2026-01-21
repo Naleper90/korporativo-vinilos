@@ -1,0 +1,76 @@
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Estilo de las pestañas superiores */
+.auth-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--color-neutral-300, #e5e7eb);
+  margin-bottom: 1rem;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 1rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-secondary, #6b7280);
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: var(--color-text-primary, #000);
+    background-color: var(--color-bg-secondary, #f9fafb);
+  }
+
+  &.active {
+    color: var(--color-primary-900, #000);
+    border-bottom-color: var(--color-accent-important, #b4f550);
+  }
+}
+
+/* Textos de "switch" abajo */
+.auth-switch-text {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary, #6b7280);
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 0.25rem;
+
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  color: var(--color-accent-important, #8cc63f); /* Verde corporativo */
+
+  cursor: pointer;
+  text-decoration: underline;
+
+  &:hover {
+    text-decoration: none;
+    color: var(--color-primary-900, #000);
+  }
+}
+
+/* Animación suave al cambiar de pestaña */
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

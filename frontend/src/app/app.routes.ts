@@ -11,8 +11,8 @@ import { BudgetCreate } from './pages/budgets/budget-create';
 import { budgetResolver } from './pages/budgets/budget.resolver';
 
 import { authGuard } from './guards/auth.guard';
-import { RegisterForm } from './components/shared/register-form/register-form';
-import { pendingChangesGuard } from './guards/pending-changes.guard';
+// import { RegisterForm } ... <--- YA NO LO NECESITAS AQUÍ
+// import { pendingChangesGuard } ... <--- SI NO LO USAS EN OTRO SITIO, TAMPOCO
 
 export const routes: Routes = [
   { path: '', component: Home, data: { breadcrumb: 'Inicio' } },
@@ -44,12 +44,10 @@ export const routes: Routes = [
     data: { breadcrumb: 'Área de usuario' },
   },
 
-  {
-    path: 'registro',
-    component: RegisterForm,
-    canDeactivate: [pendingChangesGuard],
-    data: { breadcrumb: 'Registro' },
-  },
+  /*
+     ELIMINADO: La ruta /registro se va fuera.
+     El registro ahora vive felizmente dentro del Modal.
+  */
 
   { path: '**', component: NotFound, data: { breadcrumb: 'No encontrado' } },
 ];

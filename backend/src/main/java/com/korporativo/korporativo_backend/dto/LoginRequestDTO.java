@@ -4,25 +4,25 @@ import jakarta.validation.constraints.NotBlank;
 
 public class LoginRequestDTO {
 
-    @NotBlank(message = "El usuario es requerido")
-    private String username;
+    @NotBlank(message = "El email es requerido")
+    private String email; 
 
     @NotBlank(message = "La contraseña es requerida")
     private String password;
 
     public LoginRequestDTO() {}
 
-    public LoginRequestDTO(String username, String password) {
-        this.username = username;
+    public LoginRequestDTO(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

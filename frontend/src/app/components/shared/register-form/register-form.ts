@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core'; // <--- AÑADIR EventEmitter y Output
 import {
   FormBuilder,
   FormGroup,
@@ -12,6 +12,7 @@ import {
 import { NgIf, CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-register-form',
@@ -20,11 +21,17 @@ import { delay, map } from 'rxjs/operators';
   templateUrl: './register-form.html',
   styleUrls: ['./register-form.scss'],
 })
-export class RegisterForm {
+export class RegisterFormComponent {
+
+  @Output() registerSuccess = new EventEmitter<void>();
+
   form: FormGroup;
   submitted = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService
+  ) {
     this.form = this.fb.group(
       {
         email: [
@@ -69,31 +76,24 @@ export class RegisterForm {
     this.telefonosArray.removeAt(i);
   }
 
-  private passwordFuerteValidator(
-    control: AbstractControl,
-  ): ValidationErrors | null {
+  // --- VALIDATORS (Igual que antes) ---
+  private passwordFuerteValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value as string;
     if (!value) return null;
     const tieneMayus = /[A-Z]/.test(value);
     const tieneMinus = /[a-z]/.test(value);
     const tieneNum = /[0-9]/.test(value);
-    return tieneMayus && tieneMinus && tieneNum
-      ? null
-      : { passwordFuerte: true };
+    return tieneMayus && tieneMinus && tieneNum ? null : { passwordFuerte: true };
   }
 
-  private passwordsIgualesValidator(
-    group: AbstractControl,
-  ): ValidationErrors | null {
+  private passwordsIgualesValidator(group: AbstractControl): ValidationErrors | null {
     const password = group.get('password')?.value;
     const confirm = group.get('confirmPassword')?.value;
     if (!password || !confirm) return null;
     return password === confirm ? null : { passwordsNoCoinciden: true };
   }
 
-  private telefonoValidator(
-    control: AbstractControl,
-  ): ValidationErrors | null {
+  private telefonoValidator(control: AbstractControl): ValidationErrors | null {
     const value = (control.value || '').toString().trim();
     if (!value) return null;
     const regex = /^[0-9]{9}$/;
@@ -124,14 +124,32 @@ export class RegisterForm {
     };
   }
 
+      // --- SUBMIT ---
   onSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
-    this.submitted = true;
-    console.log('Registro enviado', this.form.value);
-    this.markAsSaved();
+
+    const userData = this.form.value; // <--- Definimos userData aquí
+
+    // Llamada al servicio
+    this.authService.register(userData).subscribe({
+      next: (response) => {
+        console.log('Registro exitoso', response);
+
+        this.submitted = true;
+        this.markAsSaved();
+
+        // Avisamos al padre
+        setTimeout(() => {
+          this.registerSuccess.emit();
+        }, 1500);
+      },
+      error: (err) => {
+        console.error('Error en registro', err);
+      }
+    });
   }
 
   markAsSaved(): void {
@@ -142,3 +160,4 @@ export class RegisterForm {
     return this.form.dirty && !this.submitted;
   }
 }
+

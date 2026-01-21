@@ -17,22 +17,30 @@ public class KorporativoBackendApplication {
     }
 
     @Bean
-    @Profile("!test") // no se ejecuta en tests
+    @Profile("!test")
     public CommandLineRunner initUsers(UserRepository userRepository) {
         return args -> {
+            // Si la base de datos está vacía, creamos los usuarios
             if (userRepository.count() == 0) {
+                
+                // 1. Crear ADMIN
                 User admin = new User();
                 admin.setUsername("admin");
-                admin.setPassword("{noop}admin");
+                admin.setEmail("admin@korporativo.com"); // <--- IMPORTANTE: Necesario para el login
+                admin.setPassword("admin123");           // Contraseña simple para pruebas
                 admin.setRole(Role.ROLE_ADMIN);
 
+                // 2. Crear USER normal
                 User user = new User();
                 user.setUsername("user");
-                user.setPassword("{noop}user");
+                user.setEmail("user@korporativo.com");   // <--- IMPORTANTE
+                user.setPassword("user123");
                 user.setRole(Role.ROLE_USER);
 
                 userRepository.save(admin);
                 userRepository.save(user);
+                
+                System.out.println("Usuarios iniciales creados: admin@korporativo.com / admin123");
             }
         };
     }

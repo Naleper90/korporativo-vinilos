@@ -23,7 +23,7 @@ export class Contact {
 
   onFormSubmit(): void {
   console.log('Formulario enviado');
-  this.modal?.openModal();
+  this.modal?.open();
 }
 
 }

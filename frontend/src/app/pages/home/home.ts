@@ -3,12 +3,11 @@ import { Router } from '@angular/router';
 import { Main } from '../../components/layout/main/main';
 import { Button } from '../../components/shared/button/button';
 import { TabsComponent } from '../../components/shared/tabs/tabs';
-import { RegisterForm } from '../../components/shared/register-form/register-form';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [Main, Button, TabsComponent, RegisterForm],
+  imports: [Main, Button, TabsComponent],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

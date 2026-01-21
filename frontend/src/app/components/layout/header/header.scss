@@ -1,22 +1,31 @@
+/* =========================================
+   HEADER STYLE
+   ========================================= */
+
 .layout-header {
   background-color: var(--color-header-bg);
+  /* Añadimos una transición suave al fondo por si cambias de tema */
+  transition: background-color var(--transition-base, 0.3s) ease;
 }
 
 .layout-header__nav {
   display: flex;
   align-items: center;
   padding: var(--spacing-2) var(--spacing-4);
-  position: relative; /* para el overlay mobile */
+  position: relative; /* Necesario para posicionar el menú móvil */
 }
 
+/* --- LOGO --- */
 .layout-header__logo {
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-header-text);
   text-decoration: none;
   margin-right: var(--spacing-6);
+  letter-spacing: -0.5px;
 }
 
+/* --- HAMBURGER BUTTON (Mobile) --- */
 .layout-header__hamburger {
   background: none;
   border: none;
@@ -24,33 +33,139 @@
   font-size: var(--font-size-lg);
   cursor: pointer;
   margin-right: var(--spacing-4);
+
+  /* Ocultamos en escritorio por defecto */
+  @media (min-width: 769px) {
+    display: none;
+  }
 }
 
+/* --- NAVIGATION LIST (Desktop) --- */
 .layout-header__nav-list {
   display: flex;
   align-items: center;
   gap: var(--spacing-4);
   list-style: none;
-  margin: 0 0 0 auto;
+  margin: 0 0 0 auto; /* Empuja todo a la derecha */
   padding: 0;
+
+  /* Ocultamos en móvil */
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .layout-header__nav-list a {
   color: var(--color-header-text);
   font-size: var(--font-size-xs);
   text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--color-accent-important);
+  }
+
+  &.is-active {
+    color: var(--color-accent-important);
+    /* Opcional: subrayado para activo */
+    border-bottom: 2px solid var(--color-accent-important);
+  }
 }
 
-.layout-header__nav-list a.is-active {
-  color: var(--color-accent-important);
+/* --- BOTÓN LOGIN (No logueado) --- */
+.layout-header__login-btn {
+  background: transparent;
+  border: 1px solid var(--color-header-text);
+  color: var(--color-header-text);
+  padding: 0.4rem 1rem;
+  font-size: var(--font-size-xs);
+  font-family: inherit;
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  border-radius: var(--radius-sm, 4px);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-header-text);
+    color: var(--color-header-bg); /* Invertimos colores al hover */
+  }
+
+  /* Modificador para dentro del menú móvil */
+  &--mobile {
+    border: none;
+    padding: var(--spacing-2) 0;
+    width: 100%;
+    justify-content: flex-start;
+    font-size: var(--font-size-sm);
+
+    &:hover {
+      background-color: transparent;
+      color: var(--color-accent-important);
+      text-decoration: underline;
+    }
+  }
 }
 
+/* --- USER MENU (Logueado - Estilo Mejorado) --- */
+.user-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  /* Separador vertical elegante */
+  padding-left: 1.5rem;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  height: 24px; /* Altura fija para el borde */
+
+  /* Ajuste para tema oscuro */
+  :host-context(.dark) & {
+     border-left-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .user-greeting {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--color-header-text);
+    opacity: 0.9;
+  }
+
+  .btn--logout {
+    background: none;
+    border: none;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.85rem;
+    font-family: inherit;
+    font-weight: 600;
+    color: var(--color-header-text);
+    opacity: 0.6;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+
+    &:hover {
+      opacity: 1;
+      color: #e74c3c; /* Rojo suave para indicar salida */
+      background-color: rgba(231, 76, 60, 0.1);
+      text-decoration: none;
+    }
+  }
+}
+
+/* --- THEME TOGGLE --- */
 .layout-header__theme-toggle {
-  /* estilos del btn ya definidos */
+  /* Se hereda de .btn .btn--secondary */
+  font-size: var(--font-size-xs);
+  padding: 0.4rem 0.8rem;
 }
 
+/* --- MOBILE MENU --- */
 .layout-header__nav-mobile {
-  display: none;
+  display: none; /* Oculto por defecto */
   position: absolute;
   top: 100%;
   left: 0;
@@ -62,16 +177,48 @@
   padding: var(--spacing-3);
   box-shadow: var(--shadow-md);
   z-index: 1000;
+  border-top: 1px solid rgba(255,255,255,0.1);
+
+  &.layout-header__nav-mobile--open {
+    display: block;
+    animation: slideDown 0.3s ease-out;
+  }
+
+  /* Ajuste de enlaces en móvil */
+  a {
+    display: block;
+    color: var(--color-header-text);
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    padding: var(--spacing-2) 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+
+    &:hover, &.is-active {
+      color: var(--color-accent-important);
+    }
+  }
+
+  /* Ajuste del menú de usuario en móvil para que se vea bien */
+  .user-menu-item {
+    padding-left: 0;
+    border-left: none;
+    height: auto;
+    margin-bottom: 1rem;
+    flex-direction: column; /* Apilado en vertical */
+    align-items: flex-start;
+    gap: 0.5rem;
+
+    .btn--logout {
+      opacity: 1;
+      color: #e74c3c;
+      padding: 0;
+      background: none;
+    }
+  }
 }
 
-.layout-header__nav-mobile--open {
-  display: block;
-}
-
-.layout-header__nav-mobile a {
-  display: block;
-  color: var(--color-header-text);
-  font-size: var(--font-size-sm);
-  text-decoration: none;
-  padding: var(--spacing-2) 0;
+/* Animación simple para el menú */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

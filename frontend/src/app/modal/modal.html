@@ -1,7 +1,25 @@
-<nav class="toast-overlay" *ngIf="isModalOpen" role="alert">
-  <section #modal class="toast">
-    <h3>Mensaje enviado correctamente</h3>
-    <p>Te contactaremos pronto.</p>
-    <button type="button" class="toast__close" (click)="closeModal()">Cerrar</button>
-  </section>
-</nav>
+<aside
+  class="modal-overlay"
+  *ngIf="isOpen"
+  (click)="close()"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="modal-content"
+>
+  <article class="modal-container" (click)="$event.stopPropagation()" id="modal-content">
+
+    <button
+      type="button"
+      class="modal-close-btn"
+      (click)="close()"
+      aria-label="Cerrar modal"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <div class="modal-content">
+      <ng-content></ng-content>
+    </div>
+
+  </article>
+</aside>

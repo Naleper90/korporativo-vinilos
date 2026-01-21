@@ -1,41 +1,80 @@
-.toast-overlay {
-  position: fixed;
-  inset-inline: 0;
-  bottom: var(--spacing-4);
-  display: flex;
+/* =========================================
+   MODAL COMPONENT STYLES
+   ========================================= */
+
+/* Overlay: El fondo oscuro que cubre toda la pantalla */
+.modal-overlay {
+  position: fixed;       /* Fijo respecto a la ventana */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
+
+  display: flex;         /* Flexbox para centrar el contenido */
   justify-content: center;
-  z-index: 1000;
-  pointer-events: none;
-}
-
-.toast {
-  pointer-events: auto;
-  background-color: var(--color-accent-important, #9be43a);
-  color: var(--color-on-accent, #000);
-  padding: var(--spacing-2) var(--spacing-4);
-  border-radius: 999px;
-  box-shadow: var(--shadow-md, 0 4px 12px rgba(0,0,0,0.25));
-  font-size: var(--font-size-xs);
-  display: flex;
   align-items: center;
-  gap: var(--spacing-2);
+
+  z-index: 9999;         /* Muy alto para estar encima de todo */
+  backdrop-filter: blur(3px); /* Difuminado elegante del fondo */
+
+  /* Animación de aparición */
+  animation: fadeIn 0.2s ease-out;
 }
 
-.toast h3 {
-  margin: 0;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold, 600);
+/* Container: La tarjeta blanca/oscura del modal */
+.modal-container {
+  background-color: var(--color-bg-primary, #ffffff); /* Usa variable de tu tema */
+  color: var(--color-text-primary, #000000);
+
+  width: 90%;
+  max-width: 480px;      /* Ancho máximo razonable */
+  padding: 2rem;
+
+  border-radius: var(--radius-lg, 12px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  position: relative;    /* Para posicionar el botón de cerrar */
+  overflow-y: auto;      /* Scroll interno si el contenido es muy alto */
+  max-height: 90vh;
+
+  /* Animación de entrada hacia arriba */
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.toast p {
-  margin: 0;
-}
+/* Close Button: La X para cerrar */
+.modal-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 
-.toast__close {
-  margin-left: var(--spacing-2);
   background: transparent;
   border: none;
-  color: inherit;
   cursor: pointer;
-  font-size: var(--font-size-xs);
+
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--color-text-secondary, #666);
+
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--color-error-500, #ef4444);
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Utility: Bloquear scroll del body (se añade vía JS) */
+body.modal-open {
+  overflow: hidden;
 }
