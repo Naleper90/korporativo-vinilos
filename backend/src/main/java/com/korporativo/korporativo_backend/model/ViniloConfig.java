@@ -1,6 +1,7 @@
 package com.korporativo.korporativo_backend.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "vinilo_configs")
@@ -31,6 +32,7 @@ public class ViniloConfig {
     // Relación con Presupuesto
     @ManyToOne
     @JoinColumn(name = "presupuesto_id")
+    @JsonIgnoreProperties("viniloConfigs")
     private Presupuesto presupuesto;
 
     public ViniloConfig() {

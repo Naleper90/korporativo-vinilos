@@ -2,6 +2,8 @@ package com.korporativo.korporativo_backend.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -32,6 +34,10 @@ public class Presupuesto {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("presupuesto")
+    private List<ViniloConfig> viniloConfigs = new ArrayList<>();
+
     public Presupuesto() {}
 
     public Presupuesto(String titulo, Double precio, String descripcion, Cliente cliente) {
@@ -40,6 +46,8 @@ public class Presupuesto {
         this.descripcion = descripcion;
         this.cliente = cliente;
     }
+
+    // Getters y Setters
 
     public Long getId() { 
         return id; 
@@ -68,6 +76,7 @@ public class Presupuesto {
     public void setDescripcion(String descripcion) { 
         this.descripcion = descripcion; 
     }
+
     public LocalDate getFecha() { 
         return fecha; 
     }
@@ -87,5 +96,13 @@ public class Presupuesto {
     }
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<ViniloConfig> getViniloConfigs() {
+        return viniloConfigs;
+    }
+
+    public void setViniloConfigs(List<ViniloConfig> viniloConfigs) {
+        this.viniloConfigs = viniloConfigs;
     }
 }
