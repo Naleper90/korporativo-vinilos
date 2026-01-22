@@ -2,7 +2,7 @@ package com.korporativo.korporativo_backend.controller;
 
 import com.korporativo.korporativo_backend.dto.LoginRequestDTO;
 import com.korporativo.korporativo_backend.dto.LoginResponseDTO;
-import com.korporativo.korporativo_backend.dto.RegisterRequestDTO; // <--- NUEVO DTO
+import com.korporativo.korporativo_backend.dto.RegisterRequestDTO;
 import com.korporativo.korporativo_backend.model.Role;
 import com.korporativo.korporativo_backend.model.User;
 import com.korporativo.korporativo_backend.repository.UserRepository;
@@ -32,7 +32,7 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // --- LOGIN (Igual que antes) ---
+    // --- LOGIN ---
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDTO loginRequest) {
         
@@ -52,16 +52,20 @@ public class AuthController {
             user.getRole().name().replace("ROLE_", "")
         );
 
-        LoginResponseDTO response = new LoginResponseDTO(
-            token,
-            user.getUsername(),
-            user.getRole().name().replace("ROLE_", "")
-        );
+        // AuthController.java (dentro del método login)
 
-        return ResponseEntity.ok(response);
+    LoginResponseDTO response = new LoginResponseDTO(
+        token,
+        user.getUsername(),
+        user.getRole().name().replace("ROLE_", ""),
+        user.getId()
+    );
+
+    return ResponseEntity.ok(response);
+
     }
 
-    // --- NUEVO: REGISTRO ---
+    // --- REGISTRO ---
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequestDTO registerRequest) {
         
@@ -82,12 +86,10 @@ public class AuthController {
         newUser.setPassword(registerRequest.getPassword()); // Guardamos tal cual (NoOp) o encriptada según tu config
         newUser.setRole(Role.ROLE_USER); // Rol por defecto
 
-        // Opcional: Si añades campo 'phone' en User, guárdalo aquí también
-        // newUser.setPhone(registerRequest.getPhone());
 
         userRepository.save(newUser);
 
-        // 4. Devolver respuesta de éxito (puedes devolver token directamente si quieres auto-login)
+        // 4. Devolver respuesta de éxitos
         Map<String, String> response = new HashMap<>();
         response.put("message", "Usuario registrado con éxito");
         

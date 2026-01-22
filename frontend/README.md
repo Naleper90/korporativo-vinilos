@@ -61,3 +61,64 @@ ng build
 - Unificar estilos mediante una guía de estilos y un sistema de variables CSS.  
 - Dejar preparada la base para futuras versiones con más lógica de negocio
 (cálculo completo de presupuestos y gestión avanzada de facturas).
+
+---
+
+
+# Korporativo Vinilos
+
+Aplicación web Full-Stack para la gestión y cálculo de presupuestos de vinilos personalizados. Desarrollada como proyecto para el ciclo DAW (Desarrollo de Aplicaciones Web).
+
+🔗 **URL DE PRODUCCIÓN:** [PEGAR AQUÍ TU URL DE VERCEL]
+
+![Korporativo Vinilos Hero Image](assets/images/hero-home.jpg)
+
+## 🚀 Descripción
+
+Korporativo Vinilos permite a los usuarios calcular el coste de sus vinilos basándose en dimensiones y materiales, gestionar sus presupuestos y contactar con la empresa. El proyecto destaca por una arquitectura CSS robusta (ITCSS/BEM), un diseño completamente responsive y una separación clara entre Frontend y Backend.
+
+## 🛠 Tecnologías utilizadas
+
+### Frontend (DWEC + DIW)
+- **Framework**: Angular 17+
+- **Estilos**: SCSS con arquitectura ITCSS y BEM.
+- **Diseño**: Custom Properties (Variables CSS) para temas Claro/Oscuro.
+- **Optimización**: Imágenes WebP, Lazy Loading.
+
+### Backend (DWES)
+- **Framework**: Spring Boot 3 (Java 17).
+- **Seguridad**: Spring Security + JWT.
+- **Base de Datos**: H2 (Dev) / MySQL (Prod).
+- **API**: RESTful.
+
+### DevOps & Despliegue
+- **Frontend**: Vercel.
+- **Backend**: Railway (Docker).
+- **Control de versiones**: Git & GitHub.
+
+## ✨ Características principales
+
+1.  **Calculadora Reactiva**: Precio actualizado en tiempo real según input de usuario.
+2.  **Sistema de Diseño**: Componentes UI reutilizables (Botones, Cards, Inputs).
+3.  **Modo Oscuro**: Cambio de tema instantáneo y persistente.
+4.  **Autenticación**: Registro y Login seguro con tokens JWT.
+5.  **Responsive**: Interfaz "Mobile First" adaptada a cualquier dispositivo.
+
+## 📦 Instalación local
+
+Si deseas ejecutar el proyecto en tu máquina:
+
+1.  **Clonar el repositorio**:
+    ```bash
+    git clone https://github.com/Naleper90/korporativo-vinilos.git
+    ```
+
+2.  **Backend**:
+    - Navegar a `/backend`.
+    - Ejecutar: `./mvnw spring-boot:run`
+
+3.  **Frontend**:
+    - Navegar a `/frontend`.
+    - Instalar dependencias: `npm install`
+    - Ejecutar: `ng serve`
+    - Abrir navegador en `http://localhost:4200`

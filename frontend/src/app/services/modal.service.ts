@@ -5,12 +5,12 @@ export class ModalService {
   // Array para guardar las referencias de todos los modales de la app
   private modals: any[] = [];
 
-  // Método para registrar un modal (lo llama el componente al iniciarse)
+  // Método para registrar un modal
   add(modal: any) {
     this.modals.push(modal);
   }
 
-  // Método para eliminar un modal (lo llama el componente al destruirse)
+  // Método para eliminar un modal
   remove(id: string) {
     this.modals = this.modals.filter(x => x.id !== id);
   }

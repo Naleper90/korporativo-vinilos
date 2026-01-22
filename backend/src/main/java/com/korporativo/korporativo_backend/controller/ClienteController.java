@@ -25,7 +25,7 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    // LISTAR (paginación + filtro opcional por nombre)
+    // LISTAR
     @GetMapping
     public ResponseEntity<Page<ClienteDTO>> listarPaginado(
             @RequestParam(defaultValue = "0") int page,

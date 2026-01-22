@@ -24,9 +24,13 @@ public class Presupuesto {
     private LocalDate fecha = LocalDate.now();
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false)
+    @JoinColumn(name = "cliente_id", nullable = true)
     @JsonIgnoreProperties({"presupuestos"})
     private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Presupuesto() {}
 
@@ -37,21 +41,51 @@ public class Presupuesto {
         this.cliente = cliente;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId() { 
+        return id; 
+    }
+    public void setId(Long id) { 
+        this.id = id; 
+    }
 
-    public String getTitulo() { return titulo; }
-    public void setTitulo(String titulo) { this.titulo = titulo; }
+    public String getTitulo() { 
+        return titulo; 
+    }
+    public void setTitulo(String titulo) { 
+        this.titulo = titulo; 
+    }
 
-    public Double getPrecio() { return precio; }
-    public void setPrecio(Double precio) { this.precio = precio; }
+    public Double getPrecio() { 
+        return precio; 
+    }
+    public void setPrecio(Double precio) { 
+        this.precio = precio; 
+    }
 
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public String getDescripcion() { 
+        return descripcion; 
+    }
+    public void setDescripcion(String descripcion) { 
+        this.descripcion = descripcion; 
+    }
+    public LocalDate getFecha() { 
+        return fecha; 
+    }
+    public void setFecha(LocalDate fecha) { 
+        this.fecha = fecha; 
+    }
 
-    public LocalDate getFecha() { return fecha; }
-    public void setFecha(LocalDate fecha) { this.fecha = fecha; }
+    public Cliente getCliente() { 
+        return cliente; 
+    }
+    public void setCliente(Cliente cliente) { 
+        this.cliente = cliente; 
+    }
 
-    public Cliente getCliente() { return cliente; }
-    public void setCliente(Cliente cliente) { this.cliente = cliente; }
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

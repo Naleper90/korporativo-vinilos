@@ -1,79 +1,120 @@
+/* =========================================
+   WRAPPER GLOBAL
+   ========================================= */
+.page-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================
+   LAYOUT: LANDING
+   ========================================= */
 .landing {
+  container-type: inline-size;
+  container-name: landing-container;
+
   max-width: 960px;
+  width: 100%;
   margin: 4rem auto 0;
   padding-inline: 2rem;
+  box-sizing: border-box;
 
   display: grid;
   grid-template-columns: 1fr;
-  row-gap: var(--spacing-8);
+  row-gap: var(--spacing-8, 3rem);
+
+  margin-bottom: 5rem;
 }
 
+/* =========================================
+   HERO SECTION
+   ========================================= */
 .hero__content {
   max-width: none;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+
+  align-items: flex-start;
 }
 
 .hero__title {
   max-width: 700px;
   font-size: 3.4rem;
   line-height: 0.95;
+  font-weight: 800;
+  color: #111;
 }
 
 .hero__preview {
-  /* Asegura que el contenedor tenga tamaño */
   width: 100%;
-  height: 100%;
+  aspect-ratio: 16/9;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden; /* Por si la imagen se sale */
-  border-radius: var(--radius-md, 12px); /* Un poco de estética */
+  overflow: hidden;
+  border-radius: var(--radius-md, 12px);
+  background-color: #eee;
 
-  /* Estilo para la imagen dentro del figure */
   .hero__img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Recorta la imagen para llenar el hueco sin deformarse */
+    object-fit: cover;
     display: block;
   }
 }
 
+/* =========================================
+   BENEFITS GRID
+   ========================================= */
 .hero-benefits {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--spacing-4);
+  gap: var(--spacing-4, 1.5rem);
+
+  /* 1. MÓVIL POR DEFECTO: 1 Columna */
+  grid-template-columns: 1fr;
+}
+
+/* 2. ESCRITORIO: Usamos el nombre CORRECTO del contenedor (landing-container) */
+@container landing-container (min-width: 600px) {
+  .hero-benefits {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .hero-benefits__item {
   padding: 1.5rem 1.25rem;
-  border: 1px solid #dedede;
-  border-radius: 0;
+  border: 1px solid #e0e0e0;
+  background-color: #fff;
 }
 
 .hero-benefits__title {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   margin-bottom: 0.75rem;
   font-weight: 700;
+  color: #222;
 }
 
 .hero-benefits__text {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   line-height: 1.5;
-  color: var(--color-text-secondary);
+  color: var(--color-text-secondary, #666);
 }
 
+/* =========================================
+   WHY US SECTION
+   ========================================= */
 .why-us {
-  margin-top: 3rem;
-  border-top: 1px solid #e5e5e5;
   padding-top: 2rem;
-  font-size: 0.85rem;
+  border-top: 1px solid #e5e5e5;
+  font-size: 0.9rem;
 }
 
 .why-us__title {
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  color: #222;
 }
 
 .why-us__list {
@@ -84,45 +125,73 @@
 
 .why-us__item {
   position: relative;
-  padding-left: 1.25rem;
-  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #444;
+
+  &::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: -2px;
+    font-size: 1.2rem;
+    color: var(--color-primary, #8cc63f);
+  }
 }
 
-.why-us__item::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: #8cc63f;
+/* =========================================
+   HOME EXTRA (PRE-FOOTER)
+   ========================================= */
+.home-extra {
+  width: 100%;
+  background-color: #f8f9fa;
+  border-top: 1px solid #eaeaea;
+  padding: 4rem 1rem;
+
+  display: flex;
+  justify-content: center;
+}
+
+.home-extra__container {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .home-extra__title {
-  margin-bottom: var(--spacing-4);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  color: #222;
 }
 
-.home-extra {
-  max-width: 960px;
-  margin: var(--spacing-10) auto;
-  padding-inline: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+app-tabs {
+  width: 100%;
+  max-width: 600px;
 }
 
-.tabs {
-  max-width: 320px;
-}
-
+/* =========================================
+   MEDIA QUERIES (Mobile)
+   ========================================= */
 @media (max-width: 768px) {
   .landing {
-    row-gap: var(--spacing-6);
+    row-gap: 2rem;
+    margin-top: 2rem;
   }
 
-  .hero-benefits {
-    grid-template-columns: 1fr;
+  .hero__title {
+    font-size: 2.2rem;
   }
 
   .hero__preview {
-    min-height: 180px;
+    aspect-ratio: auto;
+    min-height: 200px;
+  }
+
+  .home-extra {
+    padding: 3rem 1rem;
   }
 }

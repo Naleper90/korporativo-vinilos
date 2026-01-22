@@ -26,6 +26,12 @@ public class SecurityConfig {
         this.userRepository = userRepository;
     }
 
+    // --- ESTE ES EL MÉTODO QUE TE FALTABA ---
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter();
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -39,14 +45,20 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/h2-console/**"
                         ).permitAll()
-                        // Login endpoint público (sin autenticación)
+                        
+                        // Login y Registro públicos
                         .requestMatchers("/api/auth/**").permitAll()
+                        
+                        // --- PERMITIR PRESUPUESTOS SIN LOGIN (SOLO PARA PRUEBAS) ---
+                        .requestMatchers("/api/presupuestos/**").permitAll()
+
                         // Toda la API requiere estar autenticado
                         .requestMatchers("/api/**").authenticated()
+                        
                         // Lo demás se permite
                         .anyRequest().permitAll()
                 )
-                // Agregar JWT Filter (antes que UsernamePasswordAuthenticationFilter)
+                // Aquí llamamos al método definido arriba
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         // H2 console
@@ -58,27 +70,17 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /**
-     * Bean para el filtro JWT
-     */
-    @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        return new JwtAuthenticationFilter();
-    }
-
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
             User user = userRepository.findByUsername(username)
                     .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-            UserDetails details = org.springframework.security.core.userdetails.User
+            return org.springframework.security.core.userdetails.User
                     .withUsername(user.getUsername())
                     .password(user.getPassword())
                     .roles(user.getRole().name().replace("ROLE_", ""))
                     .build();
-
-            return details;
         };
     }
 

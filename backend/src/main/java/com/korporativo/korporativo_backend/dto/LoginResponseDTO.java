@@ -6,13 +6,16 @@ public class LoginResponseDTO {
     private String type = "Bearer";
     private String username;
     private String role;
+    private Long userId; // <--- CAMPO NUEVO
 
     public LoginResponseDTO() {}
 
-    public LoginResponseDTO(String token, String username, String role) {
+    // Constructor actualizado
+    public LoginResponseDTO(String token, String username, String role, Long userId) {
         this.token = token;
         this.username = username;
         this.role = role;
+        this.userId = userId;
     }
 
     public String getToken() {
@@ -45,5 +48,14 @@ public class LoginResponseDTO {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    // Getter y Setter para userId
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

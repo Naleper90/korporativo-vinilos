@@ -21,7 +21,6 @@ import { AuthContainerComponent } from './components/shared/auth-container/auth-
 @Component({
   selector: 'app-root',
   standalone: true,
-  // Importamos TODOS los componentes que se usan en app.html
   imports: [
     CommonModule,
     RouterOutlet,
@@ -34,28 +33,25 @@ import { AuthContainerComponent } from './components/shared/auth-container/auth-
     ToastComponent,
     AuthContainerComponent
   ],
-  // Vinculamos el HTML externo (app.html) en lugar del template inline
+
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
 export class AppComponent implements OnInit {
-  // Array para los toasts (si los usas en el HTML con *ngFor)
   notifications: any[] = [];
 
   constructor(
     private themeService: ThemeService,
     private notificationService: NotificationService
   ) {
-    // Suscribirse a notificaciones para mostrarlas en los Toasts
     this.notificationService.notifications$.subscribe(notif => {
       this.notifications.push(notif);
-      // Opcional: Auto-eliminar visualmente tras unos segundos si no lo hace el componente Toast
       setTimeout(() => this.removeNotification(notif), 5000);
     });
   }
 
   ngOnInit() {
-    // Lógica del tema (Dark Mode)
+
     const savedTheme = localStorage.getItem('theme') || 'system';
     this.themeService.setTheme(savedTheme as 'light' | 'dark' | 'system');
 

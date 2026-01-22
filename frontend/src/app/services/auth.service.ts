@@ -5,19 +5,25 @@ import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../environments/environment';
 
+// Definimos la interfaz del usuario
+export interface User {
+  username: string;
+  id?: number; // El ID es opcional al principio hasta que logueamos
+  email?: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
   private platformId = inject(PLATFORM_ID);
 
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private apiUrl = `${environment.apiUrl}/auth`;
 
-
-  private currentUserSignal = signal<string | null>(null);
+  // Signal que guarda el estado del usuario
+  private currentUserSignal = signal<User | null>(null);
 
   public isLoggedIn = computed(() => !!this.currentUserSignal());
-
   public currentUser = this.currentUserSignal.asReadonly();
 
   private redirectUrl: string | null = null;
@@ -25,10 +31,16 @@ export class AuthService {
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
       const token = localStorage.getItem('token');
-      const user = localStorage.getItem('username');
+      const storedUser = localStorage.getItem('user');
 
-      if (token && user) {
-        this.currentUserSignal.set(user);
+      if (token && storedUser) {
+        try {
+          // Recuperamos el objeto usuario guardado
+          this.currentUserSignal.set(JSON.parse(storedUser));
+        } catch (e) {
+          console.error('Error parseando usuario local', e);
+          localStorage.removeItem('user');
+        }
       }
     }
   }
@@ -37,13 +49,29 @@ export class AuthService {
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, { email, password }).pipe(
       tap(response => {
+
         if (response && response.token) {
           if (isPlatformBrowser(this.platformId)) {
             localStorage.setItem('token', response.token);
-            const username = response.username || email;
-            localStorage.setItem('username', username);
 
-            this.currentUserSignal.set(username);
+            // Intentamos capturar el ID con varios nombres posibles por seguridad
+            const userIdFromBackend = response.userId || response.id || response.user_id;
+
+            if (!userIdFromBackend) {
+                console.warn('⚠️ CUIDADO: El backend no ha devuelto un ID (userId/id). El perfil fallará.');
+            }
+
+            const user: User = {
+              username: response.username || email,
+              id: userIdFromBackend, // Asignamos el ID detectado
+              email: response.email || email
+            };
+
+            // Guardamos el objeto completo con ID en localStorage
+            localStorage.setItem('user', JSON.stringify(user));
+
+            // Actualizamos la señal para que toda la app se entere
+            this.currentUserSignal.set(user);
           }
         }
       }),
@@ -54,7 +82,7 @@ export class AuthService {
     );
   }
 
-  // --- NUEVO MÉTODO: REGISTRO ---
+  // --- REGISTRO ---
   register(userData: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/register`, userData).pipe(
       catchError(error => {
@@ -68,6 +96,7 @@ export class AuthService {
   logout() {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('token');
+      localStorage.removeItem('user');
       localStorage.removeItem('username');
     }
     this.currentUserSignal.set(null);

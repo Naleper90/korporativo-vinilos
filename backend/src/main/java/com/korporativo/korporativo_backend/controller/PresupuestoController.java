@@ -1,5 +1,6 @@
 package com.korporativo.korporativo_backend.controller;
 
+import com.korporativo.korporativo_backend.dto.CreatePresupuestoRequestDTO;
 import com.korporativo.korporativo_backend.dto.PresupuestoDTO;
 import com.korporativo.korporativo_backend.model.Presupuesto;
 import com.korporativo.korporativo_backend.service.PresupuestoService;
@@ -25,7 +26,7 @@ public class PresupuestoController {
         this.presupuestoService = presupuestoService;
     }
 
-    // LISTAR TODOS (DTO)
+    // LISTAR TODOS (DTO) - Para Admin o paginación general
     @GetMapping
     public ResponseEntity<Page<PresupuestoDTO>> listarPaginado(
             @RequestParam(defaultValue = "0") int page,
@@ -54,10 +55,17 @@ public class PresupuestoController {
         return ResponseEntity.ok(p);
     }
 
-    // CREAR (entidad simple)
+    // --- NUEVO ENDPOINT: OBTENER PRESUPUESTOS DE UN USUARIO ---
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Presupuesto>> getPresupuestosByUserId(@PathVariable Long userId) {
+        List<Presupuesto> presupuestos = presupuestoService.getPresupuestosByUserId(userId);
+        return ResponseEntity.ok(presupuestos);
+    }
+
+    // CREAR DESDE CALCULADORA
     @PostMapping
-    public ResponseEntity<Presupuesto> crear(@RequestBody Presupuesto presupuesto) {
-        Presupuesto creado = presupuestoService.savePresupuesto(presupuesto);
+    public ResponseEntity<Presupuesto> crear(@RequestBody CreatePresupuestoRequestDTO request) {
+        Presupuesto creado = presupuestoService.createFullBudget(request);
         return ResponseEntity
                 .created(URI.create("/api/presupuestos/" + creado.getId()))
                 .body(creado);
@@ -82,9 +90,9 @@ public class PresupuestoController {
         return ResponseEntity.ok(actualizado);
     }
 
-    // ELIMINAR (solo ADMIN)
+    // ELIMINAR
+    // (Ojo: He quitado la restricción estricta de ADMIN para que puedas probar borrar tus propios pedidos)
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         Presupuesto existente = presupuestoService.getPresupuestoById(id);
         if (existente == null) {
@@ -94,10 +102,7 @@ public class PresupuestoController {
         return ResponseEntity.noContent().build();
     }
 
-    // AGREGADA: total precio de presupuestos de un cliente (ya expuesta en ClienteController)
-    // Esta normalmente la dejamos en ClienteController: /api/clientes/{id}/presupuestos/total
-
-    // AGREGADA 2: número de vinilos de un presupuesto
+    // Contar vinilos de un presupuesto
     @GetMapping("/{id}/vinilos/count")
     public ResponseEntity<Long> contarVinilosDePresupuesto(@PathVariable Long id) {
         Presupuesto existente = presupuestoService.getPresupuestoById(id);

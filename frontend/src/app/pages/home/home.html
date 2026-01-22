@@ -1,100 +1,101 @@
 <app-main>
-  <!-- HERO PRINCIPAL -->
-  <section class="landing" aria-label="Sección principal de bienvenida">
+  <div class="page-wrapper">
 
-    <!-- CONTENIDO HERO -->
-    <article class="hero__content">
-      <h1 class="hero__title">
-        CALCULA TUS VINILOS DE MANERA FÁCIL Y RÁPIDA
-      </h1>
+    <!-- =========================================
+         BLOQUE CENTRAL (Landing)
+         ========================================= -->
+    <section class="landing" aria-label="Sección principal de bienvenida">
 
-      <app-button
-        variant="primary"
-        (click)="goToCalculator()"
-        aria-label="Ir a la calculadora de presupuestos"
-      >
-        Calcular ahora
-      </app-button>
+      <!-- CONTENIDO HERO -->
+      <article class="hero__content">
+        <h1 class="hero__title">
+          CALCULA TUS VINILOS DE MANERA FÁCIL Y RÁPIDA
+        </h1>
 
-      <app-button
-        variant="secondary"
-        (click)="goToContactForm()"
-        aria-label="Ir al formulario de contacto"
-      >
-        Hablar con el estudio
-      </app-button>
-    </article>
-
-        <!-- PREVIEW VISUAL -->
-    <figure class="hero__preview" aria-label="Previsualización del vinilo decorativo">
-      <!-- IMAGEN RESPONSIVE Y OPTIMIZADA (WebP + JPG fallback) -->
-      <picture>
-        <!-- Formato moderno (WebP) -->
-        <source srcset="assets/images/hero-home.webp" type="image/webp">
-        <!-- Formato estándar (JPG) -->
-        <source srcset="assets/images/hero-home.jpg" type="image/jpeg">
-        <!-- Imagen final -->
-        <img
-          src="assets/images/hero-home.jpg"
-          alt="Vinilo decorativo de alta calidad Korporativo"
-          class="hero__img"
-          loading="eager"
-          width="800"
-          height="600"
+        <app-button
+          variant="primary"
+          (click)="goToCalculator()"
+          aria-label="Ir a la calculadora de presupuestos"
         >
-      </picture>
-    </figure>
+          Calcular ahora
+        </app-button>
 
-
-    <!-- BENEFICIOS (Grid de 3 columnas) -->
-    <section class="hero-benefits" aria-label="Beneficios principales">
-      <article class="hero-benefits__item">
-        <h3 class="hero-benefits__title">01 Presupuestos instantáneos</h3>
-        <p class="hero-benefits__text">
-          Calcula precios en segundos según las especificaciones del vinilo.
-        </p>
+        <app-button
+          variant="secondary"
+          (click)="goToContactForm()"
+          aria-label="Ir al formulario de contacto"
+        >
+          Hablar con el estudio
+        </app-button>
       </article>
 
-      <article class="hero-benefits__item">
-        <h3 class="hero-benefits__title">02 Personalización sencilla</h3>
-        <p class="hero-benefits__text">
-          Ajusta medidas, materiales y acabados sin salir de la página.
-        </p>
-      </article>
+      <!-- PREVIEW VISUAL -->
+      <figure class="hero__preview" aria-label="Previsualización del vinilo decorativo">
+        <picture>
+          <source srcset="assets/images/hero-home.webp" type="image/webp">
+          <source srcset="assets/images/hero-home.jpg" type="image/jpeg">
+          <img
+            src="assets/images/hero-home.jpg"
+            alt="Vinilo decorativo de alta calidad Korporativo"
+            class="hero__img"
+            loading="eager"
+            width="800"
+            height="600"
+          >
+        </picture>
+      </figure>
 
-      <article class="hero-benefits__item">
-        <h3 class="hero-benefits__title">03 Sin sorpresas</h3>
-        <p class="hero-benefits__text">
-          Visualiza el coste desglosado antes de enviar el presupuesto.
-        </p>
-      </article>
+      <!-- BENEFICIOS -->
+      <section class="hero-benefits" aria-label="Beneficios principales">
+        <article class="hero-benefits__item">
+          <h3 class="hero-benefits__title">01 Presupuestos instantáneos</h3>
+          <p class="hero-benefits__text">
+            Calcula precios en segundos según las especificaciones del vinilo.
+          </p>
+        </article>
+
+        <article class="hero-benefits__item">
+          <h3 class="hero-benefits__title">02 Personalización sencilla</h3>
+          <p class="hero-benefits__text">
+            Ajusta medidas, materiales y acabados sin salir de la página.
+          </p>
+        </article>
+
+        <article class="hero-benefits__item">
+          <h3 class="hero-benefits__title">03 Sin sorpresas</h3>
+          <p class="hero-benefits__text">
+            Visualiza el coste desglosado antes de enviar el presupuesto.
+          </p>
+        </article>
+      </section>
+
+      <!-- POR QUÉ ELEGIRNOS -->
+      <section class="why-us" aria-labelledby="why-us-title">
+        <h2 id="why-us-title" class="why-us__title">¿Por qué elegirnos?</h2>
+        <ul class="why-us__list">
+          <li class="why-us__item">
+            Materiales de vinilo de calidad profesional para resultados duraderos.
+          </li>
+          <li class="why-us__item">
+            Servicios de instalación expertos disponibles para todo tipo de proyectos.
+          </li>
+          <li class="why-us__item">
+            Diseños a medida sin sacrificar la calidad.
+          </li>
+        </ul>
+      </section>
+
     </section>
 
-    <!-- POR QUÉ ELEGIRNOS -->
-    <section class="why-us" aria-labelledby="why-us-title">
-      <h2 id="why-us-title" class="why-us__title">¿Por qué elegirnos?</h2>
-
-      <ul class="why-us__list">
-        <li class="why-us__item">
-          Materiales de vinilo de calidad profesional para resultados duraderos.
-        </li>
-        <li class="why-us__item">
-          Servicios de instalación expertos disponibles para todo tipo de proyectos.
-        </li>
-        <li class="why-us__item">
-          Diseños a medida sin sacrificar la calidad.
-        </li>
-      </ul>
+    <!-- =========================================
+         SECCIÓN EXTRA (Pre-Footer)
+         ========================================= -->
+    <section class="home-extra" aria-labelledby="extra-title">
+      <div class="home-extra__container">
+        <h2 id="extra-title" class="home-extra__title">Más sobre Korporativo</h2>
+        <app-tabs [tabs]="demoTabs"></app-tabs>
+      </div>
     </section>
-  </section>
 
-  <!-- SECCIÓN EXTRA (TABS) -->
-  <section class="home-extra" aria-labelledby="extra-title">
-    <h2 id="extra-title" class="home-extra__title">Más sobre Korporativo</h2>
-    <app-tabs [tabs]="demoTabs"></app-tabs>
-  </section>
-
-  <!-- SECCIÓN REGISTRO ELIMINADA -->
-  <!-- Se ha movido al Modal de Autenticación global -->
-
+  </div>
 </app-main>

@@ -15,18 +15,14 @@ import java.util.Arrays;
 @Configuration
 public class CorsConfig {
 
-    @Bean
+        @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // ✅ En desarrollo: localhost:4200
-        // ✅ En producción: cambiar a dominio real (ej: https://korporativo.com)
-        configuration.setAllowedOrigins(Arrays.asList(
-            "http://localhost:4200",
-            "http://localhost:3000",
-            "http://localhost:8080"
-            // Agregar dominio de producción aquí: "https://korporativo.com"
-        ));
+        // ⚠️ CAMBIO CLAVE: Usamos setAllowedOriginPatterns("*") 
+        // Esto permite CUALQUIER dominio (incluido Vercel y localhost)
+        // y funciona perfectamente con setAllowCredentials(true)
+        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
 
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
@@ -34,7 +30,8 @@ public class CorsConfig {
         configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/**", configuration);
+        source.registerCorsConfiguration("/**", configuration); // Asegúrate de poner "/**" para cubrir toda la API
         return source;
     }
+
 }

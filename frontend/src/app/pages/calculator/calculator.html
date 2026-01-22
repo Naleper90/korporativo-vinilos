@@ -1,19 +1,22 @@
 <main class="calculator-page">
-  <button class="back-button" type="button" (click)="onBack()">
-    ← Volver
-  </button>
+  <nav class="calculator-nav">
+    <button class="back-button" type="button" (click)="onBack()">
+      ← Volver
+    </button>
+  </nav>
 
-  <section class="calculator-page__container">
+  <!-- FORMULARIO PRINCIPAL -->
+  <form class="calculator-page__container" (submit)="$event.preventDefault()">
+
     <header class="calculator-page__header">
       <h1>Calculadora de vinilos</h1>
     </header>
 
     <!-- SECCIÓN: DIMENSIONES -->
-    <section class="calculator-section">
-      <h2 class="calculator-section__title">Dimensiones</h2>
+    <fieldset class="calculator-section">
+      <legend class="calculator-section__title">Dimensiones</legend>
 
-      <section class="calculator-section__row calculator-section__row--inline" aria-label="Dimensiones del vinilo">
-
+      <section class="calculator-section__row calculator-section__row--inline" aria-label="Controles de dimensiones">
         <!-- Input Ancho -->
         <label class="calculator-input-wrapper">
           <span class="calculator-input-label">Ancho</span>
@@ -46,9 +49,9 @@
 
         <!-- Mensaje de error -->
         @if (mostrarErrores()) {
-          <small class="calculator-error-message">
-            ⚠️ Por favor, introduce medidas válidas (mayores que 0).
-          </small>
+          <p class="calculator-error-message" role="alert">
+            Por favor, introduce medidas válidas (mayores que 0).
+          </p>
         }
 
         <!-- BOTÓN UNIDAD -->
@@ -56,13 +59,13 @@
           {{ calc.unidad() }} ▾
         </button>
       </section>
-    </section>
+    </fieldset>
 
-        <!-- SECCIÓN: TIPO DE VINILO -->
-    <section class="calculator-section">
-      <h2 class="calculator-section__title">Tipo de vinilo</h2>
-      <section class="calculator-section__row" aria-label="Tipo de vinilo">
+    <!-- SECCIÓN: TIPO DE VINILO -->
+    <fieldset class="calculator-section">
+      <legend class="calculator-section__title">Tipo de vinilo</legend>
 
+      <section class="calculator-section__row" aria-label="Selección de material">
         <button
           class="calculator-chip"
           [class.calculator-chip--active]="calc.material() === 'monomerico'"
@@ -86,18 +89,17 @@
           type="button">
           Transparente
         </button>
-
       </section>
-    </section>
+    </fieldset>
 
-        <!-- SECCIÓN: PERSONALIZACIÓN -->
+    <!-- SECCIÓN: PERSONALIZACIÓN -->
     <section class="calculator-section">
       <h2 class="calculator-section__title">Personalización</h2>
 
       <!-- TIPO DE CORTE -->
-      <section aria-label="Tipo de corte">
-        <h3 class="calculator-subtitle">Tipo de corte</h3>
-        <section class="calculator-section__row">
+      <fieldset class="calculator-subsection">
+        <legend class="calculator-subtitle">Tipo de corte</legend>
+        <div class="calculator-section__row">
           <button class="calculator-chip"
                   [class.calculator-chip--active]="calc.corte() === 'recto'"
                   (click)="calc.corte.set('recto')"
@@ -107,13 +109,13 @@
                   [class.calculator-chip--active]="calc.corte() === 'contorno'"
                   (click)="calc.corte.set('contorno')"
                   type="button">Contorno</button>
-        </section>
-      </section>
+        </div>
+      </fieldset>
 
       <!-- ADHESIVO -->
-      <section aria-label="Adhesivo" style="margin-top: 1rem;">
-        <h3 class="calculator-subtitle">Adhesivo</h3>
-        <section class="calculator-section__row">
+      <fieldset class="calculator-subsection" style="margin-top: 1rem;">
+        <legend class="calculator-subtitle">Adhesivo</legend>
+        <div class="calculator-section__row">
           <button class="calculator-chip"
                   [class.calculator-chip--active]="calc.adhesivo() === 'normal'"
                   (click)="calc.adhesivo.set('normal')"
@@ -123,49 +125,72 @@
                   [class.calculator-chip--active]="calc.adhesivo() === 'extra'"
                   (click)="calc.adhesivo.set('extra')"
                   type="button">Extra Fuerte</button>
-        </section>
-      </section>
+        </div>
+      </fieldset>
     </section>
 
-        <!-- SECCIÓN: EXTRAS -->
-    <section class="calculator-section">
-      <h2 class="calculator-section__title">Extras</h2>
-      <section class="calculator-section__row calculator-section__row--inline" aria-label="Extras">
+    <!-- SECCIÓN: EXTRAS -->
+    <fieldset class="calculator-section">
+      <legend class="calculator-section__title">Ubicación y Extras</legend>
 
-        <!-- Checkbox IVA -->
-        <label class="calculator-checkbox">
-          <input type="checkbox" checked disabled />
-          <span>Incluir IVA (21%)</span>
+      <section class="calculator-section__row calculator-section__row--column">
+
+        <!-- SELECTOR DE PAÍS -->
+        <label class="calculator-input-wrapper">
+          <span class="calculator-input-label">Destino del envío</span>
+          <select
+            class="calculator-select"
+            [ngModel]="calc.pais()"
+            (ngModelChange)="calc.pais.set($event)"
+            name="paisSelector">
+            <option value="ES">España (Península y Baleares) - 21% IVA</option>
+            <option value="PT">Portugal - 23% IVA</option>
+            <option value="CANARIAS">Canarias - Exento de IVA (IGIC)</option>
+          </select>
         </label>
 
-        <!-- Checkbox Instalación -->
-        <label class="calculator-checkbox" style="opacity: 1; cursor: pointer;">
-          <input type="checkbox"
-                 [checked]="calc.instalacion()"
-                 (change)="toggleInstalacion()" />
-          <span>Incluir instalación (+50€)</span>
-        </label>
+        <div class="calculator-section__row calculator-section__row--inline">
+          <!-- Checkbox IVA (Ahora editable) -->
+          <label class="calculator-checkbox" style="cursor: pointer;">
+            <input type="checkbox"
+                  [checked]="calc.incluirIvaManual()"
+                  (change)="calc.incluirIvaManual.set(!calc.incluirIvaManual())"
+                  [disabled]="calc.pais() === 'CANARIAS'" /> <!-- Solo bloqueado si es Canarias -->
+            <span>
+              @if (calc.pais() === 'ES') { Incluir IVA (21%) }
+              @else if (calc.pais() === 'PT') { Incluir IVA (23%) }
+              @else { Exento de IVA (Canarias) }
+            </span>
+          </label>
+
+          <!-- Checkbox Instalación -->
+          <label class="calculator-checkbox" style="opacity: 1; cursor: pointer;">
+            <input type="checkbox"
+                  [checked]="calc.instalacion()"
+                  (change)="toggleInstalacion()" />
+            <span>Incluir instalación (+50€)</span>
+          </label>
+        </div>
 
       </section>
-    </section>
+    </fieldset>
 
     <!-- SECCIÓN: RESULTADO Y ACCIÓN -->
-    <section class="calculator-section calculator-section--submit">
-            <!-- Botón de Acción -->
-            <button
-              class="btn btn--primary calculator-submit"
-              type="button"
-              (click)="onSaveBudget()">
-              Guardar Presupuesto
-            </button>
+    <footer class="calculator-section calculator-section--submit">
+      <button
+        class="btn btn--primary calculator-submit"
+        type="button"
+        (click)="onSaveBudget()">
+        Guardar Presupuesto
+      </button>
 
-      <section class="calculator-result">
+      <div class="calculator-result" aria-live="polite">
         <span class="calculator-result__label">Presupuesto actual:</span>
         <output class="calculator-result__value">
           {{ calc.precioTotal() | currency:'EUR' }}
         </output>
-      </section>
-    </section>
+      </div>
+    </footer>
 
-  </section>
+  </form>
 </main>

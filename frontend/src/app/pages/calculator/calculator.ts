@@ -6,7 +6,9 @@ import { Router } from '@angular/router';
 // Servicios
 import { CalculatorService } from '../../services/calculator.service';
 import { BudgetService } from '../../services/budgets.service';
-import { LoadingService } from '../../services/loading'; // <--- RUTA CORRECTA
+import { LoadingService } from '../../services/loading';
+import { PdfService } from '../../services/pdf.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-calculator',
@@ -19,7 +21,9 @@ export class CalculatorComponent {
   // Inyecciones
   private router = inject(Router);
   private budgetService = inject(BudgetService);
-  private loadingService = inject(LoadingService); // <--- INYECCIÓN NUEVA
+  private loadingService = inject(LoadingService);
+  private pdfService = inject(PdfService);
+  private authService = inject(AuthService);
   public calc = inject(CalculatorService);
 
   // Estado visual
@@ -32,40 +36,66 @@ export class CalculatorComponent {
 
   // --- ACCIÓN PRINCIPAL: GUARDAR PRESUPUESTO ---
   onSaveBudget() {
-    // 1. Validar
+    // 1. Validar dimensiones
     if (this.calc.alto() === 0 || this.calc.ancho() === 0) {
       this.mostrarErrores.set(true);
       return;
     }
     this.mostrarErrores.set(false);
 
-    // 2. Preparar datos
-    const presupuestoFinal = {
-      dimensiones: `${this.calc.ancho()}x${this.calc.alto()} ${this.calc.unidad()}`,
-      material: this.calc.material(),
-      corte: this.calc.corte(),
-      adhesivo: this.calc.adhesivo(),
-      instalacion: this.calc.instalacion(),
-      precioTotal: this.calc.precioTotal()
+    // 2. Validar USUARIO (Seguridad)
+    const currentUser = this.authService.currentUser();
+
+    if (!currentUser || !currentUser.id) {
+        alert('⚠️ Para guardar un presupuesto necesitas iniciar sesión.');
+        // Opcional: guardas el estado actual para recuperarlo luego
+        this.router.navigate(['/']); // Te lleva al login
+        return;
+    }
+
+    // 3. Preparar datos para el Backend Java
+    const esMetros = this.calc.unidad() === 'm';
+    const anchoNormalizado = esMetros ? this.calc.ancho() * 100 : this.calc.ancho();
+    const altoNormalizado = esMetros ? this.calc.alto() * 100 : this.calc.alto();
+
+    const presupuestoParaBackend = {
+      anchoCm: anchoNormalizado,
+      altoCm: altoNormalizado,
+      tipoVinilo: this.calc.material(),
+      tipoCorte: this.calc.corte(),
+      tipoAdhesivo: this.calc.adhesivo(),
+      incluirInstalacion: this.calc.instalacion(),
+      incluirIva: this.calc.incluirIvaManual(),
+      pais: this.calc.pais(),
+      precioFinal: this.calc.precioTotal(),
+      userId: currentUser.id,
     };
 
-    console.log('📡 Enviando al backend...', presupuestoFinal);
+    console.log('📡 Enviando al backend...', presupuestoParaBackend);
 
-    // 3. ACTIVAR SPINNER GLOBAL
-    this.loadingService.show(); // <--- START LOADING
+    // 4. ACTIVAR SPINNER GLOBAL
+    this.loadingService.show();
 
-    // 4. LLAMADA AL SERVIDOR
-    this.budgetService.createBudget(presupuestoFinal).subscribe({
-      next: (response) => {
-        this.loadingService.hide(); // <--- STOP LOADING
-        console.log('✅ Respuesta:', response);
-        alert(`¡Presupuesto guardado con éxito!`);
-        this.router.navigate(['/']);
+    // 5. LLAMADA AL SERVIDOR
+    this.budgetService.createBudget(presupuestoParaBackend).subscribe({
+      next: (response: any) => {
+        this.loadingService.hide();
+
+        // --- GENERAR Y DESCARGAR PDF ---
+        this.pdfService.generateBudgetPDF({
+            id: response.id, // ID que devuelve el backend
+            ...presupuestoParaBackend, // Datos que acabamos de enviar
+            createdAt: new Date().toISOString(), // Fecha actual
+            clientName: currentUser.username, // Añadimos nombre al PDF
+            clientEmail: currentUser.email
+        });
+
+        alert(`¡Presupuesto guardado y descargado con éxito!`);
       },
       error: (error) => {
-        this.loadingService.hide(); // <--- STOP LOADING (SIEMPRE)
+        this.loadingService.hide();
         console.error('❌ Error:', error);
-        alert('Hubo un error al conectar con el servidor.');
+        alert('Hubo un error al guardar el presupuesto. Inténtalo de nuevo más tarde.');
       }
     });
   }

@@ -1,8 +1,6 @@
 /* =========================================
-   CALCULATOR PAGE STYLE
-   Theme: Korporativo Design System (v1)
+   1. LAYOUT & CONTAINER
    ========================================= */
-
 .calculator-page {
   padding: 3rem 5rem;
   flex: 1;
@@ -10,7 +8,7 @@
   background-color: var(--color-primary-100);
   color: var(--color-text-primary);
 
-  /* Container Queries */
+  /* Container Query para responsive inteligente */
   container-type: inline-size;
   container-name: calculator;
 }
@@ -23,7 +21,9 @@
   gap: var(--spacing-6);
 }
 
-/* --- HEADER --- */
+/* =========================================
+   2. HEADER & NAVEGACIÓN
+   ========================================= */
 .calculator-page__header h1 {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
@@ -51,7 +51,9 @@
   }
 }
 
-/* --- SECCIONES --- */
+/* =========================================
+   3. SECCIONES (FIELDSETS & LEGENDS)
+   ========================================= */
 .calculator-section {
   display: flex;
   flex-direction: column;
@@ -64,22 +66,44 @@
   }
 }
 
-.calculator-section__title {
+.calculator-section__title,
+legend.calculator-section__title {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   margin-bottom: var(--spacing-2);
   color: var(--color-text-primary);
+
+  /* Reset para legend */
+  padding: 0;
+  display: block;
+  width: 100%;
 }
 
-.calculator-subtitle {
+.calculator-subtitle,
+legend.calculator-subtitle {
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-medium);
   margin-bottom: var(--spacing-1);
   color: var(--color-text-secondary);
   margin-top: var(--spacing-2);
+
+  /* Reset para legend */
+  padding: 0;
+  display: block;
+  width: 100%;
 }
 
-/* --- FILAS --- */
+/* Reset global para fieldset */
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+/* =========================================
+   4. FILAS Y ALINEACIÓN (GRID SYSTEM)
+   ========================================= */
 .calculator-section__row {
   display: flex;
   flex-wrap: wrap;
@@ -88,10 +112,22 @@
 }
 
 .calculator-section__row--inline {
-  align-items: flex-end;
+  align-items: flex-end; /* Alinea inputs con botón de unidad abajo */
 }
 
-/* --- INPUTS --- */
+/* Corrección para la sección de Extras (Columna vertical izquierda) */
+.calculator-section__row--column {
+  flex-direction: column;
+  align-items: flex-start; /* Alinea Select y Checkboxes a la izquierda */
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* =========================================
+   5. COMPONENTES DE FORMULARIO
+   ========================================= */
+
+/* --- Inputs Numéricos --- */
 .calculator-input-wrapper {
   display: flex;
   flex-direction: column;
@@ -107,7 +143,6 @@
 .calculator-input-field {
   width: 100%;
   min-width: 140px;
-  box-sizing: border-box;
   padding: 0.6rem 0.75rem;
   border: var(--border-width-thin) solid var(--color-primary-300);
   background-color: var(--color-white);
@@ -116,6 +151,7 @@
   font-size: var(--font-size-md);
   color: var(--color-text-primary);
   transition: border-color var(--transition-base) var(--transition-easing);
+  box-sizing: border-box;
 
   &:focus {
     outline: none;
@@ -123,7 +159,26 @@
   }
 }
 
-/* --- CHIPS / BOTONES DE SELECCIÓN --- */
+/* --- Select Personalizado --- */
+.calculator-select {
+  width: 100%;
+  max-width: 400px; /* Evita que sea gigante en pantallas grandes */
+  padding: 0.75rem;
+  border: 1px solid #e0e0e0; /* O var(--color-primary-300) */
+  border-radius: 8px; /* O var(--radius-sm) */
+  background-color: #fff;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+  appearance: none;
+
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+}
+
+/* --- Chips / Botones Selección --- */
 .calculator-chip {
   padding: 0.5rem 1rem;
   border: var(--border-width-thin) solid var(--color-primary-300);
@@ -153,13 +208,12 @@
     color: var(--color-primary-900);
     border-color: var(--color-accent-important);
     font-weight: var(--font-weight-bold);
-
     box-shadow: var(--shadow-md);
     transform: translateY(-1px);
   }
 }
 
-/* --- CHECKBOX --- */
+/* --- Checkbox --- */
 .calculator-checkbox {
   display: inline-flex;
   align-items: center;
@@ -168,7 +222,8 @@
   border: var(--border-width-thin) solid var(--color-primary-300);
   border-radius: var(--radius-sm);
   background: var(--color-white);
-  opacity: 0.7;
+  opacity: 1; /* Forzamos opacidad para que se vea habilitado visualmente */
+  cursor: pointer;
 
   span {
     font-size: var(--font-size-sm);
@@ -176,7 +231,9 @@
   }
 }
 
-/* --- BOTÓN CALCULAR --- */
+/* =========================================
+   6. SECCIÓN FINAL (PRECIO Y BOTÓN)
+   ========================================= */
 .calculator-section--submit {
   margin-top: var(--spacing-10);
   padding: var(--spacing-8);
@@ -212,7 +269,6 @@
     transform: translateY(0);
   }
 
-  /* Estado deshabilitado (cuando está cargando) */
   &:disabled {
     opacity: 0.7;
     cursor: not-allowed;
@@ -242,7 +298,9 @@
   }
 }
 
-/* --- FEEDBACK DE ERRORES --- */
+/* =========================================
+   7. FEEDBACK Y ERRORES
+   ========================================= */
 .calculator-input-field--error {
   border-color: var(--color-error-500) !important;
   background-color: var(--color-error-300);
@@ -263,7 +321,9 @@
   75% { transform: translateX(4px); }
 }
 
-/* --- FASE 4: RESPONSIVE CON CONTAINER QUERIES --- */
+/* =========================================
+   8. RESPONSIVE (CONTAINER QUERIES)
+   ========================================= */
 @container calculator (max-width: 768px) {
   .calculator-page {
     padding: var(--spacing-6);
@@ -296,5 +356,10 @@
 
   .calculator-result__value {
     font-size: var(--font-size-2xl);
+  }
+
+  /* Ajuste móvil para Select de país */
+  .calculator-select {
+    max-width: 100%;
   }
 }

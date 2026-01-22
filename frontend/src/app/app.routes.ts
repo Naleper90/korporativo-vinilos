@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
 import { StyleGuide } from './pages/style-guide/style-guide';
 import { Contact } from './pages/contact/contact';
+import { UserProfile } from './pages/user/user-profile';
 import { CalculatorComponent } from './pages/calculator/calculator';
 import { NotFound } from './pages/not-found/not-found';
 
@@ -11,8 +12,6 @@ import { BudgetCreate } from './pages/budgets/budget-create';
 import { budgetResolver } from './pages/budgets/budget.resolver';
 
 import { authGuard } from './guards/auth.guard';
-// import { RegisterForm } ... <--- YA NO LO NECESITAS AQUÍ
-// import { pendingChangesGuard } ... <--- SI NO LO USAS EN OTRO SITIO, TAMPOCO
 
 export const routes: Routes = [
   { path: '', component: Home, data: { breadcrumb: 'Inicio' } },
@@ -43,11 +42,6 @@ export const routes: Routes = [
       import('./pages/user/user.routes').then(m => m.USER_ROUTES),
     data: { breadcrumb: 'Área de usuario' },
   },
-
-  /*
-     ELIMINADO: La ruta /registro se va fuera.
-     El registro ahora vive felizmente dentro del Modal.
-  */
 
   { path: '**', component: NotFound, data: { breadcrumb: 'No encontrado' } },
 ];

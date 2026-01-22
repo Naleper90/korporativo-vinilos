@@ -7,13 +7,84 @@
       </p>
     </header>
 
+    <!-- SECCIÓN COLORES Y TIPOGRAFÍA -->
+    <section class="style-guide__section">
+      <h2 class="style-guide__section-title">Colores y Tipografía</h2>
+
+      <!-- PALETA DE COLORES -->
+      <article class="style-guide__row">
+
+        <!-- Colores Primarios -->
+        <section>
+            <h3 style="margin-bottom: 0.5rem; font-size: 1rem;">Neutros / Primarios</h3>
+            <ul style="display: flex; gap: 0.5rem; list-style: none; padding: 0; margin: 0;">
+                <li>
+                    <figure style="width: 60px; height: 60px; background: var(--color-primary-900); border-radius: var(--radius-md); margin: 0; border: 1px solid var(--color-primary-300);" title="Primary 900"></figure>
+                    <span style="font-size: var(--font-size-xs); display: block; margin-top: 4px;"></span>
+                </li>
+                <li>
+                    <figure style="width: 60px; height: 60px; background: var(--color-primary-500); border-radius: var(--radius-md); margin: 0; border: 1px solid var(--color-primary-300);" title="Primary 500"></figure>
+                    <span style="font-size: var(--font-size-xs); display: block; margin-top: 4px;"></span>
+                </li>
+                <li>
+                    <figure style="width: 60px; height: 60px; background: var(--color-primary-100); border-radius: var(--radius-md); margin: 0; border: 1px solid var(--color-primary-300);" title="Primary 100"></figure>
+                    <span style="font-size: var(--font-size-xs); display: block; margin-top: 4px;"></span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Color de Acento -->
+        <section>
+            <h3 style="margin-bottom: 0.5rem; font-size: 1rem;">Acento</h3>
+            <ul style="display: flex; gap: 0.5rem; list-style: none; padding: 0; margin: 0;">
+                <li>
+                    <figure style="width: 60px; height: 60px; background: var(--color-accent-500); border-radius: var(--radius-md); margin: 0; border: 1px solid var(--color-primary-300);" title="Accent 500"></figure>
+                    <span style="font-size: var(--font-size-xs); display: block; margin-top: 4px;"></span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Colores Feedback -->
+        <section>
+            <h3 style="margin-bottom: 0.5rem; font-size: 1rem;">Feedback</h3>
+            <ul style="display: flex; gap: 0.5rem; list-style: none; padding: 0; margin: 0;">
+                <li>
+                    <figure style="width: 60px; height: 60px; background: var(--color-error-500); border-radius: var(--radius-md); margin: 0;" title="Error"></figure>
+                </li>
+                <li>
+                    <figure style="width: 60px; height: 60px; background: var(--color-success-500); border-radius: var(--radius-md); margin: 0;" title="Success"></figure>
+                </li>
+                <li>
+                    <figure style="width: 60px; height: 60px; background: var(--color-warning-500); border-radius: var(--radius-md); margin: 0;" title="Warning"></figure>
+                </li>
+                <li>
+                    <figure style="width: 60px; height: 60px; background: var(--color-info-500); border-radius: var(--radius-md); margin: 0;" title="Info"></figure>
+                </li>
+            </ul>
+        </section>
+      </article>
+
+      <!-- TIPOGRAFÍA -->
+      <article class="style-guide__column">
+        <h1 style="margin: 0;">Heading 1 - Títulos principales ({{ '36px' }})</h1>
+        <h2 style="margin: 0;">Heading 2 - Secciones ({{ '28px' }})</h2>
+        <h3 style="margin: 0;">Heading 3 - Subtítulos ({{ '22px' }})</h3>
+        <p style="max-width: 65ch;">
+            <strong>Body Text:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Este es un párrafo de ejemplo utilizando la fuente <code style="background: var(--color-primary-100); padding: 2px 4px; border-radius: 2px;">Roboto</code>.
+            El interlineado está optimizado para lectura cómoda (--line-height-normal).
+        </p>
+        <small>Texto pequeño / Legal / Ayuda (14px)</small>
+      </article>
+    </section>
+
     <!-- DEMO AUTH / ROUTE GUARDS -->
     <section class="style-guide__section">
       <h2 class="style-guide__section-title">Demo autenticación (Route Guards)</h2>
       <article class="style-guide__row">
         <p>
           Estado actual:
-          {{ isLoggedIn ? 'Usuario autenticado' : 'Invitado (sin login)' }}
+          <strong>{{ isLoggedIn ? 'Usuario autenticado' : 'Invitado (sin login)' }}</strong>
         </p>
 
         <app-button variant="primary" (click)="loginDemo()">
@@ -31,8 +102,8 @@
         </p>
       </article>
     </section>
-    <!-- FIN DEMO AUTH -->
 
+    <!-- BOTONES -->
     <section class="style-guide__section">
       <h2 class="style-guide__section-title">Botones</h2>
       <article class="style-guide__row">
@@ -43,6 +114,7 @@
       </article>
     </section>
 
+    <!-- CAMPOS DE FORMULARIO -->
     <section class="style-guide__section style-guide__section--form-fields">
       <h2 class="style-guide__section-title">Campos de formulario</h2>
       <article class="style-guide__row">
@@ -63,6 +135,7 @@
       </article>
     </section>
 
+    <!-- FORMULARIO CONTACTO -->
     <section class="style-guide__section">
       <h2 class="style-guide__section-title">Formulario de contacto</h2>
       <article class="style-guide__row">
@@ -70,6 +143,7 @@
       </article>
     </section>
 
+    <!-- ALERTAS -->
     <section class="style-guide__section">
       <h2 class="style-guide__section-title">Alertas</h2>
       <article class="style-guide__column">
@@ -88,6 +162,7 @@
       </article>
     </section>
 
+    <!-- CARDS -->
     <section class="style-guide__section">
       <h2 class="style-guide__section-title">Cards</h2>
       <article class="style-guide__row">
@@ -111,6 +186,7 @@
       </article>
     </section>
 
+    <!-- TEXTAREA Y SELECT -->
     <section class="style-guide__section style-guide__section--textarea-select">
       <h2 class="style-guide__section-title">Textarea y Select</h2>
 

@@ -1,7 +1,7 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
+import { provideRouter, withPreloading, PreloadAllModules, withViewTransitions } from '@angular/router';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptorsFromDi, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withInterceptors, withFetch } from '@angular/common/http';
 
 import { ThemeService } from './services/theme.service';
 import { routes } from './app.routes';
@@ -9,10 +9,16 @@ import { commonHeadersInterceptor } from './interceptors/common-headers.intercep
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes, withPreloading(PreloadAllModules)),
+    provideRouter(
+      routes,
+      withPreloading(PreloadAllModules),
+      withViewTransitions()
+    ),
+
     provideClientHydration(withEventReplay()),
 
     provideHttpClient(
+      withFetch(),
       withInterceptorsFromDi(),
       withInterceptors([commonHeadersInterceptor]),
     ),

@@ -1,0 +1,92 @@
+<section class="user-profile" aria-labelledby="user-profile-title">
+
+  <!-- CABECERA -->
+  <header class="user-profile__header">
+    <h1 id="user-profile-title" class="user-profile__title">Mi Cuenta</h1>
+    <p class="user-profile__subtitle">Gestiona tu información y revisa tus presupuestos guardados.</p>
+  </header>
+
+  <!-- TARJETA INFORMACIÓN PERSONAL -->
+  <article class="user-profile__card" aria-labelledby="personal-info-title">
+    <h2 id="personal-info-title" class="card__title">Información Personal</h2>
+
+    <dl class="card__list">
+      <div class="field-group">
+        <dt class="field__label">Usuario</dt>
+        <dd class="field__value">{{ user?.username || 'Invitado' }}</dd>
+      </div>
+
+      <div class="field-group">
+        <dt class="field__label">Email</dt>
+        <dd class="field__value">{{ user?.email || 'No disponible' }}</dd>
+      </div>
+
+      <div class="field-group">
+        <dt class="field__label">ID Cliente</dt>
+        <dd class="field__value">#{{ user?.id }}</dd>
+      </div>
+    </dl>
+
+    <!-- Botones de acción (funcionalidad futura) -->
+    <footer class="card__actions">
+      <!-- <button class="btn btn--secondary">Editar Datos</button> -->
+    </footer>
+  </article>
+
+  <!-- SECCIÓN PRESUPUESTOS -->
+  <section class="budgets-section" aria-labelledby="budgets-title">
+    <header class="budgets-header">
+      <h2 id="budgets-title" class="section-title">Mis Presupuestos</h2>
+    </header>
+
+    <!-- ESTADO: CARGANDO -->
+    <p *ngIf="loading()" class="status-msg loading">
+      Cargando tus presupuestos...
+    </p>
+
+    <!-- ESTADO: VACÍO -->
+    <p *ngIf="!loading() && budgets().length === 0" class="status-msg empty">
+      No tienes presupuestos guardados todavía.
+      <a routerLink="/" class="link">¡Crea el primero ahora!</a>
+    </p>
+
+    <!-- TABLA DE DATOS -->
+    <table *ngIf="!loading() && budgets().length > 0" class="budgets-table">
+      <thead>
+        <tr>
+          <th scope="col">Ref.</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Detalle</th>
+          <th scope="col" class="text-right">Total</th>
+          <th scope="col" class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of budgets()">
+          <td data-label="Ref">
+            <span class="badge-ref">#{{ item.id }}</span>
+          </td>
+          <td data-label="Fecha">
+            {{ item.fecha | date:'dd/MM/yyyy' }}
+          </td>
+          <td data-label="Detalle" class="detail-cell">
+            <strong>{{ item.titulo }}</strong>
+            <small>{{ item.descripcion }}</small>
+          </td>
+          <td data-label="Total" class="text-right price-cell">
+            {{ item.precio | currency:'EUR':'symbol':'1.2-2' }}
+          </td>
+          <td data-label="Acciones" class="actions-cell">
+            <button (click)="onDownload(item)" class="btn-icon download" title="Descargar PDF" aria-label="Descargar PDF">
+              📄
+            </button>
+            <button (click)="onDelete(item.id)" class="btn-icon delete" title="Eliminar Presupuesto" aria-label="Eliminar">
+              🗑️
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+</section>

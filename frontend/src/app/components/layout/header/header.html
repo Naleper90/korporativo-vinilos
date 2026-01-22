@@ -30,7 +30,10 @@
 
       <!-- CASO 2: LOGUEADO -->
       <li *ngIf="authService.isLoggedIn()" class="user-menu-item">
-        <span class="user-greeting">Hola, {{ authService.currentUser() }}</span>
+        <!-- AHORA ES UN ENLACE AL ÁREA DE USUARIO -->
+        <a routerLink="/usuario" class="user-greeting" style="text-decoration: none; cursor: pointer;">
+          Hola, {{ authService.currentUser()?.username || authService.currentUser() }}
+        </a>
         <button type="button" class="btn btn--text btn--logout" (click)="onLogout()">
           Salir
         </button>
@@ -61,9 +64,10 @@
 
       <!-- CASO 2: LOGUEADO -->
       <li *ngIf="authService.isLoggedIn()">
-        <span style="display: block; margin-bottom: 0.5rem; color: var(--text-color);">
-            Hola, {{ authService.currentUser() }}
-        </span>
+        <!-- AHORA ES UN ENLACE AL ÁREA DE USUARIO -->
+        <a routerLink="/usuario" style="display: block; margin-bottom: 0.5rem; color: var(--text-color); text-decoration: none;">
+            Hola, {{ authService.currentUser()?.username || authService.currentUser() }}
+        </a>
         <button type="button" class="btn btn--text" (click)="onLogout()">
           Cerrar sesión
         </button>
