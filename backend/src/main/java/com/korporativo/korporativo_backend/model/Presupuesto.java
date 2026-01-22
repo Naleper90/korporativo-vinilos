@@ -34,8 +34,8 @@ public class Presupuesto {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties("presupuesto")
+    // AÑADIDO: fetch = FetchType.EAGER para evitar errores de carga
+    @OneToMany(mappedBy = "presupuesto", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<ViniloConfig> viniloConfigs = new ArrayList<>();
 
     public Presupuesto() {}
@@ -48,61 +48,27 @@ public class Presupuesto {
     }
 
     // Getters y Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getId() { 
-        return id; 
-    }
-    public void setId(Long id) { 
-        this.id = id; 
-    }
+    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
 
-    public String getTitulo() { 
-        return titulo; 
-    }
-    public void setTitulo(String titulo) { 
-        this.titulo = titulo; 
-    }
+    public Double getPrecio() { return precio; }
+    public void setPrecio(Double precio) { this.precio = precio; }
 
-    public Double getPrecio() { 
-        return precio; 
-    }
-    public void setPrecio(Double precio) { 
-        this.precio = precio; 
-    }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public String getDescripcion() { 
-        return descripcion; 
-    }
-    public void setDescripcion(String descripcion) { 
-        this.descripcion = descripcion; 
-    }
+    public LocalDate getFecha() { return fecha; }
+    public void setFecha(LocalDate fecha) { this.fecha = fecha; }
 
-    public LocalDate getFecha() { 
-        return fecha; 
-    }
-    public void setFecha(LocalDate fecha) { 
-        this.fecha = fecha; 
-    }
+    public Cliente getCliente() { return cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
 
-    public Cliente getCliente() { 
-        return cliente; 
-    }
-    public void setCliente(Cliente cliente) { 
-        this.cliente = cliente; 
-    }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 
-    public User getUser() {
-        return user;
-    }
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<ViniloConfig> getViniloConfigs() {
-        return viniloConfigs;
-    }
-
-    public void setViniloConfigs(List<ViniloConfig> viniloConfigs) {
-        this.viniloConfigs = viniloConfigs;
-    }
+    public List<ViniloConfig> getViniloConfigs() { return viniloConfigs; }
+    public void setViniloConfigs(List<ViniloConfig> viniloConfigs) { this.viniloConfigs = viniloConfigs; }
 }
