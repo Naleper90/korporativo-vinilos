@@ -1,8 +1,15 @@
+# Build stage
 FROM maven:3.8.5-openjdk-17 AS build
-COPY . .
-RUN mvn clean package -DskipTests
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+# El flag -Dmaven.test.skip=true es más agresivo que -DskipTests
+# Evita compilar los tests por completo
+RUN mvn clean package -Dmaven.test.skip=true
 
-FROM openjdk:17.0.1-jdk-slim
-COPY --from=build /target/*.jar app.jar
+# Run stage
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","app.jar"]
