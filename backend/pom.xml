@@ -84,6 +84,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Driver PostgreSQL (Añadido para Producción en Railway) -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- Actuator (salud, info, etc.) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

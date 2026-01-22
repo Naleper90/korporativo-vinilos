@@ -59,3 +59,24 @@
   margin-bottom: 1.5rem;
 }
 
+/* RESPONSIVE CONTACTO */
+@media (max-width: 850px) {
+  .contact-page {
+    padding: 2rem 1.5rem;
+  }
+
+  .contact-page__container {
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .contact-page__info,
+  .contact-page__form {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .contact-page__info h1 {
+    font-size: 1.75rem;
+  }
+}

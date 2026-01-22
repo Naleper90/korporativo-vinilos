@@ -268,27 +268,39 @@ El servicio `ThemeService` de Angular gestiona la lógica del tema:
 
 ***
 
-# Fase 7 · Aplicación web completa y Accesibilidad
+# Fase 7 · Aplicación completa y despliegue
 
 ***
 
-## 7.1 Accesibilidad (A11Y)
+## 7.1 Estado final de la aplicación
 
-Se han seguido las pautas WCAG 2.1 Nivel AA:
+La aplicación **Korporativo Vinilos** se ha completado integrando todas las capas de desarrollo (DIW, DWEC, DWES) en una solución funcional.
 
-- **Contraste de color**: Todos los textos cumplen el ratio mínimo de 4.5:1.
-- **Navegación por teclado**: Los elementos interactivos (botones, inputs) tienen estados `:focus-visible` claros.
-- **Etiquetas ARIA**: Se han añadido atributos `aria-label` en botones que solo contienen iconos y `aria-expanded` en menús desplegables.
-- **Texto alternativo**: Todas las imágenes informativas incluyen atributo `alt` descriptivo.
+### Páginas implementadas
+- **Home**: Landing page con Hero, Beneficios y CTA.
+- **Calculadora**: Cálculo reactivo de presupuestos según medidas y materiales.
+- **Auth**: Login y Registro de usuarios contra backend Spring Boot.
+- **Dashboard**: Gestión privada de presupuestos guardados.
 
 ***
 
-## 7.2 Despliegue y Producción
+## 7.2 Despliegue en Producción
 
-La aplicación ha sido construida para producción optimizada:
+La arquitectura de despliegue separa el Frontend del Backend para optimizar recursos y escalabilidad.
 
-- **Compilación AOT**: Ahead-of-Time compilation para reducir el tamaño del bundle.
-- **Hosting**: Despliegue continuo (CD) mediante Vercel/Netlify.
-- **Rendimiento**: Puntuación superior a 90 en Lighthouse (Performance, Accessibility, Best Practices, SEO).
+- **Frontend**: Desplegado en **Vercel** (SPA Angular).
+- **Backend**: Desplegado en **Railway** (Docker Container con Spring Boot + MySQL).
 
----
+### URL de Producción
+La aplicación es accesible públicamente en:
+
+👉 **[https://korporativo.vercel.app](https://korporativo.vercel.app)**
+
+*Verificación:* La aplicación está operativa, con certificado SSL activo y comunicación funcional entre cliente y servidor.
+
+***
+
+## 7.3 Problemas conocidos y mejoras futuras
+
+- **Mejora**: Implementar pasarela de pago (Stripe) para finalizar pedidos.
+- **Mejora**: Añadir panel de administración para gestionar precios de materiales sin tocar la BD.

@@ -87,13 +87,11 @@ legend.calculator-subtitle {
   color: var(--color-text-secondary);
   margin-top: var(--spacing-2);
 
-  /* Reset para legend */
   padding: 0;
   display: block;
   width: 100%;
 }
 
-/* Reset global para fieldset */
 fieldset {
   border: none;
   padding: 0;
@@ -112,13 +110,12 @@ fieldset {
 }
 
 .calculator-section__row--inline {
-  align-items: flex-end; /* Alinea inputs con botón de unidad abajo */
+  align-items: flex-end;
 }
 
-/* Corrección para la sección de Extras (Columna vertical izquierda) */
 .calculator-section__row--column {
   flex-direction: column;
-  align-items: flex-start; /* Alinea Select y Checkboxes a la izquierda */
+  align-items: flex-start;
   gap: 1.5rem;
   width: 100%;
 }
@@ -127,7 +124,6 @@ fieldset {
    5. COMPONENTES DE FORMULARIO
    ========================================= */
 
-/* --- Inputs Numéricos --- */
 .calculator-input-wrapper {
   display: flex;
   flex-direction: column;
@@ -162,10 +158,10 @@ fieldset {
 /* --- Select Personalizado --- */
 .calculator-select {
   width: 100%;
-  max-width: 400px; /* Evita que sea gigante en pantallas grandes */
+  max-width: 400px;
   padding: 0.75rem;
-  border: 1px solid #e0e0e0; /* O var(--color-primary-300) */
-  border-radius: 8px; /* O var(--radius-sm) */
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
   background-color: #fff;
   font-size: 1rem;
   color: #333;
@@ -222,7 +218,7 @@ fieldset {
   border: var(--border-width-thin) solid var(--color-primary-300);
   border-radius: var(--radius-sm);
   background: var(--color-white);
-  opacity: 1; /* Forzamos opacidad para que se vea habilitado visualmente */
+  opacity: 1;
   cursor: pointer;
 
   span {
@@ -326,40 +322,52 @@ fieldset {
    ========================================= */
 @container calculator (max-width: 768px) {
   .calculator-page {
-    padding: var(--spacing-6);
+    padding: var(--spacing-4) var(--spacing-4);
   }
 
   .calculator-page__container {
-    gap: var(--spacing-4);
+    gap: var(--spacing-6);
   }
 
   .calculator-page__header h1 {
-    font-size: var(--font-size-xl);
+    font-size: 1.75rem;
     margin-bottom: var(--spacing-3);
   }
 
   .calculator-section__row--inline {
     flex-direction: column;
     align-items: stretch;
+    gap: var(--spacing-4);
   }
 
   .calculator-input-field {
     min-width: 100%;
+    font-size: 16px;
+  }
+
+  .calculator-section__row {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   .calculator-chip {
-    flex: 1;
+    width: 100%;
+    min-width: auto;
+    padding: 0.75rem;
     text-align: center;
     justify-content: center;
-    min-width: 45%;
   }
 
   .calculator-result__value {
-    font-size: var(--font-size-2xl);
+    font-size: 2rem;
   }
 
-  /* Ajuste móvil para Select de país */
   .calculator-select {
     max-width: 100%;
+    font-size: 14px;
+  }
+
+  .calculator-submit {
+    width: 100%;
   }
 }

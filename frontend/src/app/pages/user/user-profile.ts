@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 // Servicios
 import { AuthService } from '../../services/auth.service';
@@ -10,7 +10,7 @@ import { PdfService } from '../../services/pdf.service';
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [CommonModule, DatePipe, CurrencyPipe],
+  imports: [CommonModule, DatePipe, CurrencyPipe, RouterLink],
   templateUrl: './user-profile.html',
   styleUrls: ['./user-profile.scss']
 })

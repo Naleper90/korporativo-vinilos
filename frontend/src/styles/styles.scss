@@ -19,4 +19,31 @@
 @use '05-components/buttons';
 @use '05-components/theme';
 
+/* =========================================
+   06 – Utilities
+   ========================================= */
 
+/* 1. Keyframes */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 2. Clases de utilidad */
+.animate-spin {
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* 3. Micro-interacción extra para botones */
+.btn:active {
+  transform: scale(0.97);
+}

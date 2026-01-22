@@ -1,248 +1,235 @@
-/* --- TU CÓDIGO ORIGINAL (MANTENIDO) --- */
-.user-profile {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: var(--spacing-6, 2rem) var(--spacing-4, 1rem);
+/* =========================================
+   ESTILOS DE PERFIL (V2 - Clean & Themed)
+   ========================================= */
+
+:host {
+  display: block;
+  width: 100%;
 }
 
+.user-profile {
+  width: 100%;
+  max-width: 100%; /* El contenedor padre ya limita */
+}
+
+/* --- CABECERA --- */
 .user-profile__header {
-    margin-bottom: 2rem;
+  margin-bottom: var(--spacing-6);
 }
 
 .user-profile__title {
-  font-size: var(--font-size-h2, 2rem);
-  font-weight: var(--font-weight-bold, 700);
-  margin-bottom: var(--spacing-2, 0.5rem);
-  color: var(--color-primary-900, #111);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-2);
 }
 
 .user-profile__subtitle {
-  font-size: var(--font-size-body, 1rem);
-  color: var(--color-primary-700, #666);
-  margin-bottom: var(--spacing-6, 2rem);
+  color: var(--color-text-secondary);
 }
 
+/* --- TARJETA DE DATOS --- */
 .user-profile__card {
-  background-color: var(--color-primary-0, #fff);
-  border: 1px solid var(--color-primary-200, #e0e0e0);
-  border-radius: var(--radius-md, 12px);
-  padding: var(--spacing-6, 2rem);
-  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.08));
+  background-color: var(--color-white);
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-6);
+  /* Sombra suave */
+  box-shadow: var(--shadow-sm);
 }
 
 .card__title {
-  font-size: var(--font-size-h3, 1.5rem);
-  font-weight: var(--font-weight-semibold, 600);
-  margin-bottom: var(--spacing-4, 1.5rem);
-  color: var(--color-primary-900, #111);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-4);
+  color: var(--color-text-primary);
+  border-bottom: 1px solid var(--color-neutral-100);
+  padding-bottom: var(--spacing-2);
 }
 
-/* Modificación para adaptarse al nuevo HTML con divs si lo usaste, o DL directo */
+/* Lista de Datos (Grid) */
 .card__list {
-  margin: 0;
   display: grid;
-  grid-template-columns: 1fr;
-  row-gap: var(--spacing-3, 1rem);
+  gap: var(--spacing-4);
 }
 
 .field-group {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    border-bottom: 1px solid var(--color-primary-100, #f0f0f0);
-    padding-bottom: 0.5rem;
-    align-items: center;
-
-    &:last-child {
-        border-bottom: none;
-    }
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
 }
 
 .field__label {
-  margin: 0;
-  font-size: var(--font-size-sm, 0.9rem);
-  font-weight: var(--font-weight-medium, 500);
-  color: var(--color-primary-700, #666);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
 }
 
 .field__value {
-  margin: 0;
-  font-size: var(--font-size-body, 1rem);
-  color: var(--color-primary-900, #111);
-  font-weight: 500;
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
 }
 
-.card__actions {
-  display: flex;
-  gap: var(--spacing-3, 1rem);
-  margin-top: var(--spacing-5, 1.5rem);
-  padding-top: var(--spacing-4, 1rem);
-  border-top: 1px solid var(--color-primary-100, #f0f0f0);
-}
-
-/* --- ESTILOS DE BOTONES (MANTENIDOS) --- */
-.btn {
-  padding: var(--spacing-2, 0.5rem) var(--spacing-4, 1.5rem);
-  font-size: var(--font-size-body, 1rem);
-  font-weight: var(--font-weight-medium, 500);
-  border-radius: var(--radius-sm, 8px);
-  cursor: pointer;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-  border: none;
-}
-
-.btn--secondary {
-  background-color: transparent;
-  color: var(--color-primary-900, #111);
-  border: 1px solid var(--color-primary-200, #e0e0e0);
-
-  &:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-  }
-}
-
-
-/* --- 🆕 NUEVOS ESTILOS PARA LA TABLA DE PRESUPUESTOS --- */
-
+/* --- SECCIÓN PRESUPUESTOS --- */
 .budgets-section {
-    margin-top: 3rem;
-}
-
-.budgets-header {
-    margin-bottom: 1rem;
+  margin-top: var(--spacing-8);
 }
 
 .section-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-primary-900, #111);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-4);
 }
 
+/* Estado Vacío */
 .status-msg {
-    padding: 1rem;
-    background: #f9f9f9;
-    border-radius: 8px;
-    text-align: center;
-    color: #666;
+  padding: var(--spacing-6);
+  border-radius: var(--radius-md);
+  text-align: center;
 
-    &.loading { color: #888; font-style: italic; }
-    &.empty { background: #f0f9ff; color: #0066cc; }
+  &.loading {
+    background-color: var(--color-neutral-100);
+    color: var(--color-text-secondary);
+  }
+
+  &.empty {
+    background-color: var(--color-info-300);
+    color: var(--color-info-500);
+    border: 1px dashed var(--color-info-500);
+  }
 }
 
 .link {
-    color: var(--color-primary-600, #8cc63f);
-    text-decoration: underline;
-    font-weight: bold;
+  color: var(--color-text-primary);
+  text-decoration: underline;
+  font-weight: var(--font-weight-bold);
+  &:hover { color: var(--color-accent-500); }
 }
 
+/* --- TABLA MODERNA (Responsive) --- */
 .budgets-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    margin-top: 1rem;
-    font-size: 0.95rem;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--color-white);
 
-    th {
-        text-align: left;
-        padding: 1rem;
-        background: #f4f4f4;
-        color: #555;
-        font-weight: 600;
-        border-bottom: 2px solid #e0e0e0;
+  th {
+    background-color: var(--color-neutral-100);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-bold);
+    text-align: left;
+    padding: var(--spacing-3);
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
 
-        &:first-child { border-radius: 8px 0 0 0; }
-        &:last-child { border-radius: 0 8px 0 0; }
-        &.text-right { text-align: right; }
-        &.text-center { text-align: center; }
+  td {
+    padding: var(--spacing-4) var(--spacing-3);
+    border-bottom: 1px solid var(--color-neutral-100);
+    color: var(--color-text-primary);
+    vertical-align: middle;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* Celdas especiales */
+  .badge-ref {
+    background-color: var(--color-neutral-100);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.85rem;
+  }
+
+  .price-cell {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-success-500); /* Verde dinero */
+    text-align: right;
+  }
+
+  .actions-cell {
+    display: flex;
+    gap: var(--spacing-2);
+    justify-content: center;
+  }
+}
+
+/* Botones de acción (Iconos) */
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1.2rem;
+
+  &:hover {
+    background-color: var(--color-neutral-100);
+    transform: translateY(-2px);
+  }
+
+  &.delete:hover {
+    background-color: var(--color-error-300);
+    color: var(--color-error-500);
+  }
+}
+
+/* RESPONSIVE TABLE (Card View en móvil) */
+@media (max-width: 700px) {
+  .budgets-table {
+    border: none;
+    background: transparent;
+
+    thead { display: none; }
+
+    tr {
+      display: block;
+      background-color: var(--color-white);
+      border: 1px solid var(--color-neutral-300);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-4);
+      padding: var(--spacing-4);
     }
 
     td {
-        padding: 1rem;
-        border-bottom: 1px solid #eee;
-        vertical-align: middle;
-    }
+      display: flex;
+      justify-content: space-between;
+      border: none;
+      padding: var(--spacing-2) 0;
 
-    /* Columnas específicas */
-    .badge-ref {
-        background: #eee;
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-family: monospace;
-        font-size: 0.85rem;
-        color: #333;
+      &::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--color-text-secondary);
+      }
     }
 
     .detail-cell {
-        display: flex;
-        flex-direction: column;
-
-        strong { display: block; color: #333; }
-        small { color: #888; font-size: 0.8rem; }
-    }
-
-    .price-cell {
-        font-weight: bold;
-        color: var(--color-primary-600, #8cc63f);
-        font-size: 1.1rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.2rem;
+      border-bottom: 1px solid var(--color-neutral-100);
+      padding-bottom: var(--spacing-3);
+      margin-bottom: var(--spacing-2);
     }
 
     .actions-cell {
-        display: flex;
-        gap: 0.5rem;
-        justify-content: center;
+      justify-content: flex-end;
+      margin-top: var(--spacing-2);
+      padding-top: var(--spacing-3);
+      border-top: 1px solid var(--color-neutral-100);
     }
-
-    .btn-icon {
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 1.2rem;
-        padding: 0.4rem;
-        border-radius: 4px;
-        transition: background 0.2s;
-
-        &:hover { background: #f0f0f0; }
-        &.download:hover { background: #e6fffa; }
-        &.delete:hover { background: #ffe6e6; }
-    }
-}
-
-/* RESPONSIVE TABLE */
-@media (max-width: 650px) {
-    .field-group { grid-template-columns: 1fr; }
-
-    .budgets-table {
-        thead { display: none; } /* Ocultar cabeceras */
-
-        tr {
-            display: block;
-            margin-bottom: 1rem;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 1rem;
-        }
-
-        td {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: none;
-            padding: 0.5rem 0;
-
-            &::before {
-                content: attr(data-label);
-                font-weight: bold;
-                color: #666;
-                margin-right: 1rem;
-            }
-
-            /* Alineación específica móvil */
-            &.actions-cell {
-                margin-top: 1rem;
-                padding-top: 1rem;
-                border-top: 1px solid #f0f0f0;
-                justify-content: flex-end;
-            }
-        }
-    }
+  }
 }

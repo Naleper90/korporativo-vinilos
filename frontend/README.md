@@ -4,11 +4,12 @@ Aplicación web para calcular precios y gestionar presupuestos/facturas de vinil
 Este repositorio corresponde a la **primera versión del proyecto** desarrollada para las asignaturas **DIW** y **DWEC** del ciclo **2º DAW**.  
 **Autora:** Natalia Alejo Pérez (2º DAW).
 
-## Tecnologías
+🚀 **URL DE PRODUCCIÓN:** [https://korporativo.vercel.app](https://korporativo.vercel.app)
 
-- Framework **Angular**.  
-- TypeScript, HTML5 y CSS (con variables y estilos modulares).  
-- Maquetación semántica y diseño responsive básico.
+## Tecnologías
+- **Frontend:** Angular 17, SCSS, ITCSS/BEM.
+- **Backend:** Spring Boot 3, Java 21, MySQL.
+- **Infraestructura:** Vercel + Railway.
 
 ## Puesta en marcha (desarrollo)
 

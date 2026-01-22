@@ -13,6 +13,8 @@
   color: var(--color-primary-900);
   display: flex;
   flex-direction: column;
+  transition: background-color var(--transition-base) var(--transition-easing),
+    color var(--transition-base) var(--transition-easing);
 }
 
 .layout-header__nav {
