@@ -55,7 +55,7 @@ public class PresupuestoController {
         return ResponseEntity.ok(p);
     }
 
-    // --- NUEVO ENDPOINT: OBTENER PRESUPUESTOS DE UN USUARIO ---
+    // --- OBTENER PRESUPUESTOS DE UN USUARIO ---
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Presupuesto>> getPresupuestosByUserId(@PathVariable Long userId) {
         List<Presupuesto> presupuestos = presupuestoService.getPresupuestosByUserId(userId);
@@ -91,7 +91,6 @@ public class PresupuestoController {
     }
 
     // ELIMINAR
-    // (Ojo: He quitado la restricción estricta de ADMIN para que puedas probar borrar tus propios pedidos)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         Presupuesto existente = presupuestoService.getPresupuestoById(id);

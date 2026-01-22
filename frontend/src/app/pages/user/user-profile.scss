@@ -9,7 +9,7 @@
 
 .user-profile {
   width: 100%;
-  max-width: 100%; /* El contenedor padre ya limita */
+  max-width: 100%;
 }
 
 /* --- CABECERA --- */
@@ -34,7 +34,6 @@
   border: 1px solid var(--color-neutral-300);
   border-radius: var(--radius-md);
   padding: var(--spacing-6);
-  /* Sombra suave */
   box-shadow: var(--shadow-sm);
 }
 
@@ -150,7 +149,7 @@
 
   .price-cell {
     font-weight: var(--font-weight-bold);
-    color: var(--color-success-500); /* Verde dinero */
+    color: var(--color-success-500);
     text-align: right;
   }
 

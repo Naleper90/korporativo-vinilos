@@ -52,8 +52,6 @@ public class AuthController {
             user.getRole().name().replace("ROLE_", "")
         );
 
-        // AuthController.java (dentro del método login)
-
     LoginResponseDTO response = new LoginResponseDTO(
         token,
         user.getUsername(),
@@ -83,8 +81,8 @@ public class AuthController {
         User newUser = new User();
         newUser.setUsername(registerRequest.getUsername());
         newUser.setEmail(registerRequest.getEmail());
-        newUser.setPassword(registerRequest.getPassword()); // Guardamos tal cual (NoOp) o encriptada según tu config
-        newUser.setRole(Role.ROLE_USER); // Rol por defecto
+        newUser.setPassword(registerRequest.getPassword());
+        newUser.setRole(Role.ROLE_USER);
 
 
         userRepository.save(newUser);

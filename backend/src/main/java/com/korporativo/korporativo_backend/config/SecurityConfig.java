@@ -26,7 +26,6 @@ public class SecurityConfig {
         this.userRepository = userRepository;
     }
 
-    // --- ESTE ES EL MÉTODO QUE TE FALTABA ---
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
         return new JwtAuthenticationFilter();
@@ -55,10 +54,8 @@ public class SecurityConfig {
                         // Toda la API requiere estar autenticado
                         .requestMatchers("/api/**").authenticated()
                         
-                        // Lo demás se permite
                         .anyRequest().permitAll()
                 )
-                // Aquí llamamos al método definido arriba
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         // H2 console
@@ -86,7 +83,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // Para entorno de proyecto/pruebas; en real usar BCryptPasswordEncoder
         return NoOpPasswordEncoder.getInstance();
     }
 }

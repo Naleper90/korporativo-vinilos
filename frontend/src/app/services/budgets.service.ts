@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 export class BudgetService {
 
   private http = inject(HttpClient);
-  private apiUrl = environment.apiUrl; // Usualmente http://localhost:8080/api
+  private apiUrl = environment.apiUrl;
 
   // Obtener todos (público/admin)
   getAllBudgets(): Observable<any> {
@@ -26,7 +26,6 @@ export class BudgetService {
     return this.http.post(`${this.apiUrl}/presupuestos`, budget);
   }
 
-  // --- NUEVOS MÉTODOS PARA PERFIL DE USUARIO ---
 
   // Obtener presupuestos de un usuario específico
   getBudgetsByUserId(userId: number): Observable<any[]> {

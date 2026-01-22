@@ -76,7 +76,7 @@ export class RegisterFormComponent {
     this.telefonosArray.removeAt(i);
   }
 
-  // --- VALIDATORS (Igual que antes) ---
+  // --- VALIDATORS ---
   private passwordFuerteValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value as string;
     if (!value) return null;
@@ -131,7 +131,7 @@ export class RegisterFormComponent {
       return;
     }
 
-    const userData = this.form.value; // <--- Definimos userData aquí
+    const userData = this.form.value;
 
     // Llamada al servicio
     this.authService.register(userData).subscribe({

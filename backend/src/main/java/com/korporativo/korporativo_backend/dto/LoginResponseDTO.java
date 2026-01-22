@@ -6,7 +6,7 @@ public class LoginResponseDTO {
     private String type = "Bearer";
     private String username;
     private String role;
-    private Long userId; // <--- CAMPO NUEVO
+    private Long userId;
 
     public LoginResponseDTO() {}
 

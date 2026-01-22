@@ -1,83 +1,88 @@
 <header class="layout-header">
-  <nav class="layout-header__nav layout__container" aria-label="Navegación principal">
-    <!-- LOGO -->
-    <a routerLink="/" class="layout-header__logo">Korporativo</a>
 
-    <!-- HAMBURGER MENU (Móvil) -->
-    <button
-      type="button"
-      class="layout-header__hamburger"
-      aria-label="Abrir menú"
-      (click)="onToggleMobileMenu($event)"
-    >
-      ☰
-    </button>
+  <!-- LOGO -->
+  <a routerLink="/" class="layout-header__logo" aria-label="Ir al inicio">
+    Korporativo<span class="dot" aria-hidden="true">.</span>
+  </a>
 
-    <!-- MENÚ DE NAVEGACIÓN (Escritorio) -->
-    <ul class="layout-header__nav-list" role="list">
+  <!-- BOTÓN HAMBURGUESA (Móvil) -->
+  <button type="button" class="layout-header__hamburger"
+          (click)="onToggleMobileMenu($event)"
+          aria-label="Menú principal"
+          [attr.aria-expanded]="isMobileMenuOpen">
+    <span aria-hidden="true">☰</span>
+  </button>
+
+  <!-- NAVEGACIÓN PRINCIPAL (Escritorio) -->
+  <nav class="layout-header__nav-desktop" aria-label="Navegación principal">
+    <ul class="nav-list">
       <li><a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a></li>
       <li><a routerLink="/calculadora" routerLinkActive="is-active">Calculadora</a></li>
       <li><a routerLink="/contacto" routerLinkActive="is-active">Contacto</a></li>
-
-      <!-- LÓGICA DE AUTENTICACIÓN (Escritorio) -->
-
-      <!-- CASO 1: NO LOGUEADO -->
-      <li *ngIf="!authService.isLoggedIn()">
-        <button type="button" class="layout-header__login-btn" (click)="onLogin()">
-          <span class="icon">👤</span> Entrar
-        </button>
-      </li>
-
-      <!-- CASO 2: LOGUEADO -->
-      <li *ngIf="authService.isLoggedIn()" class="user-menu-item">
-        <!-- AHORA ES UN ENLACE AL ÁREA DE USUARIO -->
-        <a routerLink="/usuario" class="user-greeting" style="text-decoration: none; cursor: pointer;">
-          Hola, {{ authService.currentUser()?.username || authService.currentUser() }}
-        </a>
-        <button type="button" class="btn btn--text btn--logout" (click)="onLogout()">
-          Salir
-        </button>
-      </li>
-
-      <!-- TOGGLE THEME -->
-      <li>
-        <button type="button" class="btn btn--secondary layout-header__theme-toggle" (click)="onToggleTheme()">
-          {{ isDark ? 'Tema claro' : 'Tema oscuro' }}
-        </button>
-      </li>
-    </ul>
-
-    <!-- MENÚ MÓVIL (Oculto por defecto) -->
-    <ul #mobileMenu class="layout-header__nav-mobile" role="list">
-      <li><a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a></li>
-      <li><a routerLink="/calculadora" routerLinkActive="is-active">Calculadora</a></li>
-      <li><a routerLink="/contacto" routerLinkActive="is-active">Contacto</a></li>
-
-      <!-- LÓGICA DE AUTENTICACIÓN (Móvil) -->
-
-      <!-- CASO 1: NO LOGUEADO -->
-      <li *ngIf="!authService.isLoggedIn()">
-        <button type="button" class="layout-header__login-btn layout-header__login-btn--mobile" (click)="onLogin()">
-          Entrar
-        </button>
-      </li>
-
-      <!-- CASO 2: LOGUEADO -->
-      <li *ngIf="authService.isLoggedIn()">
-        <!-- AHORA ES UN ENLACE AL ÁREA DE USUARIO -->
-        <a routerLink="/usuario" style="display: block; margin-bottom: 0.5rem; color: var(--text-color); text-decoration: none;">
-            Hola, {{ authService.currentUser()?.username || authService.currentUser() }}
-        </a>
-        <button type="button" class="btn btn--text" (click)="onLogout()">
-          Cerrar sesión
-        </button>
-      </li>
-
-      <li>
-        <button type="button" class="btn btn--secondary layout-header__theme-toggle" (click)="onToggleTheme()">
-          {{ isDark ? 'Tema claro' : 'Tema oscuro' }}
-        </button>
-      </li>
     </ul>
   </nav>
+
+  <!-- HERRAMIENTAS ESCRITORIO  -->
+  <menu class="layout-header__actions">
+    <li>
+      <button type="button" class="btn-icon" (click)="onToggleTheme()"
+              [attr.aria-label]="isDark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'">
+        <span aria-hidden="true">{{ isDark ? '🌞' : '🌙' }}</span>
+      </button>
+    </li>
+    <li *ngIf="!authService.isLoggedIn()">
+      <button type="button" class="layout-header__login-btn" (click)="onLogin()">
+        <span class="icon" aria-hidden="true">👤</span> Entrar
+      </button>
+    </li>
+    <ng-container *ngIf="authService.isLoggedIn()">
+      <li>
+        <a routerLink="/usuario" class="user-capsule" [attr.aria-label]="'Perfil de ' + authService.currentUser()?.username">
+          <span class="user-avatar">{{ (authService.currentUser()?.username || 'U').charAt(0) | uppercase }}</span>
+          <span class="user-name">{{ authService.currentUser()?.username }}</span>
+        </a>
+      </li>
+      <li>
+        <button type="button" class="btn-icon btn--logout" (click)="onLogout()" aria-label="Cerrar sesión">⏻</button>
+      </li>
+    </ng-container>
+  </menu>
+
+  <!-- MENÚ MÓVIL DESPLEGABLE -->
+  <nav class="layout-header__nav-mobile" [class.is-open]="isMobileMenuOpen" aria-label="Menú móvil">
+    <ul class="mobile-list">
+        <li><a routerLink="/" (click)="closeMobileMenu()" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a></li>
+        <li><a routerLink="/calculadora" (click)="closeMobileMenu()" routerLinkActive="is-active">Calculadora</a></li>
+        <li><a routerLink="/contacto" (click)="closeMobileMenu()" routerLinkActive="is-active">Contacto</a></li>
+    </ul>
+
+    <hr class="mobile-divider">
+
+    <menu class="mobile-actions">
+        <!-- 1. TEMA MÓVIL -->
+        <li>
+            <button (click)="onToggleTheme()" class="mobile-btn mobile-theme-btn">
+                <span aria-hidden="true">{{ isDark ? '🌞' : '🌙' }}</span>
+                <span>{{ isDark ? 'Cambiar a Tema Claro' : 'Cambiar a Tema Oscuro' }}</span>
+            </button>
+        </li>
+
+        <!-- 2. LOGIN / USUARIO -->
+        <li *ngIf="!authService.isLoggedIn()">
+            <button (click)="onLogin()" class="layout-header__login-btn layout-header__login-btn--mobile">Entrar</button>
+        </li>
+
+        <ng-container *ngIf="authService.isLoggedIn()">
+            <li>
+              <a routerLink="/usuario" (click)="closeMobileMenu()" class="mobile-user-link">
+                  Hola, {{ authService.currentUser()?.username }}
+              </a>
+            </li>
+            <li>
+              <button (click)="onLogout()" class="mobile-btn mobile-logout">Cerrar sesión</button>
+            </li>
+        </ng-container>
+    </menu>
+  </nav>
+
 </header>

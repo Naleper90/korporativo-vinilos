@@ -48,12 +48,10 @@ export class CalculatorComponent {
 
     if (!currentUser || !currentUser.id) {
         alert('⚠️ Para guardar un presupuesto necesitas iniciar sesión.');
-        // Opcional: guardas el estado actual para recuperarlo luego
-        this.router.navigate(['/']); // Te lleva al login
+        this.router.navigate(['/']);
         return;
     }
 
-    // 3. Preparar datos para el Backend Java
     const esMetros = this.calc.unidad() === 'm';
     const anchoNormalizado = esMetros ? this.calc.ancho() * 100 : this.calc.ancho();
     const altoNormalizado = esMetros ? this.calc.alto() * 100 : this.calc.alto();

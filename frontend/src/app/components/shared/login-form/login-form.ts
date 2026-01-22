@@ -38,7 +38,6 @@ export class LoginFormComponent {
     // Obtenemos valores
     const { email, password } = this.loginForm.value;
 
-    // AHORA SÍ: Llamada asíncrona real
     this.authService.login(email, password).subscribe({
       next: (response) => {
         this.isLoading = false;
@@ -51,7 +50,6 @@ export class LoginFormComponent {
       },
       error: (err) => {
         this.isLoading = false;
-        // Mensaje amigable si falla
         if (err.status === 401 || err.status === 403) {
            this.errorMessage = 'Usuario o contraseña incorrectos.';
         } else {

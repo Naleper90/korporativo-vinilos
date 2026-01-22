@@ -73,7 +73,6 @@ legend.calculator-section__title {
   margin-bottom: var(--spacing-2);
   color: var(--color-text-primary);
 
-  /* Reset para legend */
   padding: 0;
   display: block;
   width: 100%;
@@ -155,7 +154,6 @@ fieldset {
   }
 }
 
-/* --- Select Personalizado --- */
 .calculator-select {
   width: 100%;
   max-width: 400px;
@@ -174,7 +172,6 @@ fieldset {
   background-size: 1em;
 }
 
-/* --- Chips / Botones Selección --- */
 .calculator-chip {
   padding: 0.5rem 1rem;
   border: var(--border-width-thin) solid var(--color-primary-300);

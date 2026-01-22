@@ -5,7 +5,6 @@ import pdfMake from 'pdfmake/build/pdfmake';
 // @ts-ignore
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 
-// Casting to any avoids the "Property does not exist" error
 (pdfMake as any).vfs = (pdfFonts as any).pdfMake
   ? (pdfFonts as any).pdfMake.vfs
   : (pdfFonts as any).vfs;

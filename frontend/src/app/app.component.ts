@@ -4,7 +4,7 @@ import { RouterOutlet } from '@angular/router';
 
 // Servicios
 import { ThemeService } from './services/theme.service';
-import { NotificationService } from './services/notification'; // (Asumiendo que tienes notificaciones)
+import { NotificationService } from './services/notification';
 
 // Componentes de Layout
 import { Header } from './components/layout/header/header';

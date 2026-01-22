@@ -33,7 +33,7 @@ public class KorporativoBackendApplication {
                 // 2. Crear USER normal
                 User user = new User();
                 user.setUsername("user");
-                user.setEmail("user@korporativo.com");   // <--- IMPORTANTE
+                user.setEmail("user@korporativo.com");
                 user.setPassword("user123");
                 user.setRole(Role.ROLE_USER);
 

@@ -11,14 +11,13 @@ import { RegisterFormComponent } from '../register-form/register-form';
   styleUrls: ['./auth-container.scss']
 })
 export class AuthContainerComponent {
-  isLoginView = true; // Por defecto mostramos Login
+  isLoginView = true;
 
   toggleView(isLogin: boolean) {
     this.isLoginView = isLogin;
   }
 
-  // Se llama cuando el registro termina con éxito
   onRegisterSuccess() {
-    this.isLoginView = true; // Volvemos al Login automáticamente
+    this.isLoginView = true;
   }
 }

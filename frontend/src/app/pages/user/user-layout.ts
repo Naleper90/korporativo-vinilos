@@ -45,7 +45,7 @@ import { Main } from '../../components/layout/main/main';
     /* ESTILOS DEL DASHBOARD GRID */
     .dashboard {
       display: grid;
-      grid-template-columns: 250px 1fr; /* Sidebar fija | Contenido */
+      grid-template-columns: 250px 1fr;
       gap: var(--spacing-8);
       align-items: start;
     }
