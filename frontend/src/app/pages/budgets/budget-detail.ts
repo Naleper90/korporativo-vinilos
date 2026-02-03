@@ -1,7 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { take } from 'rxjs';
 import { BudgetsHttpService, Budget, CreateBudgetDto } from '../../services/budgets-http.service';
 import { BudgetStateService } from '../../services/budget-state';
 
@@ -9,6 +10,7 @@ import { BudgetStateService } from '../../services/budget-state';
   selector: 'app-budget-detail',
   standalone: true,
   imports: [RouterLink, CommonModule, CurrencyPipe, DatePipe, ReactiveFormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section class="budget-detail">
       <h1>Detalle presupuesto #{{ id() }}</h1>
@@ -94,25 +96,28 @@ export class BudgetDetail {
       return;
     }
 
-    this.budgetsHttp.getBudgetById(numericId).subscribe({
-      next: budget => {
-        this.budget.set(budget);
-        this.budgetState.setSelectedBudget(budget);
+    this.budgetsHttp
+      .getBudgetById(numericId)
+      .pipe(take(1))
+      .subscribe({
+        next: budget => {
+          this.budget.set(budget);
+          this.budgetState.setSelectedBudget(budget);
 
-        this.form.patchValue({
-          titulo: budget.titulo,
-          precio: budget.precio,
-          descripcion: budget.descripcion,
-          fecha: budget.fecha,
-          clienteId: budget.clienteId,
-        });
-        this.loading.set(false);
-      },
-      error: () => {
-        this.error.set('No se ha encontrado o no se ha podido cargar el presupuesto.');
-        this.loading.set(false);
-      },
-    });
+          this.form.patchValue({
+            titulo: budget.titulo,
+            precio: budget.precio,
+            descripcion: budget.descripcion,
+            fecha: budget.fecha,
+            clienteId: budget.clienteId,
+          });
+          this.loading.set(false);
+        },
+        error: () => {
+          this.error.set('No se ha encontrado o no se ha podido cargar el presupuesto.');
+          this.loading.set(false);
+        },
+      });
   }
 
   onSave() {
@@ -121,24 +126,20 @@ export class BudgetDetail {
     const body: CreateBudgetDto = this.form.value as CreateBudgetDto;
     this.saving.set(true);
 
-    this.budgetsHttp.updateBudget(this.id()!, body).subscribe({
-      next: updated => {
-        this.budget.set(updated);
-        this.budgetState.setSelectedBudget(updated);
-
-        const current = this.budgetState.budgets();
-        const updatedList = current.map(b =>
-          b.id === updated.id ? updated : b
-        );
-        this.budgetState.setBudgets(updatedList);
-
-        this.saving.set(false);
-      },
-      error: () => {
-        this.error.set('Error al guardar los cambios del presupuesto.');
-        this.saving.set(false);
-      },
-    });
+    this.budgetsHttp
+      .updateBudget(this.id()!, body)
+      .pipe(take(1))
+      .subscribe({
+        next: updated => {
+          this.budget.set(updated);
+          this.budgetState.update(updated);
+          this.saving.set(false);
+        },
+        error: () => {
+          this.error.set('Error al guardar los cambios del presupuesto.');
+          this.saving.set(false);
+        },
+      });
   }
 
   onDelete() {
@@ -150,22 +151,21 @@ export class BudgetDetail {
 
     this.saving.set(true);
 
-    this.budgetsHttp.deleteBudget(id).subscribe({
-      next: () => {
-        const current = this.budgetState.budgets();
-        const updatedList = current.filter(b => b.id !== id);
-        this.budgetState.setBudgets(updatedList);
-        this.budgetState.setSelectedBudget(null);
-
-        this.saving.set(false);
-        this.router.navigate(['/presupuestos'], {
-          queryParams: { deleted: id },
-        });
-      },
-      error: () => {
-        this.error.set('No se ha podido eliminar el presupuesto.');
-        this.saving.set(false);
-      },
-    });
+    this.budgetsHttp
+      .deleteBudget(id)
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
+          this.budgetState.remove(id);
+          this.saving.set(false);
+          this.router.navigate(['/presupuestos'], {
+            queryParams: { deleted: id },
+          });
+        },
+        error: () => {
+          this.error.set('No se ha podido eliminar el presupuesto.');
+          this.saving.set(false);
+        },
+      });
   }
 }

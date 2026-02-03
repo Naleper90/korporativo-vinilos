@@ -99,7 +99,7 @@ export class BudgetsHttpService extends ApiService {
   }
 
   createBudget(body: CreateBudgetDto): Observable<Budget> {
-    return this.post<Budget>('/presupuestos', body).pipe(
+    return this.post<Budget>('/presupuestos/manual', body).pipe(
       map(b => this.mapBudget(b)),
       catchError(error => this.handleError(error)),
     );

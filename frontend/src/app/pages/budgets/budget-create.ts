@@ -1,16 +1,23 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { take } from 'rxjs';
 import { BudgetsHttpService, CreateBudgetDto, BudgetApiError } from '../../services/budgets-http.service';
+import { BudgetStateService } from '../../services/budget-state';
 
 @Component({
   selector: 'app-budget-create',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section class="budget-create">
       <h1>Nuevo presupuesto</h1>
+
+      <p *ngIf="error()" class="budget-create__error">
+        {{ error() }}
+      </p>
 
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <label>
@@ -38,7 +45,9 @@ import { BudgetsHttpService, CreateBudgetDto, BudgetApiError } from '../../servi
           <input type="number" formControlName="clienteId">
         </label>
 
-        <button type="submit" [disabled]="form.invalid">Crear</button>
+        <button type="submit" [disabled]="form.invalid || saving()">
+          {{ saving() ? 'Creando...' : 'Crear presupuesto' }}
+        </button>
       </form>
     </section>
   `,
@@ -46,7 +55,11 @@ import { BudgetsHttpService, CreateBudgetDto, BudgetApiError } from '../../servi
 export class BudgetCreate {
   private fb = inject(FormBuilder);
   private budgetsHttp = inject(BudgetsHttpService);
+  private budgetState = inject(BudgetStateService);
   private router = inject(Router);
+
+  saving = signal(false);
+  error = signal<string | null>(null);
 
   form = this.fb.group({
     titulo: ['', Validators.required],
@@ -60,22 +73,31 @@ export class BudgetCreate {
     if (this.form.invalid) return;
 
     const body: CreateBudgetDto = this.form.value as CreateBudgetDto;
+    this.saving.set(true);
+    this.error.set(null);
 
-    this.budgetsHttp.createBudget(body).subscribe({
-      next: (created) => {
-        this.router.navigate(['/presupuestos', created.id]);
-      },
-      error: (err: BudgetApiError) => {
-        if (err.type === 'validation') {
-          alert('Error de validación en los datos del presupuesto');
-        } else if (err.type === 'network') {
-          alert('Problema de conexión, inténtalo de nuevo');
-        } else if (err.type === 'server') {
-          alert('Error interno del servidor al crear el presupuesto');
-        } else {
-          alert('Error inesperado al crear el presupuesto');
-        }
-      },
-    });
+    this.budgetsHttp
+      .createBudget(body)
+      .pipe(take(1))
+      .subscribe({
+        next: (created) => {
+          this.budgetState.add(created);
+          this.saving.set(false);
+          this.router.navigate(['/presupuestos', created.id]);
+        },
+        error: (err: BudgetApiError) => {
+          this.saving.set(false);
+
+          if (err.type === 'validation') {
+            this.error.set('Error de validación en los datos del presupuesto');
+          } else if (err.type === 'network') {
+            this.error.set('Problema de conexión, inténtalo de nuevo');
+          } else if (err.type === 'server') {
+            this.error.set('Error interno del servidor al crear el presupuesto');
+          } else {
+            this.error.set('Error inesperado al crear el presupuesto');
+          }
+        },
+      });
   }
 }

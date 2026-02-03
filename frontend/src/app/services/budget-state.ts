@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 import type { Budget } from './budgets-http.service';
 
 interface BudgetState {
@@ -19,22 +19,22 @@ export class BudgetStateService {
 
   readonly state = this._state.asReadonly();
 
-  budgets() {
-    return this._state().budgets;
-  }
+  budgets = computed(() => this._state().budgets);
+  selectedBudget = computed(() => this._state().selectedBudget);
+  loading = computed(() => this._state().loading);
+  error = computed(() => this._state().error);
 
-  selectedBudget() {
-    return this._state().selectedBudget;
-  }
+  // --- CONTADORES Y ESTADÍSTICAS ---
+  totalCount = computed(() => this._state().budgets.length);
+  totalAmount = computed(() =>
+    this._state().budgets.reduce((sum, b) => sum + b.precio, 0)
+  );
+  averagePrice = computed(() => {
+    const count = this.totalCount();
+    return count > 0 ? this.totalAmount() / count : 0;
+  });
 
-  loading() {
-    return this._state().loading;
-  }
-
-  error() {
-    return this._state().error;
-  }
-
+  // --- SETTERS ---
   setBudgets(budgets: Budget[]) {
     this._state.update(state => ({
       ...state,
@@ -61,5 +61,39 @@ export class BudgetStateService {
       ...state,
       error,
     }));
+  }
+
+  // --- MÉTODOS CRUD ---
+  add(budget: Budget) {
+    this._state.update(state => ({
+      ...state,
+      budgets: [...state.budgets, budget],
+    }));
+  }
+
+  update(budget: Budget) {
+    this._state.update(state => ({
+      ...state,
+      budgets: state.budgets.map(b => (b.id === budget.id ? budget : b)),
+      selectedBudget:
+        state.selectedBudget?.id === budget.id ? budget : state.selectedBudget,
+    }));
+  }
+
+  remove(id: number) {
+    this._state.update(state => ({
+      ...state,
+      budgets: state.budgets.filter(b => b.id !== id),
+      selectedBudget: state.selectedBudget?.id === id ? null : state.selectedBudget,
+    }));
+  }
+
+  clear() {
+    this._state.set({
+      budgets: [],
+      selectedBudget: null,
+      loading: false,
+      error: null,
+    });
   }
 }

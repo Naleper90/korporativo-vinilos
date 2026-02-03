@@ -71,6 +71,15 @@ public class PresupuestoController {
                 .body(creado);
     }
 
+    // CREAR DESDE FORMULARIO MANUAL (Fase 6)
+    @PostMapping("/manual")
+    public ResponseEntity<Presupuesto> crearManual(@Valid @RequestBody PresupuestoDTO dto) {
+        Presupuesto creado = presupuestoService.createFromManualForm(dto);
+        return ResponseEntity
+                .created(URI.create("/api/presupuestos/" + creado.getId()))
+                .body(creado);
+    }
+
     // ACTUALIZAR
     @PutMapping("/{id}")
     public ResponseEntity<Presupuesto> actualizar(@PathVariable Long id,

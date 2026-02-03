@@ -109,6 +109,48 @@ public class PresupuestoService {
         return savedPresupuesto;
     }
 
+    /**
+     * MÉTODO PARA CREAR PRESUPUESTO DESDE FORMULARIO MANUAL
+     * (Usado en /presupuestos/nuevo - Fase 6)
+     */
+    public Presupuesto createFromManualForm(PresupuestoDTO dto) {
+        System.out.println("📝 Creando presupuesto desde formulario manual...");
+        
+        // 1. Crear entidad Presupuesto
+        Presupuesto presupuesto = new Presupuesto();
+        presupuesto.setTitulo(dto.getTitulo());
+        presupuesto.setPrecio(dto.getPrecio());
+        presupuesto.setDescripcion(dto.getDescripcion());
+        presupuesto.setFecha(dto.getFecha() != null ? dto.getFecha() : LocalDate.now());
+        
+        // 2. Asignar Cliente si existe
+        if (dto.getClienteId() != null) {
+            Cliente cliente = clienteRepository.findById(dto.getClienteId()).orElse(null);
+            if (cliente != null) {
+                presupuesto.setCliente(cliente);
+                System.out.println("✅ Cliente asignado: " + cliente.getNombre());
+            } else {
+                System.err.println("⚠️ Cliente con ID " + dto.getClienteId() + " no encontrado");
+            }
+        }
+        
+        // 3. Asignar Usuario desde SecurityContext (si está autenticado)
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && !auth.getName().equals("anonymousUser")) {
+            userRepository.findByUsername(auth.getName())
+                    .ifPresent(user -> {
+                        presupuesto.setUser(user);
+                        System.out.println("✅ Usuario asignado: " + user.getUsername());
+                    });
+        }
+        
+        // 4. Guardar y devolver
+        Presupuesto savedPresupuesto = presupuestoRepository.save(presupuesto);
+        System.out.println("✅ Presupuesto creado con ID: " + savedPresupuesto.getId());
+        
+        return savedPresupuesto;
+    }
+
     // --- OBTENER PRESUPUESTOS POR USUARIO ---
     public List<Presupuesto> getPresupuestosByUserId(Long userId) {
         return presupuestoRepository.findByUser_Id(userId);

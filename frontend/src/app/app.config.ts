@@ -1,5 +1,11 @@
 import { ApplicationConfig } from '@angular/core';
-import { provideRouter, withPreloading, PreloadAllModules, withViewTransitions } from '@angular/router';
+import {
+  provideRouter,
+  withPreloading,
+  PreloadAllModules,
+  withViewTransitions,
+  withInMemoryScrolling,
+} from '@angular/router';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi, withInterceptors, withFetch } from '@angular/common/http';
 
@@ -12,7 +18,11 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withPreloading(PreloadAllModules),
-      withViewTransitions()
+      withViewTransitions(),
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'enabled',
+        anchorScrolling: 'enabled',
+      })
     ),
 
     provideClientHydration(withEventReplay()),
