@@ -2,6 +2,7 @@ import { Component, signal, inject } from '@angular/core';
 import { NgFor, NgIf, CurrencyPipe } from '@angular/common';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { BudgetsHttpService, Budget } from '../../services/budgets-http.service';
+import { BudgetStateService } from '../../services/budget-state';
 
 @Component({
   selector: 'app-budgets-list',
@@ -48,16 +49,17 @@ import { BudgetsHttpService, Budget } from '../../services/budgets-http.service'
         <button
           type="button"
           (click)="prevPage()"
-          [disabled]="page() === 1"
+          [disabled]="page() === 0 || loading()"
         >
           Página anterior
         </button>
 
-        <span>Página {{ page() }}</span>
+        <span>Página {{ page() + 1 }}</span>
 
         <button
           type="button"
           (click)="nextPage()"
+          [disabled]="loading()"
         >
           Siguiente página
         </button>
@@ -69,14 +71,16 @@ export class BudgetsList {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private budgetsHttp = inject(BudgetsHttpService);
+  private budgetState = inject(BudgetStateService);
 
   budgets = signal<Budget[]>([]);
   fromHome = signal(false);
   error = signal<string | null>(null);
   info = signal<string | null>(null);
 
-  page = signal(1);
+  page = signal(0);
   limit = signal(10);
+  loading = signal(false);
 
   constructor() {
     this.route.queryParamMap.subscribe(params => {
@@ -84,9 +88,12 @@ export class BudgetsList {
 
       const err = params.get('error');
       if (err === 'not-found' || err === 'server-error') {
-        this.error.set('Ha ocurrido un error al cargar el presupuesto.');
+        const message = 'Ha ocurrido un error al cargar el presupuesto.';
+        this.error.set(message);
+        this.budgetState.setError(message);
       } else {
         this.error.set(null);
+        this.budgetState.setError(null);
       }
 
       const deletedId = params.get('deleted');
@@ -101,26 +108,43 @@ export class BudgetsList {
   }
 
   private loadBudgets() {
+    this.loading.set(true);
+    this.budgetState.setLoading(true);
+
     this.budgetsHttp.getBudgets({
       page: this.page(),
       limit: this.limit(),
     }).subscribe({
-      next: budgets => this.budgets.set(budgets),
-      error: () =>
-        this.error.set('No se han podido cargar los presupuestos.'),
+      next: budgets => {
+        this.budgets.set(budgets);
+        this.budgetState.setBudgets(budgets);
+        this.error.set(null);
+        this.budgetState.setError(null);
+        this.loading.set(false);
+        this.budgetState.setLoading(false);
+      },
+      error: () => {
+        const message = 'No se han podido cargar los presupuestos.';
+        this.error.set(message);
+        this.budgetState.setError(message);
+        this.loading.set(false);
+        this.budgetState.setLoading(false);
+      },
     });
   }
 
   prevPage() {
-    if (this.page() > 1) {
+    if (this.page() > 1 && !this.loading()) {
       this.page.update(p => p - 1);
       this.loadBudgets();
     }
   }
 
   nextPage() {
-    this.page.update(p => p + 1);
-    this.loadBudgets();
+    if (!this.loading()) {
+      this.page.update(p => p + 1);
+      this.loadBudgets();
+    }
   }
 
   goToDetail(budget: Budget) {
@@ -129,4 +153,3 @@ export class BudgetsList {
     });
   }
 }
-

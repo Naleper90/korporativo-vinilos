@@ -3,6 +3,15 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import { ApiService } from './api.service';
 
+interface PaginatedBudgetsResponse {
+  content: Budget[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+  size: number;
+}
+
+
 export interface Budget {
   id: number;
   titulo: string;
@@ -74,9 +83,9 @@ export class BudgetsHttpService extends ApiService {
   }
 
   getBudgets(params?: BudgetQueryParams): Observable<Budget[]> {
-    return this.get<Budget[]>('/presupuestos', { params }).pipe(
+    return this.get<PaginatedBudgetsResponse>('/presupuestos', { params }).pipe(
       retry(2),
-      map(budgets => budgets.map(b => this.mapBudget(b))),
+      map(res => res.content.map(b => this.mapBudget(b))),
       catchError(error => this.handleError(error)),
     );
   }

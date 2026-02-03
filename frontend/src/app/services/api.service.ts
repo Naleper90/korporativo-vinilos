@@ -1,11 +1,12 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   protected http = inject(HttpClient);
-  protected baseUrl = 'http://localhost:3000';
+  protected baseUrl = environment.apiUrl;
 
   protected get<T>(path: string, options: object = {}): Observable<T> {
     return this.http.get<T>(`${this.baseUrl}${path}`, options);

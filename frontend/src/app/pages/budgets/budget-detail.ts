@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { BudgetsHttpService, Budget, CreateBudgetDto } from '../../services/budgets-http.service';
+import { BudgetStateService } from '../../services/budget-state';
 
 @Component({
   selector: 'app-budget-detail',
@@ -48,9 +49,10 @@ import { BudgetsHttpService, Budget, CreateBudgetDto } from '../../services/budg
             Guardar cambios
           </button>
 
-          <button type="button"
-                  (click)="onDelete()"
-                  [disabled]="saving()">
+          <button
+            type="button"
+            (click)="onDelete()"
+            [disabled]="saving()">
             Eliminar presupuesto
           </button>
         </form>
@@ -65,6 +67,7 @@ export class BudgetDetail {
   private router = inject(Router);
   private budgetsHttp = inject(BudgetsHttpService);
   private fb = inject(FormBuilder);
+  private budgetState = inject(BudgetStateService);
 
   id = signal<number | null>(null);
   budget = signal<Budget | null>(null);
@@ -94,6 +97,8 @@ export class BudgetDetail {
     this.budgetsHttp.getBudgetById(numericId).subscribe({
       next: budget => {
         this.budget.set(budget);
+        this.budgetState.setSelectedBudget(budget);
+
         this.form.patchValue({
           titulo: budget.titulo,
           precio: budget.precio,
@@ -119,6 +124,14 @@ export class BudgetDetail {
     this.budgetsHttp.updateBudget(this.id()!, body).subscribe({
       next: updated => {
         this.budget.set(updated);
+        this.budgetState.setSelectedBudget(updated);
+
+        const current = this.budgetState.budgets();
+        const updatedList = current.map(b =>
+          b.id === updated.id ? updated : b
+        );
+        this.budgetState.setBudgets(updatedList);
+
         this.saving.set(false);
       },
       error: () => {
@@ -139,6 +152,11 @@ export class BudgetDetail {
 
     this.budgetsHttp.deleteBudget(id).subscribe({
       next: () => {
+        const current = this.budgetState.budgets();
+        const updatedList = current.filter(b => b.id !== id);
+        this.budgetState.setBudgets(updatedList);
+        this.budgetState.setSelectedBudget(null);
+
         this.saving.set(false);
         this.router.navigate(['/presupuestos'], {
           queryParams: { deleted: id },
