@@ -1,0 +1,19 @@
+# Navegadores soportados para producción
+# Angular usará esto para determinar qué polyfills incluir
+
+# Versiones recientes de navegadores principales
+last 2 Chrome versions
+last 2 Firefox versions
+last 2 Safari versions
+last 2 Edge versions
+
+# Navegadores con >0.5% de cuota de mercado global
+> 0.5%
+
+# Firefox ESR (Extended Support Release)
+Firefox ESR
+
+# Excluir navegadores legacy que ya no se usan
+not dead
+not IE 11
+not op_mini all

@@ -28,7 +28,10 @@
         <app-contact-form (formSubmitted)="onFormSubmit()"></app-contact-form>
       </section>
 
-      <app-modal id="contact-modal"></app-modal>
+      <app-modal #modal id="contact-modal">
+        <h2>¡Mensaje enviado!</h2>
+        <p>Gracias por contactar con nosotros. Te responderemos lo antes posible.</p>
+      </app-modal>
     </section>
   </section>
 </app-main>

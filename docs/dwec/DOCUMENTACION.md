@@ -1243,3 +1243,288 @@ La Fase 6 ha transformado la aplicación de un modelo tradicional (reload tras c
 - La búsqueda en tiempo real con debounce mejora la experiencia de usuario
 
 El patrón de Signals elegido equilibra simplicidad, rendimiento y mantenibilidad, siendo ideal para un proyecto de 2º DAW que demuestra conocimiento de arquitecturas frontend modernas.
+
+# Fase 7 · Cross-browser y Testing
+
+## 1. Introducción
+
+En esta fase se implementa la compatibilidad cross-browser de la aplicación Angular, asegurando que funcione correctamente en los navegadores modernos más utilizados (Chrome, Firefox, Edge). Se configuran targets de compilación explícitos mediante `.browserslistrc`, se realizan pruebas exhaustivas en cada navegador y se documenta el soporte completo.
+
+---
+
+## 2. Configuración de navegadores soportados
+
+### 2.1. Archivo `.browserslistrc`
+
+Se ha creado el archivo `.browserslistrc` en la raíz del frontend para definir explícitamente los navegadores objetivo:
+
+```browserslist
+# Navegadores soportados para producción
+# Angular usará esto para determinar qué polyfills incluir
+
+# Versiones recientes de navegadores principales
+last 2 Chrome versions
+last 2 Firefox versions
+last 2 Safari versions
+last 2 Edge versions
+
+# Navegadores con >0.5% de cuota de mercado global
+> 0.5%
+
+# Firefox ESR (Extended Support Release)
+Firefox ESR
+
+# Excluir navegadores legacy que ya no se usan
+not dead
+not IE 11
+not op_mini all
+```
+
+**Ubicación:** `frontend/.browserslistrc`
+
+Este archivo permite que Angular y sus herramientas de compilación:
+- Generen el JavaScript compatible con los navegadores objetivo
+- Incluyan automáticamente los polyfills necesarios
+- Optimicen el bundle según el soporte requerido
+
+### 2.2. Integración con Angular
+
+Angular CLI lee automáticamente `.browserslistrc` durante:
+- `ng build` - Build de producción
+- `ng serve` - Servidor de desarrollo
+- Autoprefixer (CSS) - Añade prefijos vendor cuando es necesario
+
+---
+
+## 3. Pruebas cross-browser realizadas
+
+### 3.1. Navegadores testeados
+
+| Navegador | Versión testeada | Fecha | Resultado |
+|-----------|------------------|-------|-----------|
+| Google Chrome | 144.0.7559.133 (64 bits) | 5 feb 2026 | ✅ Todas las funcionalidades OK |
+| Mozilla Firefox | 147.0.3 (64 bits) | 5 feb 2026 | ✅ Todas las funcionalidades OK |
+| Microsoft Edge | 144.0.3719.115 (64 bits) | 5 feb 2026 | ✅ Todas las funcionalidades OK |
+
+**Sistema operativo:** Windows 11
+
+### 3.2. Funcionalidades testeadas
+
+Para cada navegador se han probado 7 funcionalidades críticas:
+
+1. **Home + Theme Switcher**
+   - Página de inicio en modo claro y oscuro
+   - Persistencia del tema en localStorage
+   - Cambio de tema reactivo
+
+2. **Menú responsive (mobile)**
+   - Menú hamburguesa en vista móvil
+   - Apertura/cierre del menú
+   - Click fuera para cerrar
+
+3. **Calculadora de vinilos**
+   - Inputs numéricos (ancho, alto)
+   - Selectores (material, acabado)
+   - Cálculo de precio en tiempo real
+
+4. **Formulario de contacto**
+   - Validaciones de campos
+   - Envío del formulario
+   - Modal de confirmación
+
+5. **Presupuestos (CRUD completo)**
+   - Listado desde API
+   - Detalle de presupuesto
+   - Creación, edición y eliminación
+
+6. **Formulario de registro avanzado**
+   - Validaciones síncronas y asíncronas
+   - FormArray de teléfonos dinámico
+   - Validación cross-field (passwords)
+
+7. **Persistencia de estado**
+   - Theme en localStorage
+   - Datos del store reactivo
+   - Navegación entre rutas
+
+### 3.3. Tabla de compatibilidad
+
+| Funcionalidad | Chrome | Firefox | Edge | Notas |
+|--------------|--------|---------|------|-------|
+| Home + Theme Switcher | ✅ | ✅ | ✅ | Sin incompatibilidades |
+| Menú mobile | ✅ | ✅ | ✅ | Sin incompatibilidades |
+| Calculadora | ✅ | ✅ | ✅ | Sin incompatibilidades |
+| Formulario contacto | ✅ | ✅ | ✅ | Sin incompatibilidades |
+| Presupuestos (CRUD) | ✅ | ✅ | ✅ | Sin incompatibilidades |
+| Formulario registro | ✅ | ✅ | ✅ | Sin incompatibilidades |
+| Theme persistence | ✅ | ✅ | ✅ | Sin incompatibilidades |
+
+### 3.4. Evidencias de pruebas
+
+Todas las pruebas han sido documentadas con capturas de pantalla organizadas por navegador:
+
+**Estructura de evidencias:**
+```
+docs/dwec/evidencias-cross-browser/
+├── chrome/
+│   ├── 01-home-oscuro.png
+│   ├── 02-menu-mobile.png
+│   ├── 03-calculadora.png
+│   ├── 04-contacto-modal.png
+│   ├── 05-presupuestos-listado.png
+│   ├── 06-presupuesto-detalle.png
+│   └── 07-registro-validaciones.png
+├── firefox/
+│   └── [mismos 7 archivos]
+├── edge/
+│   └── [mismos 7 archivos]
+└── README.md (checklist y resultados)
+```
+
+**Total:** 21 capturas de pantalla (7 funcionalidades × 3 navegadores)
+
+---
+
+## 4. Incompatibilidades detectadas y soluciones
+
+### 4.1. Resultado de las pruebas
+
+Tras realizar pruebas exhaustivas en los 3 navegadores principales, **no se han detectado incompatibilidades**. Todas las funcionalidades operan correctamente sin necesidad de polyfills adicionales ni workarounds específicos por navegador.
+
+### 4.2. Análisis de compatibilidad
+
+**Motivos de la compatibilidad completa:**
+
+1. **Angular 19+** genera código compatible con los navegadores modernos por defecto
+2. **TypeScript** transpila correctamente a ES2020 (soportado por todos los navegadores testeados)
+3. **Zone.js** polyfill incluido maneja la detección de cambios de forma cross-browser
+4. **CSS moderno** con autoprefixer automático vía Angular CLI
+5. **APIs web utilizadas** son estándar y ampliamente soportadas:
+   - localStorage
+   - fetch API
+   - CSS Custom Properties
+   - Flexbox / Grid
+   - Event listeners
+
+---
+
+## 5. Polyfills incluidos
+
+### 5.1. Polyfills por defecto de Angular
+
+Angular incluye automáticamente en `angular.json`:
+
+```json
+"polyfills": ["zone.js"]
+```
+
+**Zone.js** proporciona:
+- Detección de cambios asíncrona
+- Manejo de Promises
+- Soporte para async/await
+- Observables de RxJS
+
+### 5.2. Polyfills adicionales no requeridos
+
+Gracias a los targets modernos definidos en `.browserslistrc`, **no se necesitan polyfills adicionales** para:
+- Array methods (map, filter, reduce)
+- Object methods (assign, entries, values)
+- Promise
+- fetch
+- IntersectionObserver
+- ResizeObserver
+
+Todos los navegadores testeados (Chrome 144+, Firefox 147+, Edge 144+) soportan nativamente estas APIs.
+
+---
+
+## 6. Configuración de compilación
+
+### 6.1. Targets de TypeScript
+
+El archivo `tsconfig.json` define:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022"
+  }
+}
+```
+
+### 6.2. Optimizaciones de build
+
+En `angular.json` para producción:
+
+```json
+"production": {
+  "budgets": [
+    {
+      "type": "initial",
+      "maximumWarning": "4MB",
+      "maximumError": "5MB"
+    }
+  ],
+  "outputHashing": "all"
+}
+```
+
+---
+
+## 7. Testing de APIs web utilizadas
+
+### 7.1. APIs del navegador empleadas
+
+| API | Chrome | Firefox | Edge | Uso en la app |
+|-----|--------|---------|------|---------------|
+| localStorage | ✅ | ✅ | ✅ | Persistencia de tema |
+| fetch API | ✅ | ✅ | ✅ | Llamadas HTTP a backend |
+| CSS Custom Properties | ✅ | ✅ | ✅ | Sistema de temas |
+| Flexbox | ✅ | ✅ | ✅ | Layout responsive |
+| CSS Grid | ✅ | ✅ | ✅ | Layout de componentes |
+| Event Listeners | ✅ | ✅ | ✅ | Interactividad |
+| FormData | ✅ | ✅ | ✅ | Formularios |
+
+**Todas las APIs utilizadas son estándar y están soportadas en los 3 navegadores.**
+
+---
+
+## 8. Resumen de cumplimiento Fase 7
+
+### 8.1. Configuración cross-browser
+
+- ✅ Archivo `.browserslistrc` configurado con targets explícitos
+- ✅ Angular CLI integra automáticamente la configuración
+- ✅ Polyfills necesarios incluidos (zone.js)
+- ✅ Compilación optimizada para navegadores modernos
+
+### 8.2. Pruebas realizadas
+
+- ✅ 3 navegadores testeados (Chrome, Firefox, Edge)
+- ✅ 7 funcionalidades críticas probadas por navegador
+- ✅ 21 capturas de pantalla documentadas
+- ✅ 0 incompatibilidades detectadas
+
+### 8.3. Documentación
+
+- ✅ README con checklist de pruebas completo
+- ✅ Tabla de compatibilidad documentada
+- ✅ Versiones de navegadores registradas
+- ✅ Evidencias organizadas por navegador
+
+---
+
+## 9. Conclusiones
+
+La aplicación **Korporativo Vinilos** demuestra compatibilidad completa con los navegadores modernos más utilizados (Chrome, Firefox, Edge), sin necesidad de polyfills adicionales ni workarounds específicos por navegador.
+
+**Factores clave del éxito:**
+
+1. **Angular 19+** con soporte nativo para navegadores modernos
+2. **Configuración explícita** de targets vía `.browserslistrc`
+3. **APIs web estándar** ampliamente soportadas
+4. **Testing exhaustivo** en los 3 navegadores principales
+5. **Documentación completa** de pruebas y resultados
+
+El proyecto cumple con los estándares de compatibilidad cross-browser para aplicaciones web profesionales en 2026, garantizando una experiencia de usuario consistente independientemente del navegador utilizado.
