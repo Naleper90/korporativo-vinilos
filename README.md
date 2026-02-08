@@ -69,5 +69,48 @@ cd korporativo-vinilos
 
 ***
 
+## 🤝 Contribución
+
+Este es un proyecto académico de 2º DAW. Si deseas reutilizar el código o contribuir, ten en cuenta la estructura actual del proyecto.
+
+### Estructura del proyecto
+
+**Frontend:**
+- Componentes standalone (Angular 19)
+- Estilos: SCSS con metodología BEM
+- Gestión de estado: Signals y servicios reactivos
+- Formularios reactivos con validaciones personalizadas
+
+**Backend:**
+- API REST con Spring Boot
+- DTOs para transferencia de datos
+- PostgreSQL en producción, H2 en desarrollo
+- Autenticación JWT
+
+### Convenciones de código actuales
+
+**Nombres de archivos:**
+- Componentes: `nombre.ts` (ej: `button.ts`, `calculator.ts`)
+- Servicios: `nombre.service.ts` o `nombre.ts`
+- Estilos: Un archivo `.scss` por componente
+
+**Organización:**
+- `components/shared/`: Componentes reutilizables
+- `components/layout/`: Header, footer, breadcrumbs
+- `pages/`: Páginas principales de la aplicación
+- `services/`: Lógica de negocio y estado
+
+### Instalación para desarrollo
+
+Ver sección "Instalación y Despliegue Local" más arriba.
+
+### Documentación adicional
+
+- `CHANGELOG.md`: Historial de versiones
+- `docs/dwec/DOCUMENTACION.md`: Documentación técnica completa (1700 líneas)
+- `docs/dwec/evidencias-cross-browser/`: Capturas de pruebas en navegadores
+
+***
+
 **Autora:** Natalia Alejo Pérez (2º DAW)  
 *Proyecto desarrollado para las asignaturas de Diseño de Interfaces Web (DIW), Desarrollo Web en Entorno Cliente (DWEC) y Desarrollo Web en Entorno Servidor (DWES).*

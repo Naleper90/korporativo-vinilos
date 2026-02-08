@@ -1528,3 +1528,172 @@ La aplicación **Korporativo Vinilos** demuestra compatibilidad completa con los
 5. **Documentación completa** de pruebas y resultados
 
 El proyecto cumple con los estándares de compatibilidad cross-browser para aplicaciones web profesionales en 2026, garantizando una experiencia de usuario consistente independientemente del navegador utilizado.
+
+---
+
+## 10. Auditoría de rendimiento con Lighthouse
+
+### 10.1. Resultados de la auditoría
+
+Se ha ejecutado Google Lighthouse sobre la aplicación en producción (https://korporativo.vercel.app) para medir el rendimiento, accesibilidad, buenas prácticas y SEO.
+
+**Fecha de auditoría:** 5 de febrero de 2026  
+**Modo:** Desktop  
+**URL testeada:** https://korporativo.vercel.app
+
+### 10.2. Puntuaciones obtenidas
+
+| Categoría | Puntuación | Estado |
+|-----------|------------|--------|
+| **Performance** | 89/100 | ✅ Bueno |
+| **Accessibility** | 93/100 | ✅ Excelente |
+| **Best Practices** | 100/100 | ✅ Perfecto |
+| **SEO** | 83/100 | ✅ Bueno |
+
+**Todas las categorías superan el umbral de 80 puntos**, cumpliendo con los criterios de calidad establecidos.
+
+![Reporte Lighthouse](lighthouse-report.png)
+
+### 10.3. Análisis por categoría
+
+#### Performance (89/100)
+
+La aplicación obtiene una puntuación excelente en rendimiento gracias a:
+
+- **Lazy loading** del área de usuario
+- **Tree-shaking** automático de Angular
+- **Optimización de bundles** en build de producción
+- **Output hashing** para caché eficiente
+- **SSR (Server-Side Rendering)** con Angular Universal
+
+**Áreas de mejora detectadas:**
+- Optimización de imágenes (conversión a WebP/AVIF)
+- Precarga de recursos críticos
+
+#### Accessibility (93/100)
+
+Puntuación sobresaliente en accesibilidad:
+
+- **Estructura semántica** correcta (nav, main, footer, section)
+- **Labels en formularios** completos
+- **Contraste de colores** adecuado en ambos temas
+- **ARIA attributes** en componentes interactivos (modal, menú)
+- **Navegación por teclado** funcional
+
+#### Best Practices (100/100)
+
+Puntuación perfecta en buenas prácticas:
+
+- **HTTPS** en producción
+- **Sin errores de consola**
+- **APIs modernas** utilizadas correctamente
+- **Sin librerías con vulnerabilidades conocidas**
+- **Content Security Policy** configurado
+
+#### SEO (83/100)
+
+Buena puntuación en optimización para motores de búsqueda:
+
+- **Meta tags** principales incluidos
+- **Títulos descriptivos** en cada ruta
+- **Estructura HTML semántica**
+- **Responsive** y mobile-friendly
+- **Sitemap.xml** (pendiente de implementar para mejorar)
+
+### 10.4. Conclusiones de la auditoría
+
+La aplicación **Korporativo Vinilos** cumple con los estándares de calidad web modernos:
+
+1. ✅ **Todas las categorías >80 puntos** (criterio cumplido)
+2. ✅ **Best Practices perfecto** (100/100)
+3. ✅ **Accesibilidad sobresaliente** (93/100)
+4. ✅ **Rendimiento optimizado** para navegadores modernos
+5. ✅ **SEO adecuado** para aplicación SPA
+
+**Evidencia:** `docs/dwec/lighthouse-report.png`
+
+---
+
+## 11. Análisis de bundles y optimización
+
+### 11.1. Tamaños de bundles de producción
+
+Se ha ejecutado el build de producción con análisis de estadísticas para verificar los tamaños de los bundles generados.
+
+**Comando ejecutado:**
+```bash
+npm run build -- --stats-json
+```
+
+**Fecha de análisis:** 5 de febrero de 2026
+
+### 11.2. Resultados del build
+
+#### Bundles iniciales
+
+| Archivo | Tamaño raw | Tamaño comprimido (gzip) |
+|---------|-----------|--------------------------|
+| chunk-LYGUY33V.js | 2.21 MB | 709.96 kB |
+| main-7TTMG4DT.js | 151.42 kB | 31.01 kB |
+| polyfills-B6TNHZQ6.js | 34.58 kB | 11.32 kB |
+| styles-E33FO4GU.css | 16.18 kB | 2.61 kB |
+| **Total inicial** | **2.41 MB** | **754.90 kB** |
+
+#### Bundles lazy (carga bajo demanda)
+
+| Archivo | Tamaño raw | Tamaño comprimido (gzip) |
+|---------|-----------|--------------------------|
+| chunk-23N656F5.js (user-routes) | 13.42 kB | 3.44 kB |
+
+**Tiempo de compilación:** 11.9 segundos
+
+### 11.3. Análisis de resultados
+
+#### ✅ Puntos positivos
+
+1. **Compresión efectiva:** Los bundles se reducen un 68% con gzip (de 2.41 MB a 754.90 kB)
+2. **Lazy loading funcional:** El área de usuario se carga bajo demanda (solo 3.44 kB adicionales)
+3. **Bundles secundarios optimizados:** main.js (31 kB), polyfills (11 kB) y styles (2.6 kB) son ligeros
+4. **Build rápido:** Compilación en menos de 12 segundos
+
+#### ⚠️ Áreas de mejora identificadas
+
+**Bundle principal grande (709.96 kB comprimido):**
+- Contiene librerías de terceros (Angular, RxJS, pdfmake)
+- **Causa principal:** pdfmake es una librería CommonJS pesada (~500 kB)
+- **Impacto:** Primera carga tarda más (pero solo la primera vez, luego está en caché)
+
+**Optimizaciones futuras posibles:**
+- Lazy load de pdfmake (solo cargar cuando se genere un PDF)
+- Code splitting adicional de rutas grandes
+- Eliminación de imports no utilizados detectados
+
+**Warnings detectados:**
+- 5 componentes/pipes importados pero no usados en templates (impacto mínimo ~20-30 kB)
+- 1 archivo SCSS excede budget por 685 bytes (calculator.scss: 6.68 kB vs 6 kB)
+- pdfmake no es módulo ESM (limita tree-shaking)
+
+### 11.4. Comparativa con estándares
+
+| Métrica | Valor obtenido | Estándar recomendado | Estado |
+|---------|----------------|----------------------|--------|
+| Bundle inicial comprimido | 754.90 kB | <1 MB | ✅ Cumple |
+| Lazy loading | 3.44 kB | Implementado | ✅ Cumple |
+| Tiempo de build | 11.9s | <30s | ✅ Cumple |
+| Compresión gzip | 68% reducción | >60% | ✅ Cumple |
+
+**Conclusión:** Aunque el bundle principal es grande (~710 kB), está **por debajo de 1 MB comprimido**, que es el límite aceptable para aplicaciones web modernas con funcionalidad completa. El uso de lazy loading, gzip y caché del navegador mitiga el impacto en la experiencia de usuario.
+
+### 11.5. Impacto en rendimiento real
+
+El tamaño de bundles se refleja en las métricas de Lighthouse:
+
+- **Performance: 89/100** - Confirmado en auditoría Lighthouse
+- **First Contentful Paint:** Rápido gracias a SSR
+- **Time to Interactive:** Dentro de rangos aceptables
+- **Lazy loading verificado:** Usuario solo descarga 3.44 kB adicionales al acceder al área privada
+
+**Evidencias:**
+- Reporte de build: Terminal con output completo
+- Stats JSON: `frontend/dist/korporativo-vinilos/stats.json`
+- Lighthouse: Performance 89/100 (sección anterior)
