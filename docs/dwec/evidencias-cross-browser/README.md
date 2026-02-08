@@ -1,8 +1,8 @@
-# Evidencias Cross-Browser Testing
+# Evidencias de pruebas cross-browser
 
-Este directorio contiene las capturas de pantalla de las pruebas realizadas en diferentes navegadores para demostrar la compatibilidad cross-browser de la aplicación.
+Capturas de pantalla de las pruebas en Chrome, Firefox y Edge para verificar la compatibilidad del proyecto.
 
-## 📂 Estructura de carpetas
+## Estructura de carpetas
 
 ```
 evidencias-cross-browser/
@@ -12,15 +12,15 @@ evidencias-cross-browser/
 └── README.md      → Este archivo
 ```
 
-## 🧪 Checklist de pruebas
+## Pruebas realizadas
 
-**URL base de producción:** https://korporativo.vercel.app
+**URL de producción:** https://korporativo.vercel.app
 
-### ✅ Prueba 1: Home + Theme Switcher
+### Prueba 1: Home + Theme Switcher
 **Ruta:** `/`
-- [ ] Captura de la página de inicio en modo claro
-- [ ] Captura de la página de inicio en modo oscuro
-- [ ] Verificar que el tema persiste al recargar (localStorage)
+- [x] Captura de la página de inicio en modo claro
+- [x] Captura de la página de inicio en modo oscuro
+- [x] Verificar que el tema persiste al recargar (localStorage)
 
 **Nombre de archivos:**
 - `chrome/01-home-claro.png`
@@ -32,12 +32,12 @@ evidencias-cross-browser/
 
 ---
 
-### ✅ Prueba 2: Menú responsive
+### Prueba 2: Menú responsive
 **Ruta:** `/` (en vista mobile)
-- [ ] Abrir DevTools (F12)
-- [ ] Cambiar a vista móvil (375px ancho)
-- [ ] Abrir menú hamburguesa
-- [ ] Captura del menú abierto
+- [x] Abrir DevTools (F12)
+- [x] Cambiar a vista móvil (375px ancho)
+- [x] Abrir menú hamburguesa
+- [x] Captura del menú abierto
 
 **Nombre de archivos:**
 - `chrome/02-menu-mobile.png`
@@ -46,11 +46,11 @@ evidencias-cross-browser/
 
 ---
 
-### ✅ Prueba 3: Calculadora
+### Prueba 3: Calculadora
 **Ruta:** `/calculadora`
-- [ ] Rellenar dimensiones (ej: 100x200 cm)
-- [ ] Seleccionar material y acabado
-- [ ] Captura con el precio calculado visible
+- [x] Rellenar dimensiones (ej: 100x200 cm)
+- [x] Seleccionar material y acabado
+- [x] Captura con el precio calculado visible
 
 **Nombre de archivos:**
 - `chrome/03-calculadora.png`
@@ -59,11 +59,11 @@ evidencias-cross-browser/
 
 ---
 
-### ✅ Prueba 4: Formulario de contacto
+### Prueba 4: Formulario de contacto
 **Ruta:** `/contacto`
-- [ ] Rellenar el formulario
-- [ ] Enviar y esperar el modal/toast de confirmación
-- [ ] Captura del modal abierto
+- [x] Rellenar el formulario
+- [x] Enviar y esperar el modal/toast de confirmación
+- [x] Captura del modal abierto
 
 **Nombre de archivos:**
 - `chrome/04-contacto-modal.png`
@@ -72,10 +72,10 @@ evidencias-cross-browser/
 
 ---
 
-### ✅ Prueba 5: Listado de presupuestos
+### Prueba 5: Listado de presupuestos
 **Ruta:** `/presupuestos`
-- [ ] Verificar que carga el listado desde la API
-- [ ] Captura con varios presupuestos visibles
+- [x] Verificar que carga el listado desde la API
+- [x] Captura con varios presupuestos visibles
 
 **Nombre de archivos:**
 - `chrome/05-presupuestos-listado.png`
@@ -84,10 +84,10 @@ evidencias-cross-browser/
 
 ---
 
-### ✅ Prueba 6: Detalle de presupuesto
+### Prueba 6: Detalle de presupuesto
 **Ruta:** `/presupuestos/:id` (hacer clic en uno del listado)
-- [ ] Ver detalles de un presupuesto
-- [ ] Captura del formulario de edición
+- [x] Ver detalles de un presupuesto
+- [x] Captura del formulario de edición
 
 **Nombre de archivos:**
 - `chrome/06-presupuesto-detalle.png`
@@ -96,12 +96,12 @@ evidencias-cross-browser/
 
 ---
 
-### ✅ Prueba 7: Formulario de registro
+### Prueba 7: Formulario de registro
 **Ruta:** `/registro`
-- [ ] Empezar a rellenar el formulario
-- [ ] Introducir un email para ver la validación asíncrona
-- [ ] Añadir un segundo teléfono (FormArray)
-- [ ] Captura con validaciones visibles
+- [x] Empezar a rellenar el formulario
+- [x] Introducir un email para ver la validación asíncrona
+- [x] Añadir un segundo teléfono (FormArray)
+- [x] Captura con validaciones visibles
 
 **Nombre de archivos:**
 - `chrome/07-registro-validaciones.png`
@@ -110,34 +110,25 @@ evidencias-cross-browser/
 
 ---
 
-## 📊 Tabla de compatibilidad
+## Resultados de compatibilidad
 
 | Funcionalidad | Chrome | Firefox | Edge | Notas |
 |--------------|--------|---------|------|-------|
-| Home + Theme | ✅ | ✅ | ✅ | Sin incompatibilidades |
-| Menú mobile | ✅ | ✅ | ✅ | Sin incompatibilidades |
-| Calculadora | ✅ | ✅ | ✅ | Sin incompatibilidades |
-| Formulario contacto | ✅ | ✅ | ✅ | Sin incompatibilidades |
-| Presupuestos (CRUD) | ✅ | ✅ | ✅ | Sin incompatibilidades |
-| Formulario registro | ✅ | ✅ | ✅ | Sin incompatibilidades |
-| Theme persistence | ✅ | ✅ | ✅ | Sin incompatibilidades |
+| Home + Theme | OK | OK | OK | Sin incompatibilidades |
+| Menú mobile | OK | OK | OK | Sin incompatibilidades |
+| Calculadora | OK | OK | OK | Sin incompatibilidades |
+| Formulario contacto | OK | OK | OK | Sin incompatibilidades |
+| Presupuestos (CRUD) | OK | OK | OK | Sin incompatibilidades |
+| Formulario registro | OK | OK | OK | Sin incompatibilidades |
+| Theme persistence | OK | OK | OK | Sin incompatibilidades |
 
-## 🐛 Incompatibilidades detectadas
+## Incompatibilidades
 
-> Tras realizar pruebas exhaustivas en los 3 navegadores principales, no se han detectado incompatibilidades.
-
-### Chrome
-- ✅ Todas las funcionalidades operativas sin incompatibilidades
-
-### Firefox
-- ✅ Todas las funcionalidades operativas sin incompatibilidades
-
-### Edge
-- ✅ Todas las funcionalidades operativas sin incompatibilidades
+Tras probar todas las funcionalidades en los 3 navegadores, no encontramos ninguna incompatibilidad. Todo funciona correctamente en Chrome, Firefox y Edge.
 
 ---
 
-## 📝 Notas adicionales
+## Información de las pruebas
 
 - **Versión de Chrome testeada:** 144.0.7559.133 (64 bits)
 - **Versión de Firefox testeada:** 147.0.3 (64 bits)

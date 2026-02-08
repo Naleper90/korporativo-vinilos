@@ -1,10 +1,31 @@
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
+import { of } from 'rxjs';
+
 import { App } from './app';
+import { ThemeService } from './services/theme.service';
+import { NotificationService } from './services/notification';
 
 describe('App', () => {
   beforeEach(async () => {
+    const themeServiceMock = {
+      theme$: of('light'),
+      setTheme: jasmine.createSpy('setTheme')
+    };
+
+    const notificationServiceMock = {
+      notifications$: of([])
+    };
+
     await TestBed.configureTestingModule({
       imports: [App],
+      providers: [
+        provideHttpClient(),
+        provideRouter([]),
+        { provide: ThemeService, useValue: themeServiceMock },
+        { provide: NotificationService, useValue: notificationServiceMock }
+      ]
     }).compileComponents();
   });
 
@@ -12,12 +33,5 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it('should render title', async () => {
-    const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, korporativo-vinilos');
   });
 });

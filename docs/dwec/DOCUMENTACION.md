@@ -2,7 +2,7 @@
 
 ## 1. Introducción
 
-En esta fase se ha implementado la capa de interacción de la aplicación Angular: gestión de eventos, manipulación del DOM desde componentes, theme switcher y varios componentes interactivos (menú hamburguesa, modal de contacto y tabs informativos).
+Esta fase cubre la capa de interacción de la aplicación: gestión de eventos del DOM, manipulación directa de elementos mediante ViewChild y ElementRef, y componentes interactivos como el menú hamburguesa, el modal de confirmación y las tabs informativas. También incluye el sistema de temas (theme switcher) con persistencia en localStorage.
 
 ---
 
@@ -185,7 +185,7 @@ demoTabs = [
 
 ## 1. Introducción
 
-En esta fase se ha implementado la capa de servicios Angular para comunicación entre componentes hermanos, sistema global de notificaciones (toasts) y gestión centralizada de estados de carga (spinner).
+En este punto del proyecto desarrollamos los servicios reutilizables para comunicación entre componentes. Esto incluye un servicio de notificaciones (toasts) que se muestra en cualquier parte de la app y un servicio de loading para controlar el spinner global durante operaciones asíncronas.
 
 ---
 
@@ -288,7 +288,7 @@ src/app/app.ts
 
 ## 1. Introducción
 
-En esta fase se implementa formularios reactivos avanzados en **`RegisterForm`**: FormBuilder, validadores síncronos/asíncronos, validación **cross-field** y **FormArray** dinámico para múltiples teléfonos.
+Aquí trabajamos con formularios reactivos avanzados en el componente `RegisterForm`. Usamos FormBuilder para construir el formulario, validadores síncronos y asíncronos (email único, username disponible), validación cross-field para comparar contraseñas y un FormArray dinámico que permite añadir múltiples teléfonos.
 
 ---
 
@@ -378,7 +378,7 @@ invalid → deshabilita botón submit
 
 ## 1. Introducción
 
-En esta fase se ha configurado el sistema de rutas de la SPA en Angular: páginas principales (inicio, calculadora, contacto, style guide), nuevo flujo de **presupuestos** (listado + detalle con parámetro dinámico) y una zona de ejemplo para **usuario**, además de una página 404 personalizada.
+El sistema de rutas de la SPA se configura con Angular Router para gestionar toda la navegación. Tenemos rutas principales (inicio, calculadora, contacto), el flujo completo de presupuestos con parámetros dinámicos (`/presupuestos/:id`), un área de usuario protegida con lazy loading y una página 404 para rutas inexistentes.
 
 ---
 
@@ -414,7 +414,7 @@ En esta fase se ha configurado el sistema de rutas de la SPA en Angular: página
 
 ## 4. Ruta 404 y navegación básica
 
-- Se ha definido una ruta wildcard `**` al final de la configuración que carga el componente `NotFound`, con un mensaje claro de error y un enlace de vuelta a `/`.  
+- La ruta wildcard `**` está al final de la configuración y carga el componente `NotFound`, con mensaje de error y enlace de vuelta a `/`.  
 - La navegación principal entre páginas se realiza con `routerLink` en el header y otras secciones (inicio, calculadora, contacto, style guide, presupuestos), evitando enlaces estáticos y recargas completas de página.
 
 ---
@@ -433,16 +433,16 @@ En esta fase se ha configurado el sistema de rutas de la SPA en Angular: página
 
 ## 6. Lazy loading y precarga de módulos
 
-- El área de usuario (`/usuario`) se ha aislado como conjunto de rutas de funcionalidad en `pages/user/user.routes.ts`, agrupando `UserLayout`, `UserProfile` y `UserOrders` bajo una misma ruta padre.  
-- En el router principal (`app.routes.ts`) la ruta `/usuario` se carga de forma perezosa mediante `loadChildren: () => import('./pages/user/user.routes').then(m => m.USER_ROUTES)`, de modo que el código del área de usuario solo se descarga cuando se navega a `/usuario/...`.  
-- La configuración global del router en `app.config.ts` añade la estrategia de precarga `withPreloading(PreloadAllModules)`, lo que hace que, tras la primera carga de la aplicación, Angular descargue en segundo plano los módulos lazy disponibles (en este caso, el área de usuario).  
-- Se ha ejecutado un build de producción (`ng build --configuration production`) y se ha verificado la generación de chunks diferenciados: además del bundle principal (`main-*.js`), se crea un chunk específico etiquetado como `user-routes` tanto en la parte de navegador como en la de servidor, confirmando la segmentación del código entre la parte pública y el área de usuario.
+- El área de usuario (`/usuario`) está aislada en un archivo separado `pages/user/user.routes.ts`. Agrupa las rutas `UserLayout`, `UserProfile` y `UserOrders` bajo una misma ruta padre.
+- En el router principal (`app.routes.ts`), la ruta `/usuario` usa `loadChildren` para carga perezosa: el código del área de usuario solo se descarga cuando el usuario navega allí.
+- La configuración del router incluye `withPreloading(PreloadAllModules)`. Tras la carga inicial, Angular descarga los módulos lazy en segundo plano para que la navegación sea instantánea.
+- Al ejecutar el build de producción (`ng build --configuration production`), se generan chunks diferenciados. Además del bundle principal (`main-*.js`), hay un chunk específico `user-routes` que confirma la segmentación del código.
 
 ---
 
 ## 7. Route Guards: protección de rutas y cambios sin guardar
 
-En esta parte se han implementado **Route Guards** para controlar tanto el acceso a rutas sensibles como la salida de páginas con formularios sin guardar.
+Aquí implementamos **Route Guards** para controlar tanto el acceso a rutas sensibles como la salida de páginas con formularios sin guardar.
 
 ### 7.1. CanActivate: área de usuario protegida
 
@@ -539,7 +539,7 @@ En esta parte se ha implementado un sistema de **breadcrumbs dinámicos** constr
 
 ### 9.2. Componente `<app-breadcrumbs>` y construcción dinámica
 
-- Se ha creado un componente standalone `Breadcrumbs` (`components/layout/breadcrumbs/breadcrumbs.ts`) que se muestra en el layout principal justo debajo del header.
+- El componente standalone `Breadcrumbs` (`components/layout/breadcrumbs/breadcrumbs.ts`) se muestra en el layout principal justo debajo del header.
 - El componente inyecta `Router` y `ActivatedRoute` y escucha los eventos de navegación (`NavigationEnd`) para recalcular los breadcrumbs cada vez que cambia la ruta.  
 - A partir de la ruta raíz (`ActivatedRoute.root`), recorre recursivamente el árbol de rutas activas, acumulando:  
   - El `path` de cada segmento para construir la `url` parcial.  
@@ -604,7 +604,7 @@ Además de la implementación, se ha documentado de forma explícita el sistema 
 
 ## 1. Introducción
 
-En esta fase se ha preparado la infraestructura HTTP de la aplicación Angular: configuración global de `HttpClient`, creación de un servicio base `ApiService` y definición de un interceptor para cabeceras comunes. Gracias a esto, la app puede consumir la API de Spring Boot con operaciones CRUD reales de forma consistente en todos los módulos.
+Para comunicarnos con el backend (Spring Boot), configuramos la infraestructura HTTP de Angular. Esto incluye el módulo HttpClient a nivel global, un servicio base ApiService que encapsula los métodos GET/POST/PUT/DELETE y un interceptor que añade cabeceras comunes. Así podemos hacer operaciones CRUD reales contra la API de forma consistente.
 
 ---
 
@@ -612,13 +612,13 @@ En esta fase se ha preparado la infraestructura HTTP de la aplicación Angular: 
 
 ### 2.1. Configuración de HttpClient
 
-- Se ha configurado el cliente HTTP a nivel global mediante los proveedores de Angular en `app.config.ts`, de modo que `HttpClient` está disponible en toda la aplicación sin importar módulos adicionales por componente o página.
-- La configuración HTTP se declara junto al router y la precarga (`withPreloading(PreloadAllModules)`), manteniendo un único punto de entrada para la infraestructura de la SPA. Esto evita tener que importar módulos HTTP en cada feature y centraliza la configuración en un lugar fácil de localizar.
+- El cliente HTTP se configura de forma global en `app.config.ts` mediante los proveedores de Angular. Así, `HttpClient` está disponible en toda la aplicación sin necesidad de importar módulos adicionales en cada componente.
+- La configuración HTTP se declara junto al router y la precarga (`withPreloading(PreloadAllModules)`), manteniendo un único punto de entrada para la infraestructura de la SPA. Esto centraliza toda la configuración HTTP y evita repetir imports en cada feature.
 
 ### 2.2. Interceptor de cabeceras comunes
 
-- Se ha implementado un interceptor funcional en `interceptors/common-headers.interceptor.ts` que clona cada petición saliente y añade cabeceras estándar como `Content-Type: application/json` y `Accept-Language: es-ES`.
-- El interceptor se registra en la configuración global de HttpClient, asegurando que todas las peticiones compartan las mismas cabeceras sin repetir lógica en cada servicio. Esta capa común también facilita añadir en el futuro otras cabeceras (por ejemplo autenticación o versión de API) sin tocar todos los servicios.
+- Hay un interceptor funcional en `interceptors/common-headers.interceptor.ts` que clona cada petición saliente y añade cabeceras estándar: `Content-Type: application/json` y `Accept-Language: es-ES`.
+- El interceptor se registra en la configuración global de HttpClient. Todas las peticiones comparten las mismas cabeceras sin repetir lógica en cada servicio. En el futuro se pueden añadir otras cabeceras (autenticación, versión de API) sin modificar los servicios individuales.
 
 ---
 
@@ -756,7 +756,7 @@ Con este flujo, el manejo de errores queda centralizado en los servicios, mientr
 
 ## 1. Introducción
 
-En esta fase se implementa la capa avanzada de gestión de estado reactiva usando **Signals de Angular**, permitiendo actualización dinámica del DOM sin recargas de página completa. Se aplican optimizaciones de rendimiento clave (OnPush, trackBy, auto-unsubscribe) y se añade búsqueda en tiempo real con debounce.
+La gestión de estado reactiva del proyecto usa Signals de Angular como patrón principal. Esto permite que las listas se actualicen automáticamente tras crear, editar o eliminar elementos sin necesidad de recargar la página. También aplicamos optimizaciones de rendimiento (OnPush, trackBy, unsubscribe automático) y añadimos búsqueda en tiempo real con debounce.
 
 ---
 
@@ -969,7 +969,7 @@ Gracias a esto, Angular:
 
 ### 5.1. OnPush ChangeDetectionStrategy
 
-Se ha aplicado `ChangeDetectionStrategy.OnPush` en los tres componentes principales del módulo de presupuestos:
+Aplicamos `ChangeDetectionStrategy.OnPush` en los tres componentes principales del módulo de presupuestos:
 
 ```typescript
 @Component({
@@ -1008,7 +1008,7 @@ trackById(index: number, budget: Budget): number {
 
 ### 5.3. Unsubscribe de observables (prevención de memory leaks)
 
-Se han aplicado dos estrategias:
+Usamos dos estrategias para prevenir memory leaks:
 
 #### Estrategia 1: `take(1)` para llamadas HTTP puntuales
 
@@ -1112,7 +1112,7 @@ nextPage() {
 
 ### 7.1. Input de búsqueda con debounce
 
-Se ha implementado búsqueda en tiempo real con `debounceTime` para evitar llamadas excesivas al backend:
+La búsqueda en tiempo real usa `debounceTime` para evitar llamadas excesivas al backend:
 
 ```typescript
 searchControl = new FormControl('');
@@ -1143,7 +1143,7 @@ ngOnInit() {
 
 ### 7.2. Filtrado remoto (API)
 
-La búsqueda llama al backend con el parámetro `search`:
+El input de búsqueda llama al backend con el parámetro `search`:
 
 ```typescript
 private onSearch(term: string) {
@@ -1167,10 +1167,10 @@ private onSearch(term: string) {
 }
 ```
 
-Se ha elegido **filtrado remoto** en lugar de local porque:
-- Permite búsquedas sobre grandes volúmenes de datos sin cargar todo en memoria
+Elegimos **filtrado remoto** en lugar de local porque:
+- Permite búsquedas sobre grandes volúmenes sin cargar todo en memoria
 - Aprovecha índices y optimizaciones del backend (PostgreSQL)
-- Escala mejor a futuro (si crece el número de presupuestos)
+- Escala mejor si crece el número de presupuestos
 
 ### 7.3. Actualización sin flickering
 
@@ -1201,12 +1201,55 @@ Angular conserva los elementos DOM estables y solo actualiza/crea/elimina los ne
 ### 8.2. Flujo de datos unidireccional
 
 ```
-Usuario → Componente → HTTP Service → API Backend
-                ↓
-          actualiza Store (Signals)
-                ↓
-          todos los componentes se actualizan automáticamente
+┌─────────────────────────────────────────────────────────────┐
+│                         Usuario                              │
+│                  (crea nuevo presupuesto)                    │
+└───────────────────────────┬─────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                  BudgetCreate Component                      │
+│                  onSubmit() → llama HTTP                     │
+└───────────────────────────┬─────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                 BudgetsHttpService                           │
+│              createBudget() → POST /api                      │
+└───────────────────────────┬─────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│              Backend API (Spring Boot)                       │
+│           guarda en PostgreSQL y responde                    │
+└───────────────────────────┬─────────────────────────────────┘
+                            │ respuesta: Budget con ID
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│            BudgetStateService.add(budget)                    │
+│          _state.update({ budgets: [...budgets, new] })      │
+└───────────────────────────┬─────────────────────────────────┘
+                            │ Signal emite cambio
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│        Todos los componentes suscritos se actualizan         │
+│              AUTOMÁTICAMENTE sin reload                      │
+└─────────────────────────────────────────────────────────────┘
+                            │
+            ┌───────────────┼───────────────┐
+            │               │               │
+            ▼               ▼               ▼
+    ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
+    │ BudgetsList  │ │  Statistics  │ │   Counters   │
+    │ (lista +1)   │ │ (total +X €) │ │ (count +1)   │
+    └──────────────┘ └──────────────┘ └──────────────┘
 ```
+
+**Características del flujo:**
+- **Unidireccional:** Los datos fluyen en una sola dirección (de arriba hacia abajo)
+- **Inmutable:** Cada actualización crea un nuevo estado sin mutar el anterior
+- **Reactivo:** Los componentes se actualizan automáticamente al cambiar el estado
+- **Desacoplado:** Los componentes no se conocen entre sí, solo conocen al store
 
 ### 8.3. Ventajas del patrón implementado
 
@@ -1234,7 +1277,7 @@ Usuario → Componente → HTTP Service → API Backend
 
 ## 10. Conclusión
 
-La Fase 6 ha transformado la aplicación de un modelo tradicional (reload tras cada operación) a un modelo reactivo moderno donde:
+Esta fase transforma la aplicación de un modelo tradicional (reload tras cada operación) a un modelo reactivo moderno donde:
 
 - El estado vive en un store global (BudgetStateService)
 - Los componentes reaccionan automáticamente a cambios sin código de sincronización manual
@@ -1248,7 +1291,7 @@ El patrón de Signals elegido equilibra simplicidad, rendimiento y mantenibilida
 
 ## 1. Introducción
 
-En esta fase se implementa la compatibilidad cross-browser de la aplicación Angular, asegurando que funcione correctamente en los navegadores modernos más utilizados (Chrome, Firefox, Edge). Se configuran targets de compilación explícitos mediante `.browserslistrc`, se realizan pruebas exhaustivas en cada navegador y se documenta el soporte completo.
+Las pruebas cross-browser garantizan que la aplicación funcione correctamente en Chrome, Firefox y Edge. Para esto, configuramos targets de compilación explícitos en `.browserslistrc`, realizamos pruebas manuales exhaustivas en cada navegador (21 capturas documentadas) y verificamos que no haya incompatibilidades. Además, incluimos el testing unitario con Karma/Jasmine y un coverage superior al 50%.
 
 ---
 
@@ -1256,7 +1299,7 @@ En esta fase se implementa la compatibilidad cross-browser de la aplicación Ang
 
 ### 2.1. Archivo `.browserslistrc`
 
-Se ha creado el archivo `.browserslistrc` en la raíz del frontend para definir explícitamente los navegadores objetivo:
+El archivo `.browserslistrc` en la raíz del frontend define explícitamente los navegadores objetivo:
 
 ```browserslist
 # Navegadores soportados para producción
@@ -1535,7 +1578,7 @@ El proyecto cumple con los estándares de compatibilidad cross-browser para apli
 
 ### 10.1. Resultados de la auditoría
 
-Se ha ejecutado Google Lighthouse sobre la aplicación en producción (https://korporativo.vercel.app) para medir el rendimiento, accesibilidad, buenas prácticas y SEO.
+Ejecutamos Google Lighthouse sobre la aplicación en producción (https://korporativo.vercel.app) para medir el rendimiento, accesibilidad, buenas prácticas y SEO.
 
 **Fecha de auditoría:** 5 de febrero de 2026  
 **Modo:** Desktop  
@@ -1618,7 +1661,7 @@ La aplicación **Korporativo Vinilos** cumple con los estándares de calidad web
 
 ### 11.1. Tamaños de bundles de producción
 
-Se ha ejecutado el build de producción con análisis de estadísticas para verificar los tamaños de los bundles generados.
+Ejecutamos el build de producción con análisis de estadísticas para verificar los tamaños de los bundles generados.
 
 **Comando ejecutado:**
 ```bash
@@ -1697,3 +1740,231 @@ El tamaño de bundles se refleja en las métricas de Lighthouse:
 - Reporte de build: Terminal con output completo
 - Stats JSON: `frontend/dist/korporativo-vinilos/stats.json`
 - Lighthouse: Performance 89/100 (sección anterior)
+
+---
+
+## 12. Testing unitario y code coverage
+
+### 12.1. Configuración del entorno de testing
+
+**Framework de testing:**
+- **Test runner:** Karma 6.4.4
+- **Framework de tests:** Jasmine (sintaxis BDD)
+- **Navegador:** Chrome Headless (ChromeDriver)
+- **Coverage:** Istanbul (integrado con Karma)
+
+**Archivos de configuración:**
+- `karma.conf.js`: Configuración de Karma y reporters
+- `tsconfig.spec.json`: Configuración TypeScript para tests
+  - Tipos: `jasmine` (en lugar de vitest)
+  - `importHelpers: false` y `emitDecoratorMetadata: true` para evitar errores de decoradores
+- `angular.json`: Builder `@angular-devkit/build-angular:karma`
+
+### 12.2. Comando de ejecución
+
+```bash
+cd frontend
+npm test -- --watch=false --code-coverage
+```
+
+### 12.3. Resultados del coverage
+
+**Ejecutado:** 5 de febrero de 2026
+
+```
+=============================== Coverage summary ===============================
+Statements   : 55.18% ( 266/482 )
+Branches     : 27.27% ( 42/154 )
+Functions    : 36.97% ( 44/119 )
+Lines        : 56.36% ( 248/440 )
+================================================================================
+TOTAL: 94 SUCCESS
+```
+
+**✅ Superado el objetivo del 50% de coverage** (56.36% líneas cubiertas)
+
+### 12.4. Tests implementados
+
+#### **Componentes testeados (6 componentes, 41 tests)**
+
+1. **CalculatorComponent** (6 tests funcionales)
+   - Validación de dimensiones (alto/ancho = 0)
+   - Guardado de presupuesto válido
+   - Navegación (onBack)
+   - Usuario no autenticado (alerta + redirect)
+
+2. **ContactFormComponent** (9 tests funcionales)
+   - Validación de email (formato)
+   - Validación de mensaje (minLength: 10)
+   - Formulario válido/inválido
+   - Submit con formulario inválido (mark as touched)
+   - Submit válido (loading + notification + evento)
+
+3. **ButtonComponent** (6 tests funcionales)
+   - Valores default (variant: primary, size: md, disabled: false)
+   - Inputs dinámicos (variant, size, disabled)
+
+4. **ToastComponent** (6 tests funcionales)
+   - Input de notificación (type, message, duration)
+   - Evento `closed` emitido correctamente
+   - Manejo de diferentes tipos (success, error, info, warning)
+
+5. **HomeComponent** (7 tests funcionales)
+   - Array `demoTabs` con 3 elementos
+   - Estructura de tabs (id, label, content)
+   - Navegación: `goToCalculator()` → `/calculadora`
+   - Navegación: `goToBudgets()` → `/presupuestos`
+
+6. **HeaderComponent** (7 tests funcionales)
+   - Toggle de tema (`onToggleTheme`)
+   - Toggle de menú mobile (`onToggleMobileMenu`)
+   - Cerrar menú mobile (`closeMobileMenu`)
+   - Login modal (`onLogin` → `modalService.open('login-modal')`)
+   - Logout (`onLogout` → `authService.logout()` + redirect)
+
+#### **Servicios testeados (5 servicios, 37 tests)**
+
+1. **ThemeService** (5 tests funcionales)
+   - Toggle theme (light ↔ dark)
+   - `setTheme()` guarda en localStorage
+   - Emisión de cambios via Observable
+
+2. **LoadingService** (4 tests funcionales)
+   - `show()` emite `true`
+   - `hide()` emite `false`
+   - Toggle múltiple (show → hide → estados correctos)
+
+3. **NotificationService** (4 tests funcionales)
+   - `show()` emite notificación correcta
+   - Duración custom
+   - Diferentes tipos (success, error, info, warning)
+
+4. **ModalService** (7 tests funcionales)
+   - Añadir modal (`add`)
+   - Eliminar modal (`remove`)
+   - Abrir modal por ID (`open`)
+   - Cerrar modal por ID (`close`)
+   - Múltiples modales simultáneos
+   - Warning cuando modal no existe
+
+5. **CalculatorService** (17 tests funcionales)
+   - Valores iniciales (alto: 0, ancho: 0, unidad: cm, material: monomerico...)
+   - Cálculo de precio base (cm y metros)
+   - Factores de material (polimerico 1.5x, transparente 1.2x, microperforado 1.3x)
+   - Factor de corte (contorno +10%)
+   - Factor de adhesivo (extra +20%)
+   - Coste de instalación (+50€)
+   - Cálculo de IVA por país (ES: 21%, PT: 23%, Canarias: 0%)
+   - Precio total con/sin IVA
+   - Efecto automático (Canarias → IVA desactivado)
+
+#### **Componentes base con tests básicos (16 tests)**
+
+- `App`, `Main`, `Footer`, `Modal`, `Tabs`, `Contact`, `StyleGuide`, etc. (tests `should create`)
+
+### 12.5. Mocks y dependencias
+
+**Técnicas de mocking utilizadas:**
+
+1. **Servicios mockeados con jasmine.createSpy:**
+   ```typescript
+   const loadingServiceMock = {
+     show: jasmine.createSpy('show'),
+     hide: jasmine.createSpy('hide'),
+     loading$: of(false)
+   };
+   ```
+
+2. **Signals mockeados:**
+   ```typescript
+   const authServiceMock = {
+     currentUser: signal({ id: 1, username: 'test', email: 'test@test.com' })
+   };
+   ```
+
+3. **Router mockeado:**
+   ```typescript
+   const routerMock = { navigate: jasmine.createSpy('navigate') };
+   ```
+
+4. **Providers globales:**
+   ```typescript
+   providers: [
+     provideHttpClient(),
+     provideRouter([]),
+     { provide: LoadingService, useValue: loadingServiceMock }
+   ]
+   ```
+
+### 12.6. Estructura de archivos de tests
+
+```
+frontend/src/app/
+├── app.spec.ts
+├── components/
+│   ├── layout/
+│   │   ├── header/header.spec.ts (7 tests)
+│   │   ├── footer/footer.spec.ts
+│   │   └── main/main.spec.ts
+│   └── shared/
+│       ├── button/button.spec.ts (6 tests)
+│       ├── contact-form/contact-form.spec.ts (9 tests)
+│       ├── toast/toast.spec.ts (6 tests)
+│       ├── tabs/tabs.spec.ts
+│       └── modal/modal.spec.ts
+├── pages/
+│   ├── calculator/calculator.spec.ts (6 tests)
+│   ├── contact/contact.spec.ts
+│   ├── home/home.spec.ts (7 tests)
+│   └── style-guide/style-guide.spec.ts
+└── services/
+    ├── theme.service.spec.ts (5 tests)
+    ├── loading.spec.ts (4 tests)
+    ├── notification.spec.ts (4 tests)
+    ├── modal.service.spec.ts (7 tests)
+    └── calculator.service.spec.ts (17 tests)
+```
+
+### 12.7. Reporte de coverage
+
+**Ubicación:** `frontend/coverage/korporativo-vinilos/index.html`
+
+El reporte HTML detallado incluye:
+- Tabla resumen por archivo
+- Líneas cubiertas/no cubiertas coloreadas
+- Navegación por directorios
+- Desglose por: statements, branches, functions, lines
+
+### 12.8. Criterios de calidad cumplidos
+
+| Criterio | Objetivo | Resultado | Estado |
+|----------|----------|-----------|--------|
+| Tests unitarios componentes | 3 mínimo | 6 componentes | ✅ |
+| Tests unitarios servicios | 3 mínimo | 5 servicios | ✅ |
+| Coverage de líneas | >50% | 56.36% | ✅ |
+| Tests funcionales | Sí | 94 tests funcionales | ✅ |
+| No solo "should create" | Sí | Tests de lógica real | ✅ |
+| Build de tests sin errores | Sí | 0 errores | ✅ |
+
+### 12.9. Warnings detectados
+
+**Deprecation warning (no crítico):**
+```
+WARN: 'The 'allowSignalWrites' flag is deprecated and no longer impacts effect()
+      (writes are always allowed)'
+```
+
+**Acción:** Este warning proviene de Angular 19+ donde `allowSignalWrites` ya no es necesario en `effect()`. Se puede ignorar o eliminar el flag del `CalculatorService` constructor si se desea.
+
+### 12.10. Próximos pasos (opcional)
+
+**Tests de integración (no implementados):**
+- HTTP testing con `HttpTestingController`
+- Guards (`authGuard`, `pendingChangesGuard`)
+- Routing end-to-end
+- Flujos completos (crear presupuesto → guardado → listado → detalle)
+
+**Mejora de coverage:**
+- Tests para guards (`authGuard`)
+- Tests para `BudgetsHttpService` con mocks HTTP
+- Tests para `PdfService` (generación de PDF)

@@ -7,9 +7,8 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 
 ## [Unreleased]
 
-- Tests unitarios con coverage >50%
-- Tests de integración
-- Guía de contribución
+- Tests de integración E2E
+- Mejoras en optimización de imágenes
 
 ---
 
@@ -42,6 +41,9 @@ Primera versión completa en producción (https://korporativo.vercel.app)
 - Optimizaciones de rendimiento (OnPush, trackBy, take(1), takeUntil)
 - Configuración .browserslistrc para targets cross-browser
 - Documentación completa de compatibilidad (Chrome, Firefox, Edge)
+- Tests unitarios con Karma/Jasmine (94 tests, coverage 56.36%)
+- Lighthouse audit (Performance: 89, Accessibility: 93, Best Practices: 100, SEO: 83)
+- Análisis de bundles (754.90 kB comprimido con gzip)
 
 ### Changed
 

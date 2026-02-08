@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
 import { Contact } from './contact';
 
@@ -7,8 +8,15 @@ describe('Contact', () => {
   let fixture: ComponentFixture<Contact>;
 
   beforeEach(async () => {
+    const routerMock = {
+      navigate: jasmine.createSpy('navigate')
+    };
+
     await TestBed.configureTestingModule({
-      imports: [Contact]
+      imports: [Contact],
+      providers: [
+        { provide: Router, useValue: routerMock }
+      ]
     })
     .compileComponents();
 
