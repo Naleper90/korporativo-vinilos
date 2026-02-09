@@ -1,3 +1,7 @@
+/**
+ * Servicio de calculadora de precios con estado reactivo (signals + computed).
+ * Calcula precio base, IVA según país, y aplica factores de material/corte/adhesivo.
+ */
 import { Injectable, computed, signal, effect } from '@angular/core';
 
 @Injectable({

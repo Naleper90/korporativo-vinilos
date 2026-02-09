@@ -1,3 +1,7 @@
+/**
+ * Resolver para pre-cargar un presupuesto antes de mostrar la página de detalle.
+ * Redirige a /presupuestos si no se encuentra o hay error.
+ */
 import { inject } from '@angular/core';
 import { ResolveFn, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { catchError, map, of } from 'rxjs';

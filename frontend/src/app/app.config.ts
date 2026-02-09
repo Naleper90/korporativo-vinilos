@@ -1,3 +1,7 @@
+/**
+ * Configuración global de la aplicación Angular.
+ * Incluye providers para routing, HTTP client, interceptores y hydration.
+ */
 import { ApplicationConfig } from '@angular/core';
 import {
   provideRouter,

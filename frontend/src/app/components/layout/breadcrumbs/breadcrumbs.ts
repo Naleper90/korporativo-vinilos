@@ -1,3 +1,7 @@
+/**
+ * Componente de breadcrumbs que se actualiza automáticamente según la ruta.
+ * Escucha Router.events (NavigationEnd) para reconstruir el trail.
+ */
 import { Component, inject, signal } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, RouterLink } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';

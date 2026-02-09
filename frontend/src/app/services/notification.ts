@@ -1,3 +1,6 @@
+/**
+ * Servicio para mostrar notificaciones toast (success, error, info, warning).
+ */
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 

@@ -1,3 +1,6 @@
+/**
+ * Guard para advertir al usuario si intenta salir con cambios sin guardar.
+ */
 import { CanDeactivateFn } from '@angular/router';
 import { RegisterFormComponent } from '../components/shared/register-form/register-form';
 

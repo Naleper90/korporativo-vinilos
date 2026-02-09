@@ -1,5 +1,9 @@
 package com.korporativo.korporativo_backend.controller;
 
+/**
+ * Controller REST para operaciones CRUD de presupuestos.
+ * Incluye paginación y filtros por usuario.
+ */
 import com.korporativo.korporativo_backend.dto.CreatePresupuestoRequestDTO;
 import com.korporativo.korporativo_backend.dto.PresupuestoDTO;
 import com.korporativo.korporativo_backend.model.Presupuesto;

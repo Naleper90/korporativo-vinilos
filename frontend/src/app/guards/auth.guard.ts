@@ -1,3 +1,7 @@
+/**
+ * Guard para proteger rutas que requieren autenticación.
+ * Redirige a /contacto si el usuario no está logueado.
+ */
 import { inject } from '@angular/core';
 import { CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from '../services/auth.service';

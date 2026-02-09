@@ -1,3 +1,7 @@
+/**
+ * Servicio de autenticación con JWT.
+ * Maneja login, registro, logout y estado del usuario mediante signals.
+ */
 import { Injectable, signal, inject, PLATFORM_ID, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap, catchError, throwError } from 'rxjs';

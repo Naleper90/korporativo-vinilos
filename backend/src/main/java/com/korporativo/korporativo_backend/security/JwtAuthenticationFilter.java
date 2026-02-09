@@ -1,5 +1,9 @@
 package com.korporativo.korporativo_backend.security;
 
+/**
+ * Filtro que valida el token JWT en cada petición.
+ * Extrae el token del header Authorization y configura el SecurityContext.
+ */
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

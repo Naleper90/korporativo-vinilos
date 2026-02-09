@@ -1,3 +1,6 @@
+/**
+ * Configuración de rutas de la aplicación con guards y resolvers.
+ */
 import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
 import { StyleGuide } from './pages/style-guide/style-guide';

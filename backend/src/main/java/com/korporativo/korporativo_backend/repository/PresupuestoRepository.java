@@ -1,5 +1,8 @@
 package com.korporativo.korporativo_backend.repository;
 
+/**
+ * Repository de presupuestos con query methods personalizados.
+ */
 import com.korporativo.korporativo_backend.model.Presupuesto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

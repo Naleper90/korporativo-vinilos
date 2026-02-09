@@ -1,3 +1,7 @@
+/**
+ * Store de presupuestos usando signals para estado reactivo global.
+ * Incluye computed properties para estadísticas y operaciones CRUD.
+ */
 import { Injectable, signal, computed } from '@angular/core';
 import type { Budget } from './budgets-http.service';
 

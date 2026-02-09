@@ -1,3 +1,7 @@
+/**
+ * Servicio para gestionar el tema de la aplicación (light/dark/system).
+ * Usa BehaviorSubject para notificar cambios y localStorage para persistencia.
+ */
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';

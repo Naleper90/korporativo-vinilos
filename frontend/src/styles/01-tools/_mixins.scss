@@ -1,3 +1,7 @@
+/**
+ * Mixins reutilizables: media queries, flexbox, cards.
+ */
+
 /* 1. Media queries breakpoints */
 @mixin respond-to($breakpoint) {
   @if $breakpoint == sm {

@@ -1,3 +1,6 @@
+/**
+ * Componente de botón reutilizable con variantes (primary, secondary, ghost, danger).
+ */
 import { Component, Input } from '@angular/core';
 
 @Component({

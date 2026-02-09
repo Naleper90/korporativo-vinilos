@@ -1,3 +1,7 @@
+/**
+ * Componente modal reutilizable con id único.
+ * Se registra en ModalService y se añade al body del documento.
+ */
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewEncapsulation, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';

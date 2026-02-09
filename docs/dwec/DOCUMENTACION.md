@@ -1692,14 +1692,14 @@ npm run build -- --stats-json
 
 ### 11.3. Análisis de resultados
 
-#### ✅ Puntos positivos
+#### Puntos positivos
 
 1. **Compresión efectiva:** Los bundles se reducen un 68% con gzip (de 2.41 MB a 754.90 kB)
 2. **Lazy loading funcional:** El área de usuario se carga bajo demanda (solo 3.44 kB adicionales)
 3. **Bundles secundarios optimizados:** main.js (31 kB), polyfills (11 kB) y styles (2.6 kB) son ligeros
 4. **Build rápido:** Compilación en menos de 12 segundos
 
-#### ⚠️ Áreas de mejora identificadas
+#### Áreas de mejora identificadas
 
 **Bundle principal grande (709.96 kB comprimido):**
 - Contiene librerías de terceros (Angular, RxJS, pdfmake)

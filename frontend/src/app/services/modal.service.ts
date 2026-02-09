@@ -1,3 +1,6 @@
+/**
+ * Servicio para gestionar la apertura/cierre de modales desde cualquier componente.
+ */
 import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })

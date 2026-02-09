@@ -6,3 +6,8 @@ target/
 *.jar
 *.war
 .env
+
+# Documentación de desarrollo (local)
+CONTRIBUTING.md
+ARCHITECTURE.md
+DESARROLLO.md

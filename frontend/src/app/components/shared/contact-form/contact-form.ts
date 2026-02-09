@@ -1,3 +1,6 @@
+/**
+ * Formulario de contacto con validaciones reactivas (email, required, minLength).
+ */
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Button } from '../button/button';

@@ -1,5 +1,9 @@
 package com.korporativo.korporativo_backend.service;
 
+/**
+ * Servicio de lógica de negocio para presupuestos.
+ * Maneja conversión de DTOs, validaciones y operaciones CRUD.
+ */
 import com.korporativo.korporativo_backend.dto.CreatePresupuestoRequestDTO;
 import com.korporativo.korporativo_backend.dto.PresupuestoDTO;
 import com.korporativo.korporativo_backend.model.Cliente;

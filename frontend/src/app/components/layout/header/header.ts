@@ -1,3 +1,7 @@
+/**
+ * Componente de cabecera con menú móvil responsive.
+ * Usa @ViewChild y @HostListener para detectar clics fuera del menú.
+ */
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';

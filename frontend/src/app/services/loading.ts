@@ -1,3 +1,6 @@
+/**
+ * Servicio simple para mostrar/ocultar el spinner de carga global.
+ */
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 

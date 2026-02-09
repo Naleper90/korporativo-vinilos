@@ -1,5 +1,8 @@
 package com.korporativo.korporativo_backend.model;
 
+/**
+ * Entidad JPA de presupuesto con relaciones a Cliente, User y ViniloConfig.
+ */
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;

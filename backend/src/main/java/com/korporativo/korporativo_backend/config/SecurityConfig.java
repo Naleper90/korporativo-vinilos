@@ -1,5 +1,9 @@
 package com.korporativo.korporativo_backend.config;
 
+/**
+ * Configuración de seguridad con JWT.
+ * Define filtros, rutas públicas/protegidas y habilita @PreAuthorize.
+ */
 import com.korporativo.korporativo_backend.model.Role;
 import com.korporativo.korporativo_backend.model.User;
 import com.korporativo.korporativo_backend.repository.UserRepository;
