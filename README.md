@@ -398,7 +398,7 @@ map(res => res.content.map(b => this.mapBudget(b)))
 
 // Normalizar estructura
 private mapBudget(b: Budget): Budget {
-  return { ...b }; // Aquí se podría adaptar estructura
+  return { ...b };
 }
 ```
 

@@ -30,7 +30,6 @@ public class PresupuestoController {
         this.presupuestoService = presupuestoService;
     }
 
-    // LISTAR TODOS (DTO) - Para Admin o paginación general
     @GetMapping
     public ResponseEntity<Page<PresupuestoDTO>> listarPaginado(
             @RequestParam(defaultValue = "0") int page,

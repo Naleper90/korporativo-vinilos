@@ -67,7 +67,6 @@ export class BudgetStateService {
     }));
   }
 
-  // --- MÉTODOS CRUD ---
   add(budget: Budget) {
     this._state.update(state => ({
       ...state,

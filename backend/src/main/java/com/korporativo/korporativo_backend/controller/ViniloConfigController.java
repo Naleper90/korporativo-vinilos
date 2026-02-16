@@ -22,7 +22,6 @@ public class ViniloConfigController {
         this.viniloConfigService = viniloConfigService;
     }
 
-    // LISTAR TODOS (DTO)
     @GetMapping
     public List<ViniloConfigDTO> listar() {
         return viniloConfigService.findAll()

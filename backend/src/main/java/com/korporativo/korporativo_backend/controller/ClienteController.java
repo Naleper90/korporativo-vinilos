@@ -25,7 +25,6 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    // LISTAR
     @GetMapping
     public ResponseEntity<Page<ClienteDTO>> listarPaginado(
             @RequestParam(defaultValue = "0") int page,

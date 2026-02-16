@@ -2,7 +2,6 @@
  * Design tokens del proyecto: colores, espaciados, tipografía, sombras, transiciones.
  */
 :root {
-
   --color-neutral-900: #000000;
   --color-neutral-700: #333333;
   --color-neutral-500: #555555;
@@ -33,8 +32,9 @@
   --color-info-500: #1465d8;
   --color-info-300: #e5f2ff;
 
-  --font-family-primary: "Roboto", system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-family-primary:
+    "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -106,17 +106,17 @@
   --font-size-h2: var(--font-size-2xl);
   --font-size-h3: var(--font-size-xl);
 
---theme-current: light;
+  --theme-current: light;
 
---color-neutral-dark-900: #f8fafc;
---color-neutral-dark-700: #e2e8f0;
---color-neutral-dark-500: #94a3b8;
---color-neutral-dark-300: #64748b;
---color-neutral-dark-100: #334155;
---color-white-dark: #0f172a;
+  --color-neutral-dark-900: #f8fafc;
+  --color-neutral-dark-700: #e2e8f0;
+  --color-neutral-dark-500: #94a3b8;
+  --color-neutral-dark-300: #64748b;
+  --color-neutral-dark-100: #334155;
+  --color-white-dark: #0f172a;
 
---shadow-dark-sm: 0 1px 3px rgba(255, 255, 255, 0.05);
---shadow-dark-md: 0 4px 6px rgba(255, 255, 255, 0.08);
+  --shadow-dark-sm: 0 1px 3px rgba(255, 255, 255, 0.05);
+  --shadow-dark-md: 0 4px 6px rgba(255, 255, 255, 0.08);
 
   --color-header-bg: var(--color-primary-900);
   --color-header-text: var(--color-white);
