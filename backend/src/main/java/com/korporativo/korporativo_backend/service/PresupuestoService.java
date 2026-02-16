@@ -53,6 +53,9 @@ public class PresupuestoService {
                 );
     }
 
+    /**
+     * MÉTODO PRINCIPAL PARA GUARDAR DESDE CALCULADORA ANGULAR
+     */
     public Presupuesto createFullBudget(CreatePresupuestoRequestDTO dto) {
 
         // 1. Crear la entidad Presupuesto (Cabecera)
@@ -110,6 +113,10 @@ public class PresupuestoService {
         return savedPresupuesto;
     }
 
+    /**
+     * MÉTODO PARA CREAR PRESUPUESTO DESDE FORMULARIO MANUAL
+     * (Usado en /presupuestos/nuevo - Fase 6)
+     */
     public Presupuesto createFromManualForm(PresupuestoDTO dto) {
         System.out.println("📝 Creando presupuesto desde formulario manual...");
         

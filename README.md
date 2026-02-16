@@ -21,6 +21,93 @@ El proyecto destaca por implementar una arquitectura profesional escalable, sepa
 *   **Diseño Modular:** Componentes UI reutilizables basados en una guía de estilos propia.
 *   **Modo Oscuro:** Sistema de temas (Claro/Oscuro) con persistencia en el navegador.
 *   **Arquitectura CSS:** Metodología BEM + ITCSS para estilos escalables y mantenibles.
+*   **Accesibilidad WCAG 2.1 AA:** Cumplimiento completo de las pautas de accesibilidad web (100% de criterios).
+
+---
+
+## ♿ Accesibilidad Web (WCAG 2.1)
+
+### Nivel de Conformidad Alcanzado
+
+**WCAG 2.1 Nivel AA - 100% de criterios cumplidos** ✅
+
+| Nivel | Criterios evaluados | Cumplidos | Porcentaje |
+|-------|---------------------|-----------|------------|
+| **Nivel A** | 30 | 30 | **100%** |
+| **Nivel AA** | 20 | 20 | **100%** |
+| **TOTAL** | **50** | **50** | **100%** |
+
+### Componente Multimedia Accesible
+
+**Carrusel de imágenes CSS puro** implementado en la página de inicio:
+- ✅ Navegación por teclado nativa (`<input type="radio">` + `<label>`)
+- ✅ Textos alternativos descriptivos en todas las imágenes
+- ✅ ARIA attributes (`aria-label`, `aria-labelledby`, `aria-live="polite"`)
+- ✅ Contador de posición anunciado a lectores de pantalla
+- ✅ Sin dependencia de JavaScript para funcionalidad básica
+- ✅ Lazy loading optimizado (primera imagen eager, resto lazy)
+
+### Correcciones Aplicadas
+
+Se identificaron y corrigieron **5 errores de accesibilidad**:
+
+| # | Error | Criterio WCAG | Impacto | Estado |
+|---|-------|---------------|---------|--------|
+| 1 | Idioma incorrecto (`lang="en"` → `lang="es"`) | 3.1.1 (A) | Alto | ✅ Corregido |
+| 2 | Botones sin `type="button"` | 4.1.2 (A) | Medio | ✅ Corregido |
+| 3 | Botón toast sin `aria-label` | 4.1.2 (A) | Alto | ✅ Corregido |
+| 4 | `outline: none` en inputs (foco invisible) | 2.4.7 (AA) | Crítico | ✅ Corregido |
+| 5 | Falta de skip link | 2.4.1 (A) | Medio | ✅ Corregido |
+
+### Estructura Semántica
+
+- ✅ HTML5 semántico (`<header>`, `<nav>`, `<main>`, `<footer>`, `<section>`, `<article>`)
+- ✅ Jerarquía de encabezados correcta (h1 → h2 → h3)
+- ✅ Landmarks ARIA para navegación rápida
+- ✅ Formularios accesibles (`<label>`, `<fieldset>`, `<legend>`)
+- ✅ Skip link: "Saltar al contenido principal"
+
+### Características de Accesibilidad Implementadas
+
+**Navegación:**
+- Skip link visible al foco para saltar navegación repetitiva
+- Breadcrumbs dinámicos en todas las páginas
+- Orden de tabulación lógico y consistente
+- Foco visible (outline 2px con offset) en todos los elementos interactivos
+
+**Formularios:**
+- Labels asociados correctamente a todos los inputs
+- Mensajes de error claros y específicos
+- Validación en tiempo real con feedback visual
+- Prevención de errores (botón submit deshabilitado si formulario inválido)
+- ARIA attributes: `aria-required`, `aria-invalid`, `role="alert"`
+
+**Contraste y Visibilidad:**
+- Ratio de contraste mínimo 4.5:1 para texto normal
+- Ratio de contraste mínimo 3:1 para elementos UI
+- Modo oscuro con contraste verificado
+- Responsive hasta 320px sin scroll horizontal
+
+**Compatibilidad:**
+- Funciona sin JavaScript (carrusel, navegación básica)
+- Compatible con lectores de pantalla (NVDA, JAWS, VoiceOver)
+- Testado en Chrome, Firefox y Edge
+
+### Documentación Completa
+
+📄 **[Ver análisis completo de accesibilidad](./docs/accesibilidad/README.md)** (8 secciones, 1100+ líneas)
+
+**Contenido:**
+1. Fundamentos de accesibilidad (WCAG, principios POUR, niveles)
+2. Componente multimedia accesible (carrusel CSS)
+3. Auditorías con herramientas automáticas
+4. Errores detectados y correcciones aplicadas (5 errores)
+5. Análisis de estructura semántica
+6. Tests manuales de accesibilidad
+7. Checklist WCAG 2.1 Nivel AA completo (50 criterios)
+8. Conclusiones y reflexión
+
+---
 
 ## 🛠 Stack Tecnológico
 
@@ -398,7 +485,7 @@ map(res => res.content.map(b => this.mapBudget(b)))
 
 // Normalizar estructura
 private mapBudget(b: Budget): Budget {
-  return { ...b };
+  return { ...b }; // Aquí se podría adaptar estructura
 }
 ```
 
@@ -962,7 +1049,9 @@ Ver sección "Instalación y Despliegue Local" más arriba.
 ### Documentación adicional
 
 - `CHANGELOG.md`: Historial de versiones
-- `docs/dwec/DOCUMENTACION.md`: Documentación técnica completa (1700 líneas)
+- `docs/dwec/DOCUMENTACION.md`: Documentación técnica DWEC (1700 líneas)
+- `docs/design/DOCUMENTACION.md`: Documentación de diseño DIW
+- `docs/accesibilidad/README.md`: Análisis completo de accesibilidad WCAG 2.1 (1100 líneas)
 - `docs/dwec/evidencias-cross-browser/`: Capturas de pruebas en navegadores
 
 ***
