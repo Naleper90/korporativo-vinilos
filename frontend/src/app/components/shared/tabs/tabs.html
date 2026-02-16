@@ -5,6 +5,7 @@
       class="tabs__tab"
       [class.tabs__tab--active]="activeTab === tab.id"
       type="button"
+      role="tab"
       (click)="activeTab = tab.id">
       {{ tab.label }}
     </button>
