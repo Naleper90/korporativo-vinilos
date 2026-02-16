@@ -8,7 +8,6 @@ import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-  // Manejamos tres estados: claro, oscuro o automático (sistema)
   private themeSubject = new BehaviorSubject<'light' | 'dark' | 'system'>('system');
   theme$ = this.themeSubject.asObservable();
 
@@ -19,14 +18,12 @@ export class ThemeService {
   }
 
   private initTheme(): void {
-    // Recuperamos preferencia guardada o usamos 'system' por defecto
     const saved = localStorage.getItem('theme') as 'light' | 'dark' | 'system';
     const theme = saved || 'system';
     this.setTheme(theme);
   }
 
   setTheme(theme: 'light' | 'dark' | 'system'): void {
-    // 1. Guardar persistencia
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('theme', theme);
     }

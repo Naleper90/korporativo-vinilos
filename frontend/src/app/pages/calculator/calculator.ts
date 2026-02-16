@@ -81,9 +81,9 @@ export class CalculatorComponent {
 
         // --- GENERAR Y DESCARGAR PDF ---
         this.pdfService.generateBudgetPDF({
-            id: response.id, // ID que devuelve el backend
-            ...presupuestoParaBackend, // Datos que acabamos de enviar
-            createdAt: new Date().toISOString(), // Fecha actual
+            id: response.id,
+            ...presupuestoParaBackend,
+            createdAt: new Date().toISOString(),
             clientName: currentUser.username, // Añadimos nombre al PDF
             clientEmail: currentUser.email
         });

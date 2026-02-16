@@ -155,7 +155,7 @@
             <input type="checkbox"
                   [checked]="calc.incluirIvaManual()"
                   (change)="calc.incluirIvaManual.set(!calc.incluirIvaManual())"
-                  [disabled]="calc.pais() === 'CANARIAS'" /> <!-- Solo bloqueado si es Canarias -->
+                  [disabled]="calc.pais() === 'CANARIAS'" />
             <span>
               @if (calc.pais() === 'ES') { Incluir IVA (21%) }
               @else if (calc.pais() === 'PT') { Incluir IVA (23%) }

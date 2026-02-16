@@ -36,7 +36,6 @@
 
     <!-- MODO REGISTRO -->
     <section *ngIf="!isLoginView" class="fade-in" aria-label="Formulario de registro">
-      <!-- Conectamos el evento del hijo con el método del padre -->
       <app-register-form (registerSuccess)="onRegisterSuccess()"></app-register-form>
 
       <p class="auth-switch-text">

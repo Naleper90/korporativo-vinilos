@@ -98,3 +98,23 @@
   line-height: var(--line-height-normal);
   color: var(--color-primary-500);
 }
+
+/* =========================================
+   SKIP LINK (Accesibilidad)
+   ========================================= */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-accent-important);
+  color: var(--color-neutral-900);
+  padding: 8px 16px;
+  text-decoration: none;
+  font-weight: 600;
+  z-index: 100;
+  border-radius: 0 0 4px 0;
+  
+  &:focus {
+    top: 0;
+  }
+}

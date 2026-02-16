@@ -18,7 +18,6 @@
         [class.has-error]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
         autocomplete="email"
       >
-      <!-- Feedback de error  -->
       <span *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="form-error-text">
         Email inválido
       </span>

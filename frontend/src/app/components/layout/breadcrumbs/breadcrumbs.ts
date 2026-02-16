@@ -29,6 +29,11 @@ type Crumb = { label: string; url: string };
       </ng-container>
     </nav>
   `,
+  styles: [`
+    .breadcrumbs {
+      display: none;
+    }
+  `]
 })
 export class Breadcrumbs {
   private router = inject(Router);

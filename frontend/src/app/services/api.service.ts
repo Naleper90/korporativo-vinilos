@@ -1,5 +1,6 @@
 /**
  * Servicio base para peticiones HTTP al backend.
+ * Proporciona métodos reutilizables (GET, POST, PUT, DELETE) con la URL base configurada.
  */
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';

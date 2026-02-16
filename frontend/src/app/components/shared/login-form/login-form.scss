@@ -42,7 +42,8 @@
     color: var(--color-text-primary);
 
     &:focus {
-      outline: none;
+      outline: 2px solid var(--color-accent-important);
+      outline-offset: 2px;
       border-color: var(--color-accent-important);
     }
 

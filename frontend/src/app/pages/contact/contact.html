@@ -1,12 +1,33 @@
 <app-main>
   <section class="contact-page">
-    <button class="back-button" type="button" (click)="onBack()">
-      ← Volver
-    </button>
+    <nav>
+      <button class="back-button" type="button" (click)="onBack()">
+        ← Volver
+      </button>
+    </nav>
+
+    <header class="contact-page__header">
+      <h1>Contacto</h1>
+    </header>
 
     <section class="contact-page__container">
+      <!-- IMAGEN DE FONDO -->
+      <figure class="contact-backdrop" aria-label="Fondo decorativo de vinilo">
+        <picture>
+          <source srcset="assets/images/hero-home.webp" type="image/webp">
+          <source srcset="assets/images/hero-home.jpg" type="image/jpeg">
+          <img
+            src="assets/images/hero-home.jpg"
+            alt=""
+            class="contact-backdrop__img"
+            loading="eager"
+            width="800"
+            height="600"
+          >
+        </picture>
+      </figure>
+
       <section class="contact-page__info">
-        <h1>Contacto</h1>
 
         <h2>Información de la empresa:</h2>
 

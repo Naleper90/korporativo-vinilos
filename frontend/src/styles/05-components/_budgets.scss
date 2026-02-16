@@ -42,7 +42,8 @@
   transition: border-color var(--transition-fast);
 
   &:focus {
-    outline: none;
+    outline: 2px solid var(--color-primary-900);
+    outline-offset: 2px;
     border-color: var(--color-primary-900);
   }
 

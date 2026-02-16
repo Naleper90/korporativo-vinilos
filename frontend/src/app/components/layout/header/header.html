@@ -61,7 +61,7 @@
     <menu class="mobile-actions">
         <!-- 1. TEMA MÓVIL -->
         <li>
-            <button (click)="onToggleTheme()" class="mobile-btn mobile-theme-btn">
+            <button type="button" (click)="onToggleTheme()" class="mobile-btn mobile-theme-btn">
                 <span aria-hidden="true">{{ isDark ? '🌞' : '🌙' }}</span>
                 <span>{{ isDark ? 'Cambiar a Tema Claro' : 'Cambiar a Tema Oscuro' }}</span>
             </button>
@@ -79,7 +79,7 @@
               </a>
             </li>
             <li>
-              <button (click)="onLogout()" class="mobile-btn mobile-logout">Cerrar sesión</button>
+              <button type="button" (click)="onLogout()" class="mobile-btn mobile-logout">Cerrar sesión</button>
             </li>
         </ng-container>
     </menu>

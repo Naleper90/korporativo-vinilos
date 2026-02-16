@@ -30,8 +30,6 @@ export class CalculatorService {
   incluirIvaManual = signal<boolean>(true);
 
   constructor() {
-    // EFECTO: Si selecciona Canarias, desactivamos el IVA automáticamente.
-    // Si vuelve a Península (ES/PT), lo reactivamos por defecto.
     effect(() => {
       if (this.pais() === 'CANARIAS') {
         this.incluirIvaManual.set(false);
@@ -43,7 +41,6 @@ export class CalculatorService {
 
   // --- CÁLCULOS ---
 
-  // 1. Calcular precio base (Material + Corte + Adhesivo + Instalación)
   precioBase = computed(() => {
     let h = this.alto();
     let w = this.ancho();
@@ -57,7 +54,6 @@ export class CalculatorService {
     const area = h * w;
     if (area <= 0) return 0;
 
-    // Factor Material
     let factor = 1;
     switch (this.material()) {
       case 'polimerico': factor = 1.5; break;
@@ -72,7 +68,6 @@ export class CalculatorService {
     // Factor Adhesivo (+20% si es extra)
     if (this.adhesivo() === 'extra') factor *= 1.20;
 
-    // Coste Material
     let total = area * this.PRECIO_BASE_CM2 * factor;
 
     // Sumar Instalación (Costo fijo)
@@ -97,8 +92,6 @@ export class CalculatorService {
   precioTotal = computed(() => {
     const base = this.precioBase();
 
-    // LÓGICA MODIFICADA:
-    // Si el usuario desmarcó la casilla (incluirIvaManual es false), devolvemos la base limpia.
     if (!this.incluirIvaManual()) {
         return Number(base.toFixed(2));
     }

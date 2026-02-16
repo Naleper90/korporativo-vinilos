@@ -11,9 +11,12 @@ export class BudgetService {
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
 
+  // Obtener todos (público/admin)
   getAllBudgets(): Observable<any> {
     return this.http.get(`${this.apiUrl}/presupuestos`);
   }
+
+  // Obtener uno por ID
   getBudgetById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/presupuestos/${id}`);
   }

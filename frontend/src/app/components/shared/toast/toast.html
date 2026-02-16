@@ -1,5 +1,7 @@
 <section class="toast" [class.success]="notification.type === 'success'"
                       [class.error]="notification.type === 'error'">
   {{ notification.message }}
-  <button (click)="close()">×</button>
+  <button type="button" (click)="close()" aria-label="Cerrar notificación">
+    <span aria-hidden="true">×</span>
+  </button>
 </section>

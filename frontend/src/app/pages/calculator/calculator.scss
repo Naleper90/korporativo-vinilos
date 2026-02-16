@@ -8,7 +8,6 @@
   background-color: var(--color-primary-100);
   color: var(--color-text-primary);
 
-  /* Container Query para responsive inteligente */
   container-type: inline-size;
   container-name: calculator;
 }
@@ -24,10 +23,24 @@
 /* =========================================
    2. HEADER & NAVEGACIÓN
    ========================================= */
+.calculator-nav {
+  max-width: 1100px;
+  margin: 0 auto;
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.calculator-page__header {
+  max-width: 1100px;
+  margin: 0 auto;
+  margin-bottom: var(--spacing-6);
+  width: 100%;
+}
+
 .calculator-page__header h1 {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
-  margin-bottom: var(--spacing-4);
+  margin-bottom: 0;
   color: var(--color-text-primary);
   line-height: var(--line-height-tight);
 }
@@ -149,7 +162,8 @@ fieldset {
   box-sizing: border-box;
 
   &:focus {
-    outline: none;
+    outline: 2px solid var(--color-accent-important);
+    outline-offset: 2px;
     border-color: var(--color-accent-important);
   }
 }
@@ -157,7 +171,7 @@ fieldset {
 .calculator-select {
   width: 100%;
   max-width: 400px;
-  padding: 0.75rem;
+  padding: 0.75rem 2.5rem 0.75rem 0.75rem;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   background-color: #fff;
@@ -320,6 +334,10 @@ fieldset {
 @container calculator (max-width: 768px) {
   .calculator-page {
     padding: var(--spacing-4) var(--spacing-4);
+  }
+
+  .calculator-nav {
+    max-width: 100%;
   }
 
   .calculator-page__container {
